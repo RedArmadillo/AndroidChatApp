@@ -17,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
         if(savedInstanceState == null) {
             if (findViewById(R.id.fragmentContainer) != null) {
                 getSupportFragmentManager().beginTransaction()
-                        .add(R.id.fragmentContainer, new LoginFragment())
+                        .add(R.id.fragmentContainer, new RegisterFragment())
                         .commit();
             }
         }
