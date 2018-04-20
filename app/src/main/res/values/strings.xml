@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">ChatApp</string>
+    <string name="welcome">Welcome!</string>
+    <string name="loginEmail">Email</string>
+    <string name="loginPassword">Password</string>
+    <string name="loginStayLoggedIn">Stay logged in?</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="loginMsg">Please log in or register</string>
+    <string name="registerMsg">Please register for an account</string>
+    <string name="registerFName">First name</string>
+    <string name="registerLName">Last name</string>
+    <string name="nickname">Nickname (used for in app display)</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
