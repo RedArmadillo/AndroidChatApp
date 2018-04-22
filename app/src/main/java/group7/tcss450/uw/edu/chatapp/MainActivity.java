@@ -17,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
         if(savedInstanceState == null) {
             if (findViewById(R.id.fragmentContainer) != null) {
                 getSupportFragmentManager().beginTransaction()
-                        .add(R.id.fragmentContainer, new ConnectionsFragment())
+                        .add(R.id.fragmentContainer, new ChatFragment())
                         .commit();
             }
         }
