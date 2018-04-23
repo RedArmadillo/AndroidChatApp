@@ -38,16 +38,18 @@
 
         <EditText
             android:id="@+id/chatMsg"
+            style="@android:style/Widget.Holo.Light.AutoCompleteTextView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
             android:layout_weight="1"
-            android:inputType="text"
             android:background="@drawable/customborder"
             android:hint="Say something..."
-            android:maxLines="4" />
+            android:inputType="text"
+            android:maxLines="4"
+            android:textSize="18sp" />
 
 
         <android.support.design.widget.FloatingActionButton
