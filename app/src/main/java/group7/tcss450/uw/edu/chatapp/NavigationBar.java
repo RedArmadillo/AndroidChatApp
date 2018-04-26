@@ -3,6 +3,8 @@ package group7.tcss450.uw.edu.chatapp;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -74,26 +76,38 @@ public class Home extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
+    private void loadFragment(Fragment frag) {
+        FragmentTransaction transaction = getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragmentContainer, frag)
+                .addToBackStack(null);
+// Commit the transaction
+        transaction.commit();
+    }
+
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-//        if (id == R.id.nav_camera) {
-//            // Handle the camera action
-//        } else if (id == R.id.nav_gallery) {
-//
-//        } else if (id == R.id.nav_slideshow) {
-//
-//        } else if (id == R.id.nav_manage) {
-//
-//        } else if (id == R.id.nav_share) {
-//
-//        } else if (id == R.id.nav_send) {
-//
-//        }
-
+       if (id == R.id.home_nav_menu) {
+         loadFragment(new HomeFragment());
+        }
+        else if (id == R.id.connections_menu) {
+            loadFragment(new ConnectionsFragment());
+        } else if (id == R.id.chat_nav_menu) {
+            loadFragment(new ChatFragment());
+        }
+        else if (id == R.id.setting_menu) {
+            loadFragment(new SettingsFragment());
+        }
+        else if (id == R.id.weather_menu) {
+            new WeatherFragment();
+        }
+        else if (id == R.id.logout_nav_button) {
+            //TODO Insert a logout function.
+        }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;

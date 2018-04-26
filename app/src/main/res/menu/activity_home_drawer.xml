@@ -2,21 +2,20 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
-
-    <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/log_menu"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="Login" />
-        <item
-            android:id="@+id/reg_menu"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="Register" />
-
-    </group>
-
-    <item android:title="Tools">
+        <item android:title="Tools">
         <menu>
+            <item
+                android:id="@+id/home_nav_menu"
+                android:icon="@drawable/ic_menu_share"
+                android:title="Home" />
+            <item
+                android:id="@+id/connections_menu"
+                android:icon="@drawable/ic_menu_share"
+                android:title="Connections" />
+            <item
+                android:id="@+id/chat_nav_menu"
+                android:icon="@drawable/ic_menu_share"
+                android:title="Chat" />
             <item
                 android:id="@+id/setting_menu"
                 android:icon="@drawable/ic_menu_share"
@@ -25,6 +24,15 @@
                 android:id="@+id/weather_menu"
                 android:icon="@drawable/ic_menu_share"
                 android:title="Weather" />
+        </menu>
+    </item>
+
+    <item android:title="Tools">
+        <menu>
+            <item
+                android:id="@+id/logout_nav_button"
+                android:icon="@drawable/ic_menu_share"
+                android:title="Logout" />
         </menu>
     </item>
 
