@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
+import group7.tcss450.uw.edu.chatapp.R;
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -26,9 +28,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_user_registration, container, false);
-        Button b = (Button) v.findViewById(R.id.registerbutton);
-        b.setOnClickListener(view -> onClick(b));
+        View v = inflater.inflate(R.layout.fragment_register, container, false);
         return v;
     }
 
@@ -49,27 +49,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
         mListener = null;
     }
 
-    public void onButtonPressed(View view) {
-
-        if (performValidation()) {
-
-            EditText username = getActivity().findViewById(R.id.usernameReg);
-            EditText pasword = getActivity().findViewById(R.id.passwordReg);
-            EditText email = getActivity().findViewById(R.id.confirmEmail);
-            EditText first = getActivity().findViewById(R.id.confirmFName);
-            EditText last = getActivity().findViewById(R.id.confirmLName);
-
-            Credentials creds = new Credentials.Builder(
-                    username.getText().toString(), pasword.getText())
-                    .addFirstName(first.getText().toString())
-                    .addLastName(last.getText().toString())
-                    .addEmail(email.getText().toString())
-                    .build();
-
-            mListener.onRegisterAttempt(creds);
-        }
-    }
-
+    //TODO Perform Validation!!
     private boolean performValidation() {
         return true;
     }
@@ -77,15 +57,15 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         if (mListener != null) switch (v.getId()) {
-            case R.id.registerbutton:
-                EditText username = (EditText)getView().findViewById(R.id.usernameReg);
+            case R.id.registerButton:
+                EditText username = (EditText)getView().findViewById(R.id.registerNickname);
                 Log.d("In On Click", username.getText().toString());
-                EditText password = (EditText)getView().findViewById(R.id.passwordReg);
+                EditText password = (EditText)getView().findViewById(R.id.registerPW1);
                 Credentials.Builder build = new Credentials.Builder(username.getText().toString(), password.getText());
 //                EditText confirmPassword = (EditText)v.findViewById(R.id.confirmPass);
-                EditText FName = (EditText)getView().findViewById(R.id.confirmFName);
-                EditText LNaem = (EditText)getView().findViewById(R.id.confirmLName);
-                EditText Email = (EditText)getView().findViewById(R.id.confirmEmail);
+                EditText FName = (EditText)getView().findViewById(R.id.registerFName);
+                EditText LNaem = (EditText)getView().findViewById(R.id.registerLName);
+                EditText Email = (EditText)getView().findViewById(R.id.registerEmail);
                 if(!FName.getText().toString().equals("")) {
                     build.addFirstName(FName.getText().toString());
                 }

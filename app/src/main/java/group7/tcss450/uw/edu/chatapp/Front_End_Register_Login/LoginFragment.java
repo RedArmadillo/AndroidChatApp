@@ -16,6 +16,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import group7.tcss450.uw.edu.chatapp.R;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -33,11 +35,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_user_login, container, false);
-        Button b = (Button) v.findViewById(R.id.login_button_login);
-        b.setOnClickListener(view -> onLoginButtonPressed(v));
-        Button d = (Button) v.findViewById(R.id.register_button_login);
-        d.setOnClickListener(view -> mListener.onRegisterLoadClicked());
+        View v = inflater.inflate(R.layout.fragment_login, container, false);
 
         return v;
     }
@@ -62,10 +60,10 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onClick(View view) {
         if (mListener != null) switch (view.getId()) {
-            case R.id.login_button_login:
+            case R.id.loginButton2:
                 onLoginButtonPressed(view);
                 break;
-            case R.id.register_button_login:
+            case R.id.register_l_Button:
                 mListener.onRegisterLoadClicked();
             default:
                 Log.wtf("", "Didn't Expect to see me.");
@@ -75,8 +73,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
     public void onLoginButtonPressed(View v) {
 
         if (performValidation()) {
-            EditText username = getView().findViewById(R.id.userText);
-            EditText pasword = getView().findViewById(R.id.passText);
+            EditText username = getView().findViewById(R.id.loginEmail);
+            EditText pasword = getView().findViewById(R.id.loginPassword);
 
             Credentials creds = new Credentials.Builder(
                     username.getText().toString(), pasword.getText())
@@ -106,7 +104,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
     public void setError(String err) {
 //Log in unsuccessful for reason: err. Try again.
 //you may want to add error stuffs for the user here.
-        ((TextView) getView().findViewById(R.id.userText))
+        ((TextView) getView().findViewById(R.id.registerEmail))
                 .setError("Login Unsuccessful");
     }
 

@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import group7.tcss450.uw.edu.chatapp.R;
+
 
 /**
  * A simple {@link Fragment} subclass.
