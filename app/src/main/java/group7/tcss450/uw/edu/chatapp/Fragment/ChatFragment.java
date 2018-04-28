@@ -1,4 +1,4 @@
-package group7.tcss450.uw.edu.chatapp;
+package group7.tcss450.uw.edu.chatapp.Fragment;
 
 
 import android.os.Bundle;
@@ -11,10 +11,10 @@ import android.view.ViewGroup;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class RegisterFragment extends Fragment {
+public class ChatFragment extends Fragment {
 
 
-    public RegisterFragment() {
+    public ChatFragment() {
         // Required empty public constructor
     }
 
@@ -23,7 +23,7 @@ public class RegisterFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_register, container, false);
+        return inflater.inflate(R.layout.fragment_chat, container, false);
     }
 
 }

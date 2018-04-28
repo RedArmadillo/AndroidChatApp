@@ -15,6 +15,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import group7.tcss450.uw.edu.chatapp.Fragment.ChatFragment;
+import group7.tcss450.uw.edu.chatapp.Fragment.ConnectionsFragment;
+import group7.tcss450.uw.edu.chatapp.Fragment.HomeFragment;
+import group7.tcss450.uw.edu.chatapp.Fragment.SettingsFragment;
+import group7.tcss450.uw.edu.chatapp.Fragment.WeatherFragment;
+
 public class NavigationBar extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 

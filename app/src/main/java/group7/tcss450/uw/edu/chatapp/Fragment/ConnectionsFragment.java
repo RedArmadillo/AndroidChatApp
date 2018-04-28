@@ -1,4 +1,4 @@
-package group7.tcss450.uw.edu.chatapp;
+package group7.tcss450.uw.edu.chatapp.Fragment;
 
 
 import android.os.Bundle;

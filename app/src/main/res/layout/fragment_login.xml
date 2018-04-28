@@ -5,7 +5,7 @@
     android:id="@+id/loginLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginFragment">
+    tools:context=".Front_End_Register_Login.LoginFragment">
 
 
     <TextView
