@@ -29,6 +29,8 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_register, container, false);
+        Button b = (Button) v.findViewById(R.id.registerButton);
+        b.setOnClickListener(view -> onClick(b));
         return v;
     }
 

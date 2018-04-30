@@ -18,7 +18,7 @@ import group7.tcss450.uw.edu.chatapp.Front_End_Register_Login.Credentials;
 import group7.tcss450.uw.edu.chatapp.Front_End_Register_Login.LoginFragment;
 import group7.tcss450.uw.edu.chatapp.Front_End_Register_Login.RegisterFragment;
 
-public class MainActivity extends AppCompatActivity implements LoginFragment.OnFragmentInteractionListener, RegisterFragment.OnRegisterFragmentInteractionListener {
+public class MainActivity extends AppCompatActivity implements LoginFragment.OnFragmentInteractionListener, RegisterFragment.OnRegisterFragmentInteractionListener, HomeFragment.OnSuccessFragmentInteractionListener {
 
     Credentials mCredentials;
 
@@ -201,24 +201,24 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.OnF
         }
     }
 
-//        private void checkStayLoggedIn() {
-//            if (((CheckBox) findViewById(R.id.logCheckBox)).isChecked()) {
-//                SharedPreferences prefs =
-//                        getSharedPreferences(
-//                                getString(R.string.keys_shared_prefs),
-//                                Context.MODE_PRIVATE);
-////save the username for later usage
-//                prefs.edit().putString(
-//                        getString(R.string.keys_prefs_username),
-//                        mCredentials.getUsername())
-//                        .apply();
-////save the users “want” to stay logged in
-//                prefs.edit().putBoolean(
-//                        getString(R.string.keys_prefs_stay_logged_in),
-//                        true)
-//                        .apply();
-//            }
-//        }
+        private void checkStayLoggedIn() {
+            if (((CheckBox) findViewById(R.id.checkBox)).isChecked()) {
+                SharedPreferences prefs =
+                        getSharedPreferences(
+                                getString(R.string.keys_shared_prefs),
+                                Context.MODE_PRIVATE);
+//save the username for later usage
+                prefs.edit().putString(
+                        getString(R.string.keys_prefs_username),
+                        mCredentials.getUsername())
+                        .apply();
+//save the users “want” to stay logged in
+                prefs.edit().putBoolean(
+                        getString(R.string.keys_prefs_stay_logged_in),
+                        true)
+                        .apply();
+            }
+        }
 
 //    @Override
 //    public void onLogout() {
@@ -257,6 +257,11 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.OnF
                 .onPostExecute(this::handleRegisterOnPost)
                 .onCancelled(this::handleErrorsInTask)
                 .build().execute();
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
     }
 }
 
