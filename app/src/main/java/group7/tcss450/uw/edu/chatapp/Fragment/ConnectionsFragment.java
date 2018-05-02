@@ -1,4 +1,4 @@
-package group7.tcss450.uw.edu.chatapp;
+package group7.tcss450.uw.edu.chatapp.Fragment;
 
 
 import android.os.Bundle;
@@ -9,7 +9,9 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import java.util.ArrayList;
+import java.util.Objects;
+
+import group7.tcss450.uw.edu.chatapp.R;
 
 
 /**
@@ -38,7 +40,7 @@ public class ConnectionsFragment extends Fragment {
                 "OS/2", "Ubuntu", "Windows7", "Max OS X", "Linux", "OS/2",
                 "Android", "iPhone", "WindowsMobile" };
 
-        ArrayAdapter<String> adapter = new ArrayAdapter(getActivity(),
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(Objects.requireNonNull(getActivity()),
                 android.R.layout.simple_list_item_1, values);
         listView.setAdapter(adapter);
         return v;
