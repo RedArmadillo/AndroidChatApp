@@ -114,13 +114,14 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.OnF
                         if (prefs.getBoolean(getString(R.string.keys_prefs_stay_logged_in),
                                 false)) {
                             //loadSuccessFragment();
-                            //loadHomeNavigation();
+                            loadHomeNavigation();
                             // onLogOut isn't implement yet
+                            /*
                             getSupportFragmentManager().beginTransaction()
                                     .add(R.id.fragmentContainer,
                                             new LoginFragment(),
                                             getString(R.string.keys_fragment_login))
-                                    .commit();
+                                    .commit(); */
                         } else {
                             getSupportFragmentManager().beginTransaction()
                                     .add(R.id.fragmentContainer,
@@ -170,7 +171,7 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.OnF
             JSONObject resultsJSON = new JSONObject(result);
             boolean success = resultsJSON.getBoolean("success");
             if (success) {
-                //checkStayLoggedIn();
+                checkStayLoggedIn();
 //Login was successful. Switch to the loadSuccessFragment.
                 loadHomeNavigation();
                 //loadSuccessFragment();
@@ -194,11 +195,11 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.OnF
     private void handleRegisterOnPost(String result) {
         try {
             JSONObject resultsJSON = new JSONObject(result);
-            Log.d("In Register Attempt", resultsJSON.toString());
+           // Log.d("In Register Attempt", resultsJSON.toString());
             boolean success = resultsJSON.getBoolean("success");
             if (success) {
                 Log.d("In Register Attempt", " YAY!");
-                //checkStayLoggedIn();
+                checkStayLoggedIn();
 //Login was successful. Switch to the loadSuccessFragment.
                 loadHomeNavigation();
             } else {
