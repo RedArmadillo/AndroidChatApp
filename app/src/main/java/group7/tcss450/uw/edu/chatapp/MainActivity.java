@@ -1,6 +1,7 @@
 package group7.tcss450.uw.edu.chatapp;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
@@ -18,7 +19,7 @@ import group7.tcss450.uw.edu.chatapp.Front_End_Register_Login.Credentials;
 import group7.tcss450.uw.edu.chatapp.Front_End_Register_Login.LoginFragment;
 import group7.tcss450.uw.edu.chatapp.Front_End_Register_Login.RegisterFragment;
 
-public class MainActivity extends AppCompatActivity implements LoginFragment.OnFragmentInteractionListener, RegisterFragment.OnRegisterFragmentInteractionListener, HomeFragment.OnSuccessFragmentInteractionListener {
+public class MainActivity extends AppCompatActivity implements LoginFragment.OnFragmentInteractionListener, RegisterFragment.OnRegisterFragmentInteractionListener{
 
     Credentials mCredentials;
 
@@ -112,13 +113,14 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.OnF
                                         Context.MODE_PRIVATE);
                         if (prefs.getBoolean(getString(R.string.keys_prefs_stay_logged_in),
                                 false)) {
-                            loadSuccessFragment();
+                            //loadSuccessFragment();
+                            //loadHomeNavigation();
                             // onLogOut isn't implement yet
-                            //getSupportFragmentManager().beginTransaction()
-                            //        .add(R.id.fragmentContainer,
-                            //                new LoginFragment(),
-                             //               getString(R.string.keys_fragment_login))
-                             //       .commit();
+                            getSupportFragmentManager().beginTransaction()
+                                    .add(R.id.fragmentContainer,
+                                            new LoginFragment(),
+                                            getString(R.string.keys_fragment_login))
+                                    .commit();
                         } else {
                             getSupportFragmentManager().beginTransaction()
                                     .add(R.id.fragmentContainer,
@@ -139,6 +141,11 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.OnF
                 .replace(R.id.fragmentContainer, successFragment);
 // Commit the transaction
         transaction.commit();
+    }
+
+    private void loadHomeNavigation() {
+        Intent intent = new Intent(this, LandingActivity.class);
+        startActivity(intent);
     }
 
 
@@ -165,14 +172,15 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.OnF
             if (success) {
                 //checkStayLoggedIn();
 //Login was successful. Switch to the loadSuccessFragment.
-                loadSuccessFragment();
+                loadHomeNavigation();
+                //loadSuccessFragment();
             } else {
 //Login was unsuccessful. Don’t switch fragments and inform the user
-                LoginFragment frag =
-                        (LoginFragment) getSupportFragmentManager()
-                                .findFragmentByTag(
-                                        getString(R.string.keys_fragment_login));
-                frag.setError("Log in unsuccessful");
+                //LoginFragment frag =
+                //        (LoginFragment) getSupportFragmentManager()
+                //                .findFragmentByTag(
+                //                        getString(R.string.keys_fragment_login));
+                //frag.setError("Log in unsuccessful");
             }
         } catch (JSONException e) {
 //It appears that the web service didn’t return a JSON formatted String
@@ -192,7 +200,7 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.OnF
                 Log.d("In Register Attempt", " YAY!");
                 //checkStayLoggedIn();
 //Login was successful. Switch to the loadSuccessFragment.
-                loadSuccessFragment();
+                loadHomeNavigation();
             } else {
                 Log.d("In Register Attempt Else", " NEY!");
 //Login was unsuccessful. Don’t switch fragments and inform the user
@@ -269,10 +277,7 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.OnF
                 .build().execute();
     }
 
-    @Override
-    public void onFragmentInteraction(Uri uri) {
 
-    }
 }
 
 

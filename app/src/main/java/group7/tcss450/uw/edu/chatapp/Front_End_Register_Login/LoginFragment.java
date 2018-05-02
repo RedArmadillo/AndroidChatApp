@@ -73,7 +73,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
     public void onLoginButtonPressed(View v) {
 
         if (performValidation()) {
-            EditText username = getView().findViewById(R.id.loginEmail);
+            EditText username = getView().findViewById(R.id.loginUsername);
             EditText pasword = getView().findViewById(R.id.loginPassword);
 
             Credentials creds = new Credentials.Builder(
@@ -104,7 +104,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
     public void setError(String err) {
 //Log in unsuccessful for reason: err. Try again.
 //you may want to add error stuffs for the user here.
-        ((TextView) getView().findViewById(R.id.registerEmail))
+        ((TextView) getView().findViewById(R.id.loginUsername))
                 .setError("Login Unsuccessful");
     }
 
