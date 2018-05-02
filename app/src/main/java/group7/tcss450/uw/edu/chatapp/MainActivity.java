@@ -3,12 +3,12 @@ package group7.tcss450.uw.edu.chatapp;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
-import android.view.Display;
 import android.widget.CheckBox;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -31,15 +31,17 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.OnF
 // Commit the transaction
         transaction.commit();
     }
-
+    @Override
     public void onLoginAttempt(Credentials credentials) {
+        Log.i("Login", "Clicked");
 //build the web service URL
         Uri uri = new Uri.Builder()
                 .scheme("https")
-                .appendPath(getString(R.string.ep_base_url))
+                .authority(getString(R.string.ep_base_url))
                 .appendPath(getString(R.string.ep_login))
                 .build();
-//build the JSONObject
+        Log.i("URL", uri.toString());
+                //build the JSONObject
         JSONObject msg = credentials.asJSONObject();
         mCredentials = credentials;
 //instantiate and execute the AsyncTask.
@@ -111,6 +113,12 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.OnF
                         if (prefs.getBoolean(getString(R.string.keys_prefs_stay_logged_in),
                                 false)) {
                             loadSuccessFragment();
+                            // onLogOut isn't implement yet
+                            //getSupportFragmentManager().beginTransaction()
+                            //        .add(R.id.fragmentContainer,
+                            //                new LoginFragment(),
+                             //               getString(R.string.keys_fragment_login))
+                             //       .commit();
                         } else {
                             getSupportFragmentManager().beginTransaction()
                                     .add(R.id.fragmentContainer,
@@ -133,6 +141,7 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.OnF
         transaction.commit();
     }
 
+
     /**
      * Handle errors that may occur during the AsyncTask.
      *
@@ -149,6 +158,7 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.OnF
      * @param result the JSON formatted String response from the web service
      */
     private void handleLoginOnPost(String result) {
+        Log.i("onPostLogin", result);
         try {
             JSONObject resultsJSON = new JSONObject(result);
             boolean success = resultsJSON.getBoolean("success");
@@ -220,26 +230,26 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.OnF
             }
         }
 
-//    @Override
-//    public void onLogout() {
-//        SharedPreferences prefs =
-//                getSharedPreferences(
-//                        getString(R.string.keys_shared_prefs),
-//                        Context.MODE_PRIVATE);
-//        prefs.edit().remove(getString(R.string.keys_prefs_username));
-//        prefs.edit().putBoolean(
-//                getString(R.string.keys_prefs_stay_logged_in),
-//                false)
-//                .apply();
-////the way to close an app programmaticaly
-//        finishAndRemoveTask();
-//    }
+    //@Override
+    public void onLogout() {
+        SharedPreferences prefs =
+                getSharedPreferences(
+                        getString(R.string.keys_shared_prefs),
+                        Context.MODE_PRIVATE);
+        prefs.edit().remove(getString(R.string.keys_prefs_username));
+        prefs.edit().putBoolean(
+                getString(R.string.keys_prefs_stay_logged_in),
+                false)
+                .apply();
+//the way to close an app programmaticaly
+        finishAndRemoveTask();
+    }
 
     @Override
     public void onRegisterAttempt(Credentials creds) {
         Uri uri = new Uri.Builder()
                 .scheme("https")
-                .appendPath(getString(R.string.ep_base_url))
+                .authority(getString(R.string.ep_base_url))
                 .appendPath(getString(R.string.ep_register))
                 .build();
 //build the JSONObject

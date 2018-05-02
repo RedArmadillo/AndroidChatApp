@@ -2,12 +2,9 @@ package group7.tcss450.uw.edu.chatapp.Front_End_Register_Login;
 
 
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.text.Editable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,7 +35,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
         View v = inflater.inflate(R.layout.fragment_login, container, false);
         Button b = (Button) v.findViewById(R.id.register_l_Button);
         b.setOnClickListener(view -> mListener.onRegisterLoadClicked());
-
+        b = (Button) v.findViewById(R.id.loginButton2);
+        b.setOnClickListener(this::onClick);
         return v;
     }
 

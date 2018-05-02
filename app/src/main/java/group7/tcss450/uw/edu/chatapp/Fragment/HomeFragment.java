@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import group7.tcss450.uw.edu.chatapp.Front_End_Register_Login.LoginFragment;
 import group7.tcss450.uw.edu.chatapp.R;
 
 
