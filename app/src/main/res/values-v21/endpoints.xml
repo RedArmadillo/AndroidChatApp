@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="ep_base_url">tcss450.herokuapp.com</string>
-    <string name="ep_login">login</string>
-    <string name="ep_register">register</string>
-    <string name="ep_hello">https://thorn18-lab4-backend.herokuapp.com/helloo</string>
-    <string name="ep_hello_args">params</string>
-    <string name="ep_hello_delay">wait</string>
-</resources>

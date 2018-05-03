@@ -4,12 +4,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
-import android.view.Display;
 import android.widget.CheckBox;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -19,7 +19,7 @@ import group7.tcss450.uw.edu.chatapp.Front_End_Register_Login.Credentials;
 import group7.tcss450.uw.edu.chatapp.Front_End_Register_Login.LoginFragment;
 import group7.tcss450.uw.edu.chatapp.Front_End_Register_Login.RegisterFragment;
 
-public class MainActivity extends AppCompatActivity implements LoginFragment.OnFragmentInteractionListener, RegisterFragment.OnRegisterFragmentInteractionListener, HomeFragment.OnSuccessFragmentInteractionListener {
+public class MainActivity extends AppCompatActivity implements LoginFragment.OnFragmentInteractionListener, RegisterFragment.OnRegisterFragmentInteractionListener{
 
     Credentials mCredentials;
 
@@ -32,15 +32,17 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.OnF
 // Commit the transaction
         transaction.commit();
     }
-
+    @Override
     public void onLoginAttempt(Credentials credentials) {
+        Log.i("Login", "Clicked");
 //build the web service URL
         Uri uri = new Uri.Builder()
                 .scheme("https")
-                .appendPath(getString(R.string.ep_base_url))
+                .authority(getString(R.string.ep_base_url))
                 .appendPath(getString(R.string.ep_login))
                 .build();
-//build the JSONObject
+        Log.i("URL", uri.toString());
+                //build the JSONObject
         JSONObject msg = credentials.asJSONObject();
         mCredentials = credentials;
 //instantiate and execute the AsyncTask.
@@ -111,7 +113,15 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.OnF
                                         Context.MODE_PRIVATE);
                         if (prefs.getBoolean(getString(R.string.keys_prefs_stay_logged_in),
                                 false)) {
-                            loadSuccessFragment();
+                            //loadSuccessFragment();
+                            loadHomeNavigation();
+                            // onLogOut isn't implement yet
+                            /*
+                            getSupportFragmentManager().beginTransaction()
+                                    .add(R.id.fragmentContainer,
+                                            new LoginFragment(),
+                                            getString(R.string.keys_fragment_login))
+                                    .commit(); */
                         } else {
                             getSupportFragmentManager().beginTransaction()
                                     .add(R.id.fragmentContainer,
@@ -130,6 +140,12 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.OnF
         startActivity(new Intent(MainActivity.this, NavigationBar.class));
     }
 
+    private void loadHomeNavigation() {
+        Intent intent = new Intent(this, LandingActivity.class);
+        startActivity(intent);
+    }
+
+
     /**
      * Handle errors that may occur during the AsyncTask.
      *
@@ -146,20 +162,22 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.OnF
      * @param result the JSON formatted String response from the web service
      */
     private void handleLoginOnPost(String result) {
+        Log.i("onPostLogin", result);
         try {
             JSONObject resultsJSON = new JSONObject(result);
             boolean success = resultsJSON.getBoolean("success");
             if (success) {
                 checkStayLoggedIn();
 //Login was successful. Switch to the loadSuccessFragment.
-                loadSuccessFragment();
+                loadHomeNavigation();
+                //loadSuccessFragment();
             } else {
 //Login was unsuccessful. Don’t switch fragments and inform the user
-                LoginFragment frag =
-                        (LoginFragment) getSupportFragmentManager()
-                                .findFragmentByTag(
-                                        getString(R.string.keys_fragment_login));
-                frag.setError("Log in unsuccessful");
+                //LoginFragment frag =
+                //        (LoginFragment) getSupportFragmentManager()
+                //                .findFragmentByTag(
+                //                        getString(R.string.keys_fragment_login));
+                //frag.setError("Log in unsuccessful");
             }
         } catch (JSONException e) {
 //It appears that the web service didn’t return a JSON formatted String
@@ -173,13 +191,13 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.OnF
     private void handleRegisterOnPost(String result) {
         try {
             JSONObject resultsJSON = new JSONObject(result);
-            Log.d("In Register Attempt", resultsJSON.toString());
+           // Log.d("In Register Attempt", resultsJSON.toString());
             boolean success = resultsJSON.getBoolean("success");
             if (success) {
                 Log.d("In Register Attempt", " YAY!");
-                //checkStayLoggedIn();
+                checkStayLoggedIn();
 //Login was successful. Switch to the loadSuccessFragment.
-                loadSuccessFragment();
+                loadHomeNavigation();
             } else {
                 Log.d("In Register Attempt Else", " NEY!");
 //Login was unsuccessful. Don’t switch fragments and inform the user
@@ -217,26 +235,26 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.OnF
             }
         }
 
-//    @Override
-//    public void onLogout() {
-//        SharedPreferences prefs =
-//                getSharedPreferences(
-//                        getString(R.string.keys_shared_prefs),
-//                        Context.MODE_PRIVATE);
-//        prefs.edit().remove(getString(R.string.keys_prefs_username));
-//        prefs.edit().putBoolean(
-//                getString(R.string.keys_prefs_stay_logged_in),
-//                false)
-//                .apply();
-////the way to close an app programmaticaly
-//        finishAndRemoveTask();
-//    }
+    //@Override
+    public void onLogout() {
+        SharedPreferences prefs =
+                getSharedPreferences(
+                        getString(R.string.keys_shared_prefs),
+                        Context.MODE_PRIVATE);
+        prefs.edit().remove(getString(R.string.keys_prefs_username));
+        prefs.edit().putBoolean(
+                getString(R.string.keys_prefs_stay_logged_in),
+                false)
+                .apply();
+//the way to close an app programmaticaly
+        finishAndRemoveTask();
+    }
 
     @Override
     public void onRegisterAttempt(Credentials creds) {
         Uri uri = new Uri.Builder()
                 .scheme("https")
-                .appendPath(getString(R.string.ep_base_url))
+                .authority(getString(R.string.ep_base_url))
                 .appendPath(getString(R.string.ep_register))
                 .build();
 //build the JSONObject
@@ -256,10 +274,7 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.OnF
                 .build().execute();
     }
 
-    @Override
-    public void onFragmentInteraction(Uri uri) {
 
-    }
 }
 
 
