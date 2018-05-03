@@ -145,7 +145,6 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.OnF
             boolean success = resultsJSON.getBoolean("success");
             if (success) {
                 Log.d("In Register Attempt", " YAY!");
-                checkStayLoggedIn();
 //Login was successful. Switch to the loadSuccessFragment.
                 loadHomeNavigation();
             } else {
