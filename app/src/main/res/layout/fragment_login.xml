@@ -40,7 +40,6 @@
         android:layout_width="368dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:ems="10"
         android:fontFamily="@font/alegreya_sc"
         android:hint="Password"
@@ -61,13 +60,13 @@
 
     <Button
         android:id="@+id/register_l_Button"
-        style="@style/Widget.AppCompat.Button.Colored"
+        style="@style/Widget.AppCompat.Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="280dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
         android:text="@string/ep_register"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/loginButton2"
         app:layout_constraintTop_toBottomOf="@+id/loginPassword" />
 
     <Button
