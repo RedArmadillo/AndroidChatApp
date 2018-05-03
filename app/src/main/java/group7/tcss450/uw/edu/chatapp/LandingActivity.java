@@ -1,6 +1,7 @@
 package group7.tcss450.uw.edu.chatapp;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
@@ -15,7 +16,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import group7.tcss450.uw.edu.chatapp.Fragment.ChatFragment;
 import group7.tcss450.uw.edu.chatapp.Fragment.ConnectionsFragment;
 import group7.tcss450.uw.edu.chatapp.Fragment.HomeFragment;
 import group7.tcss450.uw.edu.chatapp.Fragment.SettingsFragment;
@@ -90,8 +90,8 @@ public class LandingActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.landingChat) {
-            // Handle the camera action
-            loadFragment(new ChatFragment());
+            Intent intent = new Intent(this, ChatActivity.class);
+            startActivity(intent);
         } else if (id == R.id.landingConnections) {
             loadFragment(new ConnectionsFragment());
         } else if (id == R.id.landingHome) {

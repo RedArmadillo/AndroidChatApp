@@ -138,7 +138,6 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.OnF
             boolean success = resultsJSON.getBoolean("success");
             if (success) {
                 Log.d("In Register Attempt", " YAY!");
-                //checkStayLoggedIn();
 //Login was successful. Switch to the loadSuccessFragment.
                 loadHomeNavigation();
             } else {
@@ -178,20 +177,6 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.OnF
             }
         }
 
-    //@Override
-    public void onLogout() {
-        SharedPreferences prefs =
-                getSharedPreferences(
-                        getString(R.string.keys_shared_prefs),
-                        Context.MODE_PRIVATE);
-        prefs.edit().remove(getString(R.string.keys_prefs_username));
-        prefs.edit().putBoolean(
-                getString(R.string.keys_prefs_stay_logged_in),
-                false)
-                .apply();
-//the way to close an app programmaticaly
-        finishAndRemoveTask();
-    }
 
     @Override
     public void onRegisterAttempt(Credentials creds) {
@@ -221,4 +206,3 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.OnF
 }
 
 
-        //Create methods for regstrtion attemp/button press/ect...}
