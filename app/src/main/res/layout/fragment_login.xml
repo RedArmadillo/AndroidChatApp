@@ -22,14 +22,14 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/loginEmail"
+        android:id="@+id/loginUsername"
         android:layout_width="368dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="224dp"
         android:ems="10"
         android:fontFamily="@font/alegreya_sc"
-        android:hint="@string/loginEmail"
+        android:hint="Username"
         android:inputType="textEmailAddress"
         app:layout_constraintBottom_toTopOf="@+id/loginPassword"
         app:layout_constraintStart_toStartOf="parent"
@@ -40,13 +40,12 @@
         android:layout_width="368dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:ems="10"
         android:fontFamily="@font/alegreya_sc"
         android:hint="Password"
         android:inputType="textPassword"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/loginEmail" />
+        app:layout_constraintTop_toBottomOf="@+id/loginUsername" />
 
     <CheckBox
         android:id="@+id/checkBox"
@@ -61,13 +60,13 @@
 
     <Button
         android:id="@+id/register_l_Button"
-        style="@style/Widget.AppCompat.Button.Colored"
+        style="@style/Widget.AppCompat.Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="280dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
         android:text="@string/ep_register"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/loginButton2"
         app:layout_constraintTop_toBottomOf="@+id/loginPassword" />
 
     <Button

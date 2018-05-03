@@ -1,12 +1,12 @@
 package group7.tcss450.uw.edu.chatapp;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.view.View;
-import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -21,24 +21,16 @@ import group7.tcss450.uw.edu.chatapp.Fragment.HomeFragment;
 import group7.tcss450.uw.edu.chatapp.Fragment.SettingsFragment;
 import group7.tcss450.uw.edu.chatapp.Fragment.WeatherFragment;
 
-public class NavigationBar extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+public class LandingActivity extends AppCompatActivity
+        implements NavigationView.OnNavigationItemSelectedListener, WeatherFragment.OnFragmentInteractionListener,
+        SettingsFragment.OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+        setContentView(R.layout.activity_landing);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -48,6 +40,14 @@ public class NavigationBar extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        if(savedInstanceState == null) {
+            if (findViewById(R.id.landingContainer) != null) {
+                getSupportFragmentManager().beginTransaction()
+                        .add(R.id.landingContainer, new WeatherFragment())
+                        .commit();
+            }
+        }
     }
 
     @Override
@@ -57,13 +57,14 @@ public class NavigationBar extends AppCompatActivity
             drawer.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
+
         }
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.home, menu);
+        getMenuInflater().inflate(R.menu.landing, menu);
         return true;
     }
 
@@ -82,40 +83,63 @@ public class NavigationBar extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    private void loadFragment(Fragment frag) {
-        FragmentTransaction transaction = getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.fragmentContainer, frag)
-                .addToBackStack(null);
-// Commit the transaction
-        transaction.commit();
-    }
-
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-       if (id == R.id.home_nav_menu) {
-         loadFragment(new HomeFragment());
-        }
-        else if (id == R.id.connections_menu) {
-            loadFragment(new ConnectionsFragment());
-        } else if (id == R.id.chat_nav_menu) {
+        if (id == R.id.landingChat) {
+            // Handle the camera action
             loadFragment(new ChatFragment());
-        }
-        else if (id == R.id.setting_menu) {
+        } else if (id == R.id.landingConnections) {
+            loadFragment(new ConnectionsFragment());
+        } else if (id == R.id.landingHome) {
+            loadFragment(new HomeFragment());
+        } else if (id == R.id.landingWeather) {
+            loadFragment(new WeatherFragment());
+        } else if (id == R.id.landingSetting) {
             loadFragment(new SettingsFragment());
+        } else if (id == R.id.landingLogout) {
+            onLogout();
         }
-        else if (id == R.id.weather_menu) {
-            new WeatherFragment();
-        }
-        else if (id == R.id.logout_nav_button) {
-            //TODO Insert a logout function.
-        }
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+    public void onLogout() {
+        SharedPreferences prefs =
+                getSharedPreferences(
+                        getString(R.string.keys_shared_prefs),
+                        Context.MODE_PRIVATE);
+        prefs.edit().remove(getString(R.string.keys_prefs_username));
+        prefs.edit().putBoolean(
+                getString(R.string.keys_prefs_stay_logged_in),
+                false)
+                .apply();
+//the way to close an app programmaticaly
+        finishAndRemoveTask();
+    }
+
+    private void loadFragment(Fragment frag) {
+        FragmentTransaction transaction = getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.landingContainer, frag)
+                .addToBackStack(null);
+        // Commit the transaction
+        transaction.commit();
+    }
+
+
+
+    @Override
+    public void OnSettingFragmentInteractionListener(Uri uri) {
+
+    }
+
+    @Override
+    public void OnWeatherFragmentInteractionListener(Uri uri) {
+
     }
 }
