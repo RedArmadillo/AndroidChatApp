@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.OnF
         RegisterFragment userRegistration = new RegisterFragment();
         FragmentTransaction transaction = getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.fragmentContainer, userRegistration);
+                .replace(R.id.fragmentContainer, userRegistration).addToBackStack(null);
 // Commit the transaction
         transaction.commit();
     }
@@ -54,49 +54,6 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.OnF
                 .onCancelled(this::handleErrorsInTask)
                 .build().execute();
     }
-
-//    public static boolean Validation(Credentials cred) {
-//        String userName = cred.getUsername();
-//        String password = cred.getPassword().toString();
-//        boolean isValid = false;
-//        Log.d("Validation", "Hello");
-//        if (userName.length() == 0) {
-//            userView.setError("Username Can Not Be Empty!");
-//        }
-//        if (regView.getText().toString().length() == 0) {
-//            regView.setError("Password Can Not Be Empty!");
-//        }
-//        if (regView.getText().toString().length() > 0 && userView.getText().length() > 0) {
-//            isValid = true;
-//        }
-//    return isValid;
-//
-//    }
-
-//    public static boolean RegistrationValidation(View view) {
-//        TextView userReg = (TextView) view.findViewById(R.id.usernameReg);
-//        boolean isValid = false;
-//        Log.d("Validation", "Hello");
-//        TextView pasReg = (TextView) view.findViewById(R.id.passwordReg);
-//        TextView confirmPas = (TextView) view.findViewById(R.id.confirmFName);
-//        if (userReg.getText().toString().length() == 0) {
-//            userReg.setError("Username Can Not Be Empty!");
-//        }
-//        if (pasReg.getText().toString().length() == 0) {
-//            pasReg.setError("Password Can Not Be Empty!");
-//        }
-//        if(!confirmPas.getText().toString().equals(pasReg.getText().toString())) {
-//            confirmPas.setError("Passwords must be the same.");
-//        }
-//        if(pasReg.getText().toString().length() < 6 && pasReg.getText().toString().length() > 0) {
-//            pasReg.setError("Password must be at least 6 characters.");
-//        }
-//        if (confirmPas.getText().toString().length() > 0 && userReg.getText().toString().length() > 0 &&
-//                pasReg.getText().toString().length() > 0 && confirmPas.getText().toString().equals(pasReg.getText().toString())&& pasReg.getText().toString().length() >= 6) {
-//            isValid = true;
-//        }
-//        return isValid;
-//    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -135,11 +92,6 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.OnF
         }
     }
 
-    private void loadSuccessFragment() {
-        //Loads Nav-bar Activity as result of Loging in.
-        startActivity(new Intent(MainActivity.this, NavigationBar.class));
-    }
-
     private void loadHomeNavigation() {
         Intent intent = new Intent(this, LandingActivity.class);
         startActivity(intent);
@@ -170,14 +122,12 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.OnF
                 checkStayLoggedIn();
 //Login was successful. Switch to the loadSuccessFragment.
                 loadHomeNavigation();
-                //loadSuccessFragment();
             } else {
-//Login was unsuccessful. Don’t switch fragments and inform the user
-                //LoginFragment frag =
-                //        (LoginFragment) getSupportFragmentManager()
-                //                .findFragmentByTag(
-                //                        getString(R.string.keys_fragment_login));
-                //frag.setError("Log in unsuccessful");
+                LoginFragment frag =
+                        (LoginFragment) getSupportFragmentManager()
+                                .findFragmentByTag(
+                                        getString(R.string.keys_fragment_login));
+                frag.setError("Log in unsuccessful");
             }
         } catch (JSONException e) {
 //It appears that the web service didn’t return a JSON formatted String

@@ -61,7 +61,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
     public void onClick(View view) {
         if (mListener != null) switch (view.getId()) {
             case R.id.loginButton2:
-                onLoginButtonPressed(view);
+                onLoginButtonPressed(getView());
                 break;
             case R.id.register_l_Button:
                 mListener.onRegisterLoadClicked();
@@ -70,23 +70,50 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
         }
     }
 
+
+
     public void onLoginButtonPressed(View v) {
 
-        if (performValidation()) {
-            EditText username = getView().findViewById(R.id.loginUsername);
-            EditText pasword = getView().findViewById(R.id.loginPassword);
+        EditText username = getView().findViewById(R.id.loginUsername);
+        EditText pasword = getView().findViewById(R.id.loginPassword);
 
-            Credentials creds = new Credentials.Builder(
-                    username.getText().toString(), pasword.getText())
-                    .build();
+        Credentials creds = new Credentials.Builder(
+                username.getText().toString(), pasword.getText())
+                .build();
+
+        if (Validation(v, creds, pasword.getText().toString())) {
 
             mListener.onLoginAttempt(creds);
+        } else {
+            Log.d("NOT VALID", "FAILED VALIDATION");
         }
 
     }
-    //TODO
-    private boolean performValidation() {
-        return true;
+
+    public static boolean Validation(View v, Credentials cred, String thepassword) {
+        String userName = cred.getUsername();
+        String password = thepassword;
+        boolean isValid = false;
+        boolean flaga = false;
+        boolean flagb = false;
+        Log.d("Validation", "Hello");
+        if (userName.length() == 0) {
+            ((EditText) v.findViewById(R.id.loginUsername)).setError("Username Can Not Be Empty!");
+        } else {
+            flaga = true;
+        }
+        if (password.length() == 0) {
+            ((EditText) v.findViewById(R.id.loginPassword)).setError("Password Can Not Be Empty!");
+        } else if (password.length() < 6) {
+            ((EditText) v.findViewById(R.id.loginPassword)).setError("Password must be at least 6 characters");
+        } else {
+            flagb = true;
+        }
+        if (flaga & flagb) {
+            isValid = true;
+        }
+        return isValid;
+
     }
 
 
