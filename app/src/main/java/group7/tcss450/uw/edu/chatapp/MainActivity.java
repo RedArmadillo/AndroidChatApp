@@ -1,6 +1,7 @@
 package group7.tcss450.uw.edu.chatapp;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.support.v4.app.FragmentTransaction;
@@ -125,12 +126,8 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.OnF
     }
 
     private void loadSuccessFragment() {
-        HomeFragment successFragment = new HomeFragment();
-        FragmentTransaction transaction = getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.fragmentContainer, successFragment);
-// Commit the transaction
-        transaction.commit();
+        //Loads Nav-bar Activity as result of Loging in.
+        startActivity(new Intent(MainActivity.this, NavigationBar.class));
     }
 
     /**
@@ -153,7 +150,7 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.OnF
             JSONObject resultsJSON = new JSONObject(result);
             boolean success = resultsJSON.getBoolean("success");
             if (success) {
-                //checkStayLoggedIn();
+                checkStayLoggedIn();
 //Login was successful. Switch to the loadSuccessFragment.
                 loadSuccessFragment();
             } else {
