@@ -1,6 +1,7 @@
 package group7.tcss450.uw.edu.chatapp.Fragment;
 
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -31,9 +32,13 @@ public class ChatFragment extends Fragment {
     private String mSendUrl;
     private TextView mOutputTextView;
     private ListenManager mListenManager;
-
+    private int mChatId = 1;
     public ChatFragment() {
-        // Required empty public constructor
+
+    }
+    @SuppressLint("ValidFragment")
+    public ChatFragment(int chatId) {
+        mChatId = chatId;
     }
 
 
@@ -70,7 +75,7 @@ public class ChatFragment extends Fragment {
                 .scheme("https")
                 .authority(getString(R.string.ep_lab_url))
                 .appendPath(getString(R.string.ep_get_message))
-                .appendQueryParameter("chatId", "1")
+                .appendQueryParameter("chatId", Integer.toString(mChatId))
                 .build();
 
         if (prefs.contains(getString(R.string.keys_prefs_time_stamp))) {
@@ -100,7 +105,7 @@ public class ChatFragment extends Fragment {
         try {
             messageJson.put(getString(R.string.keys_json_username), mUsername);
             messageJson.put(getString(R.string.keys_json_message), msg);
-            messageJson.put(getString(R.string.keys_json_chat_id), 1);
+            messageJson.put(getString(R.string.keys_json_chat_id), mChatId);
         } catch (JSONException e) {
             e.printStackTrace();
         }
