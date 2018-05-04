@@ -104,7 +104,12 @@ public class LandingActivity extends AppCompatActivity
             loadFragment(new SettingsFragment());
         } else if (id == R.id.landingLogout) {
             onLogout();
+        } else if (id == R.id.landingChatList) {
+            //loadFragment(new ChatListFragment());
+            Intent intent = new Intent(this, ChatListActivity.class);
+            startActivity(intent);
         }
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
