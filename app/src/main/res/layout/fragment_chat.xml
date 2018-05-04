@@ -53,15 +53,18 @@
             android:textSize="18sp" />
 
 
-        <android.support.design.widget.FloatingActionButton
+        <ImageButton
             android:id="@+id/chatSendButton"
-            android:layout_width="64dp"
-            android:layout_height="48dp"
+            android:layout_width="32dp"
+            android:layout_height="match_parent"
             android:layout_gravity="bottom"
             android:background="@color/colorPrimary"
             android:clickable="true"
             android:gravity="center"
-            android:src="@drawable/ic_send" />
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_send_button"
+            android:tint="@color/colorPrimary"
+            app:backgroundTint="@android:color/transparent" />
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

@@ -50,6 +50,7 @@ public class LandingActivity extends AppCompatActivity
         }
     }
 
+
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -92,6 +93,7 @@ public class LandingActivity extends AppCompatActivity
         if (id == R.id.landingChat) {
             Intent intent = new Intent(this, ChatActivity.class);
             startActivity(intent);
+            //loadFragment(new ChatFragment());
         } else if (id == R.id.landingConnections) {
             loadFragment(new ConnectionsFragment());
         } else if (id == R.id.landingHome) {
