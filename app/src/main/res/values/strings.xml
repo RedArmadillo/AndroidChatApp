@@ -23,4 +23,6 @@
     <string name="RedArmodillo_Chat">Red Armodillo Chat</string>
     <string name="title_activity_home_nav">HomeNavActivity</string>
     <string name="title_activity_landing">LandingActivity</string>
+    <string name="resend_email_message">We are sorry, it appears you have not yet verified your email. If you wish to resend, hit the below button.</string>
+    <string name="resend">Resend Email</string>
 </resources>
