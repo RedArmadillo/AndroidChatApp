@@ -35,7 +35,6 @@ public class ReSendEmailFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_re_send_email, container, false);
 
         //Find the +1 button
-        mPlusOneButton = (PlusOneButton) view.findViewById(R.id.plus_one_button);
 
         return view;
     }
