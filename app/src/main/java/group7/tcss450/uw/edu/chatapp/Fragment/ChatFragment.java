@@ -8,15 +8,14 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -31,6 +30,8 @@ import group7.tcss450.uw.edu.chatapp.R;
 import group7.tcss450.uw.edu.chatapp.Utils.ListenManager;
 import group7.tcss450.uw.edu.chatapp.Utils.MessageListAdapter;
 
+import static android.content.Context.INPUT_METHOD_SERVICE;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -39,7 +40,7 @@ public class ChatFragment extends Fragment {
     private List<Message> messageList = new ArrayList<>();
     private String mUsername;
     private String mSendUrl;
-    private TextView mOutputTextView;
+    //private TextView mOutputTextView;
     private ListenManager mListenManager;
     private RecyclerView mRecycleView;
     private MessageListAdapter mAdapter;
@@ -59,12 +60,10 @@ public class ChatFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_chat, container, false);
 
         v.findViewById(R.id.chatSendButton).setOnClickListener(this::sendMessage);
-        mOutputTextView = v.findViewById(R.id.chatOutputTextView);
+        //mOutputTextView = v.findViewById(R.id.chatOutputTextView);
         mRecycleView = v.findViewById(R.id.chatOuputRecycleView);
         mAdapter = new MessageListAdapter(getContext(), messageList);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
-        mRecycleView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
-
         mRecycleView.setLayoutManager(mLayoutManager);
         mRecycleView.setItemAnimator(new DefaultItemAnimator());
         mRecycleView.setAdapter(mAdapter);
@@ -102,14 +101,14 @@ public class ChatFragment extends Fragment {
                     this::publishProgress)
                     .setTimeStamp(prefs.getString(getString(R.string.keys_prefs_time_stamp), "0"))
                     .setExceptionHandler(this::handleError)
-                    .setDelay(1000)
+                    .setDelay(100)
                     .build();
         } else {
             //no record of a saved timestamp. must be a first time login
             mListenManager = new ListenManager.Builder(retrieve.toString(),
                     this::publishProgress)
                     .setExceptionHandler(this::handleError)
-                    .setDelay(1000)
+                    .setDelay(100)
                     .build();
         }
 
@@ -121,6 +120,8 @@ public class ChatFragment extends Fragment {
                 .getText().toString();
 
         try {
+            InputMethodManager imm = (InputMethodManager) getContext().getSystemService(INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), 0);
             messageJson.put(getString(R.string.keys_json_username), mUsername);
             messageJson.put(getString(R.string.keys_json_message), msg);
             messageJson.put(getString(R.string.keys_json_chat_id), mChatId);
@@ -157,7 +158,7 @@ public class ChatFragment extends Fragment {
     }
 
     private void handleError(final Exception e) {
-        //Log.e("LISTEN ERROR!!!", e.getMessage());
+        Log.e("LISTEN ERROR!!!", e.getMessage());
     }
 
     private void publishProgress(JSONObject messages) {

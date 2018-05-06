@@ -15,10 +15,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/chatOutputTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
 
     <View
         android:layout_width="match_parent"
@@ -34,6 +30,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="1dp"
+        android:background="@android:color/white"
         android:minHeight="48dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -62,13 +59,12 @@
             android:layout_height="match_parent"
             android:layout_gravity="bottom"
             android:background="@color/colorPrimary"
+            android:backgroundTint="@android:color/transparent"
             android:clickable="true"
             android:gravity="center"
             android:scaleType="fitCenter"
             android:src="@drawable/ic_send_button"
-            android:tint="@color/colorPrimary"
-            android:backgroundTint="@android:color/transparent" />
-
+            android:tint="@color/colorPrimary" />
 
 
     </LinearLayout>

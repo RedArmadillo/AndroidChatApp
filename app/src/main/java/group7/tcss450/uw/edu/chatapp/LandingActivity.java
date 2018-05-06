@@ -15,6 +15,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import group7.tcss450.uw.edu.chatapp.Fragment.ConnectionsFragment;
 import group7.tcss450.uw.edu.chatapp.Fragment.HomeFragment;
@@ -48,6 +50,14 @@ public class LandingActivity extends AppCompatActivity
                         .commit();
             }
         }
+
+        SharedPreferences prefs =
+                getSharedPreferences(getString(R.string.keys_shared_prefs),
+                        Context.MODE_PRIVATE);
+        String currentUser = prefs.getString(getString(R.string.keys_prefs_username), "");
+        View headerView = navigationView.getHeaderView(0);
+        TextView headerUser = (TextView) headerView.findViewById(R.id.nav_header_username_display);
+        headerUser.setText(currentUser);
     }
 
 
