@@ -101,14 +101,14 @@ public class ChatFragment extends Fragment {
                     this::publishProgress)
                     .setTimeStamp(prefs.getString(getString(R.string.keys_prefs_time_stamp), "0"))
                     .setExceptionHandler(this::handleError)
-                    .setDelay(100)
+                    .setDelay(10)
                     .build();
         } else {
             //no record of a saved timestamp. must be a first time login
             mListenManager = new ListenManager.Builder(retrieve.toString(),
                     this::publishProgress)
                     .setExceptionHandler(this::handleError)
-                    .setDelay(100)
+                    .setDelay(10)
                     .build();
         }
 
@@ -183,6 +183,7 @@ public class ChatFragment extends Fragment {
                 return;
             }
             mAdapter.notifyDataSetChanged();
+            mRecycleView.smoothScrollToPosition(mAdapter.getItemCount() - 1);
 
           /*
            getActivity().runOnUiThread(() -> {

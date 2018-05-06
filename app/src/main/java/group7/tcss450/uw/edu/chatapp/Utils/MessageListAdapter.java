@@ -48,7 +48,7 @@ public class MessageListAdapter extends RecyclerView.Adapter {
                 mContext.getSharedPreferences(mContext.getString(R.string.keys_shared_prefs),
                         Context.MODE_PRIVATE);
         String currentUser = prefs.getString(mContext.getString(R.string.keys_prefs_username), "");
-        if (m.getUsername() == currentUser) {
+        if (m.getUsername().equals(currentUser)) {
             return VIEW_TYPE_MESSAGE_SENT;
         } else {
             return VIEW_TYPE_MESSAGE_RECEIVED;
