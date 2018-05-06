@@ -1,11 +1,13 @@
 package group7.tcss450.uw.edu.chatapp;
 
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +19,7 @@ public class ChatListActivity extends AppCompatActivity {
     private List<ChatRoom> chatRoomList = new ArrayList<>();
     private RecyclerView recyclerView;
     private ChatRoomViewAdapter mAdapter;
-    private DividerItemDecoration mDividerItemDecoration;
+    private int mNextChatRoomId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,13 +30,17 @@ public class ChatListActivity extends AppCompatActivity {
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
 
-//        mDividerItemDecoration = new DividerItemDecoration(
-//                recyclerView.getContext(),
-//                mLayoutManager.getLayoutDirection());
-//        recyclerView.addItemDecoration(mDividerItemDecoration);
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);
+
+        FloatingActionButton fab = findViewById(R.id.chat_list_add_button);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
         prepareChatRoom();
     }
 
