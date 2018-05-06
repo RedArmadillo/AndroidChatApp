@@ -7,6 +7,10 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,20 +22,27 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import group7.tcss450.uw.edu.chatapp.Async.SendPostAsyncTask;
+import group7.tcss450.uw.edu.chatapp.Models.Message;
 import group7.tcss450.uw.edu.chatapp.R;
 import group7.tcss450.uw.edu.chatapp.Utils.ListenManager;
+import group7.tcss450.uw.edu.chatapp.Utils.MessageListAdapter;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class ChatFragment extends Fragment {
-
+    private List<Message> messageList = new ArrayList<>();
     private String mUsername;
     private String mSendUrl;
     private TextView mOutputTextView;
     private ListenManager mListenManager;
+    private RecyclerView mRecycleView;
+    private MessageListAdapter mAdapter;
     private int mChatId = 1;
     public ChatFragment() {
 
@@ -49,7 +60,14 @@ public class ChatFragment extends Fragment {
 
         v.findViewById(R.id.chatSendButton).setOnClickListener(this::sendMessage);
         mOutputTextView = v.findViewById(R.id.chatOutputTextView);
+        mRecycleView = v.findViewById(R.id.chatOuputRecycleView);
+        mAdapter = new MessageListAdapter(getContext(), messageList);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
+        mRecycleView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
 
+        mRecycleView.setLayoutManager(mLayoutManager);
+        mRecycleView.setItemAnimator(new DefaultItemAnimator());
+        mRecycleView.setAdapter(mAdapter);
         return v;
 
     }
@@ -155,19 +173,24 @@ public class ChatFragment extends Fragment {
                     JSONObject msg = jMessages.getJSONObject(i);
                     String username = msg.get(getString(R.string.keys_json_username)).toString();
                     String userMessage = msg.get(getString(R.string.keys_json_message)).toString();
+                    Message m = new Message(userMessage, username);
+                    messageList.add(m);
                     msgs[i] = username + ":" + userMessage;
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
                 return;
             }
+            mAdapter.notifyDataSetChanged();
 
-            getActivity().runOnUiThread(() -> {
+          /*
+           getActivity().runOnUiThread(() -> {
                 for (String msg : msgs) {
                     mOutputTextView.append(msg);
                     mOutputTextView.append(System.lineSeparator());
                 }
             });
+            */
         }
     }
 

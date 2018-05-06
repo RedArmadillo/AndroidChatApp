@@ -8,11 +8,12 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import group7.tcss450.uw.edu.chatapp.Fragment.ChatRoomViewAdapter;
+import group7.tcss450.uw.edu.chatapp.Utils.ChatRoomViewAdapter;
 import group7.tcss450.uw.edu.chatapp.Models.ChatRoom;
 
 public class ChatListActivity extends AppCompatActivity {
@@ -34,11 +35,11 @@ public class ChatListActivity extends AppCompatActivity {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);
 
-        FloatingActionButton fab = findViewById(R.id.chat_list_add_button);
+        FloatingActionButton fab = findViewById(R.id.chatRoomAddButton);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Toast.makeText(getApplication(), "Implementation needed", Toast.LENGTH_SHORT).show();
             }
         });
         prepareChatRoom();

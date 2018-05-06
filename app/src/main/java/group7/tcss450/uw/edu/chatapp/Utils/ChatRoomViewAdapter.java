@@ -1,4 +1,4 @@
-package group7.tcss450.uw.edu.chatapp.Fragment;
+package group7.tcss450.uw.edu.chatapp.Utils;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,7 +15,7 @@ import group7.tcss450.uw.edu.chatapp.R;
 
 public class ChatRoomViewAdapter extends RecyclerView.Adapter<ChatRoomViewAdapter.ViewHolder> {
 
-    private final List<ChatRoom> mChatList;
+    private List<ChatRoom> mChatList;
     //private final OnListFragmentInteractionListener mListener;
 
     public ChatRoomViewAdapter(List<ChatRoom> list) {
