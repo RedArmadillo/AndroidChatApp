@@ -150,6 +150,7 @@ public class ChatFragment extends Fragment {
 
                 ((EditText) getView().findViewById(R.id.chatInputEditText))
                         .setText("");
+                mRecycleView.smoothScrollToPosition(mAdapter.getItemCount() - 1);
             }
         } catch (JSONException e) {
             Log.d("endOfSend", "error");
@@ -183,7 +184,6 @@ public class ChatFragment extends Fragment {
                 return;
             }
             mAdapter.notifyDataSetChanged();
-            mRecycleView.smoothScrollToPosition(mAdapter.getItemCount() - 1);
 
           /*
            getActivity().runOnUiThread(() -> {
