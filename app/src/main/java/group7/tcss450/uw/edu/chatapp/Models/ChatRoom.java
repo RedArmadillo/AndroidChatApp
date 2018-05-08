@@ -28,7 +28,6 @@ public class ChatRoom {
         return mLastMsg.toString();
     }
     public void setLastSender(String username) {
-
         mLastSender = new StringBuilder(username);
     }
     public String getLastSender() {

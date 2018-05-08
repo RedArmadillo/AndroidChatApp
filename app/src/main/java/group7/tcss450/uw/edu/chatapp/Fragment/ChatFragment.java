@@ -44,9 +44,9 @@ public class ChatFragment extends Fragment {
     private ListenManager mListenManager;
     private RecyclerView mRecycleView;
     private MessageListAdapter mAdapter;
-    private int mChatId = 1;
+    private int mChatId;
     public ChatFragment() {
-
+        mChatId = 1;
     }
     @SuppressLint("ValidFragment")
     public ChatFragment(int chatId) {
