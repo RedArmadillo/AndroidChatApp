@@ -15,6 +15,7 @@ import org.json.JSONObject;
 
 import group7.tcss450.uw.edu.chatapp.Async.SendPostAsyncTask;
 import group7.tcss450.uw.edu.chatapp.Fragment.HomeFragment;
+import group7.tcss450.uw.edu.chatapp.Fragment.ReSendEmailFragment;
 import group7.tcss450.uw.edu.chatapp.Front_End_Register_Login.Credentials;
 import group7.tcss450.uw.edu.chatapp.Front_End_Register_Login.LoginFragment;
 import group7.tcss450.uw.edu.chatapp.Front_End_Register_Login.RegisterFragment;
@@ -122,6 +123,14 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.OnF
                 checkStayLoggedIn();
 //Login was successful. Switch to the loadSuccessFragment.
                 loadHomeNavigation();
+            }
+            else if (resultsJSON.getString("message") == "account not verified") {
+                ReSendEmailFragment ResendFrag = new ReSendEmailFragment();
+                FragmentTransaction transaction = getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragmentContainer, ResendFrag).addToBackStack(null);
+// Commit the transaction
+                transaction.commit();
             } else {
                 LoginFragment frag =
                         (LoginFragment) getSupportFragmentManager()
@@ -135,6 +144,7 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.OnF
             Log.e("JSON_PARSE_ERROR", result
                     + System.lineSeparator()
                     + e.getMessage());
+
         }
     }
 
@@ -145,7 +155,6 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.OnF
             boolean success = resultsJSON.getBoolean("success");
             if (success) {
                 Log.d("In Register Attempt", " YAY!");
-                checkStayLoggedIn();
 //Login was successful. Switch to the loadSuccessFragment.
                 loadHomeNavigation();
             } else {
