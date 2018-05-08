@@ -7,5 +7,5 @@
     <corners
         android:radius="3dp">
     </corners>
-    <padding>8dp</padding>
+    <padding>4dp</padding>
 </shape>
