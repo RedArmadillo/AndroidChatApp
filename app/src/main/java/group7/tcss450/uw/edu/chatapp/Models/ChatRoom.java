@@ -6,6 +6,7 @@ public class ChatRoom {
     private StringBuilder mLastMsg;
     private StringBuilder mLastSender;
 
+
     public ChatRoom(int chatId, String name, String lastMsg, String lastSender) {
         this.mChatId = chatId;
         mName = new StringBuilder(name);
@@ -39,5 +40,6 @@ public class ChatRoom {
     public String getLastSender() {
         return mLastSender.toString();
     }
+
 
 }

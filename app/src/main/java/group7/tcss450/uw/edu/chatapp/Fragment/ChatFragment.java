@@ -183,16 +183,17 @@ public class ChatFragment extends Fragment {
                 e.printStackTrace();
                 return;
             }
-            mAdapter.notifyDataSetChanged();
 
-          /*
+
            getActivity().runOnUiThread(() -> {
-                for (String msg : msgs) {
-                    mOutputTextView.append(msg);
-                    mOutputTextView.append(System.lineSeparator());
-                }
+               mAdapter.notifyDataSetChanged();
+
+//                for (String msg : msgs) {
+//                    mOutputTextView.append(msg);
+//                    mOutputTextView.append(System.lineSeparator());
+//                }
             });
-            */
+
         }
     }
 
