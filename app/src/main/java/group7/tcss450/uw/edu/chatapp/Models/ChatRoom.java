@@ -12,6 +12,12 @@ public class ChatRoom {
         mLastSender = new StringBuilder(lastSender);
         mLastMsg = new StringBuilder(lastMsg);
     }
+    public ChatRoom(int chatId) {
+        mChatId = chatId;
+        mName = new StringBuilder(" ");
+        mLastSender = new StringBuilder(" ");
+        mLastMsg = new StringBuilder(" ");
+    }
     public int getChatId() {
         return mChatId;
     }

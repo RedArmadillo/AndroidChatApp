@@ -1,5 +1,7 @@
 package group7.tcss450.uw.edu.chatapp.Utils;
 
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +11,7 @@ import android.widget.Toast;
 
 import java.util.List;
 
+import group7.tcss450.uw.edu.chatapp.Fragment.ChatFragment;
 import group7.tcss450.uw.edu.chatapp.Models.ChatRoom;
 import group7.tcss450.uw.edu.chatapp.R;
 
@@ -37,7 +40,14 @@ public class ChatRoomViewAdapter extends RecyclerView.Adapter<ChatRoomViewAdapte
         holder.mLastMsg.setText(c.getLastMsg());
         holder.mLastSender.setText(c.getLastSender());
         holder.mRoomName.setText(c.getName());
-        holder.mView.setOnClickListener(view -> {
+        holder.mView.setOnClickListener((View view) -> {
+            AppCompatActivity activity = (AppCompatActivity) view.getContext();
+            FragmentTransaction transaction = activity.getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.chat_list_layout, new ChatFragment(c.getChatId()))
+                    .addToBackStack(null);
+            // Commit the transaction
+            transaction.commit();
             Toast.makeText(view.getContext(),c.getName() + " is clicked!", Toast.LENGTH_LONG).show();
         });
         /*holder.mView.setOnClickListener(v -> {

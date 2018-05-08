@@ -8,6 +8,7 @@
         <string name="ep_send_message">sendMessages</string>
         <string name="ep_get_message">getMessages</string>
         <string name="ep_lab_url">trinhpn-lab4-backend.herokuapp.com</string>
-        <string name="ep_create_room">create</string>
+        <string name="ep_create_room">createRoom</string>
+        <string name="ep_get_rooms">getRooms</string>
 
 </resources>
