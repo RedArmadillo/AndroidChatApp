@@ -19,7 +19,10 @@
     <string name="keys_json_messages">messages</string>
     <string name="keys_json_success">success</string>
     <string name="keys_json_chat_id">chatId</string>
+    <string name="keys_json_chat_id_lowercase">chatid</string>
+
     <string name="keys_json_success_value_true">true</string>
     <string name="keys_json_success_value_false">false</string>
     <string name="keys_json_new_chat_id">newchatid</string>
+
 </resources>
