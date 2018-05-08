@@ -127,24 +127,29 @@ public class ChatListActivity extends AppCompatActivity {
                 .build();
     }
 
-    private void publishProgress(JSONObject chatids) {
+    private void publishProgress(JSONObject result) {
         //final String[] ids;
-        if(chatids.has(getString(R.string.keys_json_chat_id))) {
-            Log.d("Success", "Received list of room....");
+        if(result.has(getString(R.string.keys_json_success))) {
+            List<ChatRoom> newList = new ArrayList<>();
+            Log.d("Success", "Received list of room.... " + result.toString());
             try {
-                JSONArray jIds = chatids.getJSONArray(getString(R.string.keys_json_chat_id));
+                JSONArray jIds = result.getJSONArray(getString(R.string.keys_json_success));
                 for (int i = 0; i < jIds.length(); i++) {
                     JSONObject id = jIds.getJSONObject(i);
                     int roomId = id.getInt(getString(R.string.keys_json_chat_id_lowercase));
+                    String lastMsg = id.getString(getString(R.string.keys_json_message));
                     Log.d("id: " , Integer.toString(roomId));
                     ChatRoom c = new ChatRoom(roomId);
-                    chatRoomList.add(c);
+                    c.setLastMsg(lastMsg);
+                    newList.add(c);
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
                 return;
             }
-            mAdapter.notifyDataSetChanged();
+            runOnUiThread(() -> {
+                mAdapter.updateData(newList);
+            });
         } else {
             Log.d("err", "received no room!!!");
         }
@@ -155,22 +160,16 @@ public class ChatListActivity extends AppCompatActivity {
     }
 
 
-    private void loadRooms(String result) {
-        ChatRoom one = new ChatRoom(1, "one", "hello", "me");
-        chatRoomList.add(one);
-        ChatRoom two = new ChatRoom(2, "two", "world", "me again");
-        chatRoomList.add(two);
-        ChatRoom three = new ChatRoom(3, "three", "this", "is");
-        chatRoomList.add(three);
-        ChatRoom four = new ChatRoom(4, "four", "me", "testing");
-        chatRoomList.add(four);
-        mAdapter.notifyDataSetChanged();
-    }
-
     @Override
     public void onResume() {
         super.onResume();
         mListenManager.startListening();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        mListenManager.stopListening();
     }
 
 }
