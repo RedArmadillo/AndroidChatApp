@@ -113,8 +113,10 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.OnF
             boolean success = resultsJSON.getBoolean("success");
             if (success) {
                 checkStayLoggedIn();
+                saveMemberid(mCredentials.getUsername());
 //Login was successful. Switch to the loadSuccessFragment.
                 loadHomeNavigation();
+
             } else {
                 LoginFragment frag =
                         (LoginFragment) getSupportFragmentManager()
@@ -176,6 +178,45 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.OnF
                         .apply();
             }
         }
+
+        private void saveMemberid(String username) {
+            Uri uri = new Uri.Builder()
+                    .scheme("https")
+                    .authority(getString(R.string.ep_base_url))
+                    .appendPath(getString(R.string.ep_get_memberid))
+                    .build();
+            JSONObject user = new JSONObject();
+            try {
+                user.put("username", username);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            // Retrieve member id from web service
+            new SendPostAsyncTask.Builder(uri.toString(), user)
+                    .onPostExecute(this::saveMemberidOnPost)
+                    .onCancelled(this::handleErrorsInTask)
+                    .build().execute();
+        }
+
+    // Save memberid as preference
+    private void saveMemberidOnPost(String result) {
+        int memberid = 0;
+        try {
+            JSONObject resultsJSON = new JSONObject(result);
+            memberid = resultsJSON.getInt("memberid");
+            SharedPreferences prefs =
+                    getSharedPreferences(
+                            getString(R.string.keys_shared_prefs),
+                            Context.MODE_PRIVATE);
+//save the username for later usage
+            prefs.edit().putInt(
+                    getString(R.string.keys_prefs_memberid),
+                    memberid)
+                    .apply();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
 
 
     @Override

@@ -56,8 +56,8 @@ public class ChatRoomViewAdapter extends RecyclerView.Adapter<ChatRoomViewAdapte
                     .addToBackStack(null);
             // Commit the transaction
             transaction.commit();
-            if (frag.isDetached()) {
-
+            if (!frag.isAdded()) {
+                frag.onAttach(view.getContext());
             }
             Toast.makeText(view.getContext(),c.getName() + " is clicked!", Toast.LENGTH_LONG).show();
         });

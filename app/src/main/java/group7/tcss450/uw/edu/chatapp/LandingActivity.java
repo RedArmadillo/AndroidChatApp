@@ -23,6 +23,8 @@ import group7.tcss450.uw.edu.chatapp.Fragment.HomeFragment;
 import group7.tcss450.uw.edu.chatapp.Fragment.SettingsFragment;
 import group7.tcss450.uw.edu.chatapp.Fragment.WeatherFragment;
 
+import static android.provider.AlarmClock.EXTRA_MESSAGE;
+
 public class LandingActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, WeatherFragment.OnFragmentInteractionListener,
         SettingsFragment.OnFragmentInteractionListener {
@@ -102,6 +104,8 @@ public class LandingActivity extends AppCompatActivity
 
         if (id == R.id.landingChat) {
             Intent intent = new Intent(this, ChatActivity.class);
+            String message = null;
+            intent.putExtra(EXTRA_MESSAGE, message);
             startActivity(intent);
             //loadFragment(new ChatFragment());
         } else if (id == R.id.landingConnections) {
