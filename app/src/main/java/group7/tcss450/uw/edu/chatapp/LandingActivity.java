@@ -23,8 +23,6 @@ import group7.tcss450.uw.edu.chatapp.Fragment.HomeFragment;
 import group7.tcss450.uw.edu.chatapp.Fragment.SettingsFragment;
 import group7.tcss450.uw.edu.chatapp.Fragment.WeatherFragment;
 
-import static android.provider.AlarmClock.EXTRA_MESSAGE;
-
 public class LandingActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, WeatherFragment.OnFragmentInteractionListener,
         SettingsFragment.OnFragmentInteractionListener {
@@ -104,8 +102,8 @@ public class LandingActivity extends AppCompatActivity
 
         if (id == R.id.landingChat) {
             Intent intent = new Intent(this, ChatActivity.class);
-            String message = null;
-            intent.putExtra(EXTRA_MESSAGE, message);
+            int chatId = 1;
+            intent.putExtra(getString(R.string.keys_json_chat_id_lowercase), chatId);
             startActivity(intent);
             //loadFragment(new ChatFragment());
         } else if (id == R.id.landingConnections) {
@@ -139,7 +137,7 @@ public class LandingActivity extends AppCompatActivity
                 getString(R.string.keys_prefs_stay_logged_in),
                 false)
                 .apply();
-//the way to close an app programmaticaly
+//the way to close an app programmatically
         finishAndRemoveTask();
     }
 
