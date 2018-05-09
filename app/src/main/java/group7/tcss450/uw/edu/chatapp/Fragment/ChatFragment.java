@@ -101,7 +101,7 @@ public class ChatFragment extends Fragment {
                     this::publishProgress)
                     .setTimeStamp(prefs.getString(getString(R.string.keys_prefs_time_stamp), "0"))
                     .setExceptionHandler(this::handleError)
-                    .setDelay(10)
+                    .setDelay(1000)
                     .build();
         } else {
             //no record of a saved timestamp. must be a first time login
@@ -128,7 +128,6 @@ public class ChatFragment extends Fragment {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        Log.d("send", messageJson.toString());
 
         new SendPostAsyncTask.Builder(mSendUrl, messageJson)
                 .onPostExecute(this::endOfSendMsgTask)
@@ -137,13 +136,14 @@ public class ChatFragment extends Fragment {
     }
 
     private void handleError(final String msg) {
-        //Log.e("CHAT ERROR!!!", msg.toString());
+        Log.e("CHAT ERROR!!!", msg);
     }
 
     private void endOfSendMsgTask(final String result) {
+        Log.d("response from service", result);
+
         try {
             JSONObject res = new JSONObject(result);
-            Log.d("response from service", result);
 
             if(res.get(getString(R.string.keys_json_success)).toString()
                     .equals(getString(R.string.keys_json_success_value_true))) {
@@ -163,13 +163,13 @@ public class ChatFragment extends Fragment {
     }
 
     private void publishProgress(JSONObject messages) {
-        final String[] msgs;
+        //final String[] msgs;
         if(messages.has(getString(R.string.keys_json_messages))) {
             try {
 
                 JSONArray jMessages = messages.getJSONArray(getString(R.string.keys_json_messages));
 
-                msgs = new String[jMessages.length()];
+                //msgs = new String[jMessages.length()];
                 for (int i = 0; i < jMessages.length(); i++) {
 
                     JSONObject msg = jMessages.getJSONObject(i);
@@ -177,7 +177,7 @@ public class ChatFragment extends Fragment {
                     String userMessage = msg.get(getString(R.string.keys_json_message)).toString();
                     Message m = new Message(userMessage, username);
                     messageList.add(m);
-                    msgs[i] = username + ":" + userMessage;
+                    //msgs[i] = username + ":" + userMessage;
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -188,10 +188,6 @@ public class ChatFragment extends Fragment {
            getActivity().runOnUiThread(() -> {
                mAdapter.notifyDataSetChanged();
 
-//                for (String msg : msgs) {
-//                    mOutputTextView.append(msg);
-//                    mOutputTextView.append(System.lineSeparator());
-//                }
             });
 
         }

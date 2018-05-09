@@ -131,14 +131,12 @@ public class ChatListActivity extends AppCompatActivity {
         //final String[] ids;
         if(result.has(getString(R.string.keys_json_success))) {
             List<ChatRoom> newList = new ArrayList<>();
-            Log.d("Success", "Received list of room.... " + result.toString());
             try {
                 JSONArray jIds = result.getJSONArray(getString(R.string.keys_json_success));
                 for (int i = 0; i < jIds.length(); i++) {
                     JSONObject id = jIds.getJSONObject(i);
                     int roomId = id.getInt(getString(R.string.keys_json_chat_id_lowercase));
                     String lastMsg = id.getString(getString(R.string.keys_json_message));
-                    Log.d("id: " , Integer.toString(roomId));
                     ChatRoom c = new ChatRoom(roomId);
                     c.setLastMsg(lastMsg);
                     newList.add(c);
