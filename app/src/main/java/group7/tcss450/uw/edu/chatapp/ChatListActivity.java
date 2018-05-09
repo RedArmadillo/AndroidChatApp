@@ -32,6 +32,7 @@ public class ChatListActivity extends AppCompatActivity {
     private ChatRoomViewAdapter mAdapter;
     private String mCreateRoomURL;
     private ListenManager mListenManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,12 +80,12 @@ public class ChatListActivity extends AppCompatActivity {
             JSONObject res = new JSONObject(result);
             Log.d("response from service for create new room", result);
 
-            if(res.get(getString(R.string.keys_json_success)).toString()
+            if (res.get(getString(R.string.keys_json_success)).toString()
                     .equals(getString(R.string.keys_json_success_value_true))) {
                 //int newChatID = res.getInt(getString(R.string.keys_json_new_chat_id));
                 //chatRoomList.add(new ChatRoom(newChatID, "new room", "hello", "me"));
                 //mAdapter.notifyDataSetChanged();
-               //recyclerView.smoothScrollToPosition(0);
+                //recyclerView.smoothScrollToPosition(0);
             }
         } catch (JSONException e) {
             Log.d("endOfUpdateNewRoom", "error");
@@ -129,7 +130,7 @@ public class ChatListActivity extends AppCompatActivity {
 
     private void publishProgress(JSONObject result) {
         //final String[] ids;
-        if(result.has(getString(R.string.keys_json_success))) {
+        if (result.has(getString(R.string.keys_json_success))) {
             List<ChatRoom> newList = new ArrayList<>();
             try {
                 JSONArray jIds = result.getJSONArray(getString(R.string.keys_json_success));
@@ -169,5 +170,4 @@ public class ChatListActivity extends AppCompatActivity {
         super.onStop();
         mListenManager.stopListening();
     }
-
 }
