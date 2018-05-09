@@ -23,4 +23,7 @@
     <string name="RedArmodillo_Chat">Red Armodillo Chat</string>
     <string name="title_activity_home_nav">HomeNavActivity</string>
     <string name="title_activity_landing">LandingActivity</string>
+    <string name="title_activity_setting_menu">SettingMenuActivity</string>
+    <string name="chat_recent">Recent</string>
+    <string name="chat_invitation">Invitation</string>
 </resources>

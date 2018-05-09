@@ -30,8 +30,9 @@
             android:label="@string/title_activity_landing"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".ThemeChangeActivity" />
-        <activity android:name=".ChatActivity"
-            android:parentActivityName="group7.tcss450.uw.edu.chatapp.LandingActivity" >
+        <activity
+            android:name=".ChatActivity"
+            android:parentActivityName=".LandingActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="group7.tcss450.uw.edu.chatapp.LandingActivity" />
@@ -42,6 +43,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="group7.tcss450.uw.edu.chatapp.LandingActivity" />
         </activity>
+        <activity
+            android:name=".Utils.SettingMenuActivity"
+            android:label="@string/title_activity_setting_menu"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
