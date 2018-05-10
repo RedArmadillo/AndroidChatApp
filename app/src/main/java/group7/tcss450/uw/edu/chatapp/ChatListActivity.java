@@ -13,7 +13,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -54,7 +53,6 @@ public class ChatListActivity extends AppCompatActivity implements CreateRoomDia
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplication(), "Implementation needed", Toast.LENGTH_SHORT).show();
                 CreateRoomDialogFragment frag = new CreateRoomDialogFragment();
                 FragmentManager fm = getSupportFragmentManager();
                 frag.show(fm, "input room name");
@@ -99,7 +97,7 @@ public class ChatListActivity extends AppCompatActivity implements CreateRoomDia
                 //int newChatID = res.getInt(getString(R.string.keys_json_new_chat_id));
                 //chatRoomList.add(new ChatRoom(newChatID, "new room", "hello", "me"));
                 //mAdapter.notifyDataSetChanged();
-                //recyclerView.smoothScrollToPosition(0);
+                recyclerView.smoothScrollToPosition(0);
             }
         } catch (JSONException e) {
             Log.d("endOfUpdateNewRoom", "error");
@@ -137,7 +135,7 @@ public class ChatListActivity extends AppCompatActivity implements CreateRoomDia
         mListenManager = new ListenManager.Builder(retrieve.toString(),
                 this::publishProgress)
                 .setExceptionHandler(this::handleError)
-                .setDelay(100000)
+                .setDelay(1000)
                 .build();
     }
 
