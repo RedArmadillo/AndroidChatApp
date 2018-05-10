@@ -1,8 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="keys_shared_prefs">group7.tcss450.uw.edu.chatapp.PREFS</string>
+
+    <string name="keys_shared_prefs">edu.uw.tcss450.challengeapp.PREFS</string>
+
     <string name="keys_prefs_username">username</string>
     <string name="keys_prefs_stay_logged_in">loggedIn</string>
+    <string name="keys_prefs_time_stamp">ts key</string>
+    <string name="keys_prefs_memberid">memberid</string>
+
     <string name="keys_fragment_login">loginFragmentTag</string>
     <string name="keys_fragment_register">registerFragmentTag</string>
+
+    <string name="keys_json_username">username</string>
+    <string name="keys_json_password">password</string>
+    <string name="keys_json_email">email</string>
+    <string name="keys_json_firstname">first</string>
+    <string name="keys_json_lastname">last</string>
+    <string name="keys_json_message">message</string>
+    <string name="keys_json_messages">messages</string>
+    <string name="keys_json_success">success</string>
+    <string name="keys_json_chat_id">chatId</string>
+    <string name="keys_json_chat_id_lowercase">chatid</string>
+
+    <string name="keys_json_success_value_true">true</string>
+    <string name="keys_json_success_value_false">false</string>
+    <string name="keys_json_new_chat_id">newchatid</string>
+
 </resources>

@@ -1,6 +1,7 @@
 package group7.tcss450.uw.edu.chatapp;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
@@ -14,8 +15,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
-import group7.tcss450.uw.edu.chatapp.Fragment.ChatFragment;
 import group7.tcss450.uw.edu.chatapp.Fragment.ConnectionsFragment;
 import group7.tcss450.uw.edu.chatapp.Fragment.HomeFragment;
 import group7.tcss450.uw.edu.chatapp.Fragment.SettingsFragment;
@@ -48,7 +50,16 @@ public class LandingActivity extends AppCompatActivity
                         .commit();
             }
         }
+
+        SharedPreferences prefs =
+                getSharedPreferences(getString(R.string.keys_shared_prefs),
+                        Context.MODE_PRIVATE);
+        String currentUser = prefs.getString(getString(R.string.keys_prefs_username), "");
+        View headerView = navigationView.getHeaderView(0);
+        TextView headerUser = (TextView) headerView.findViewById(R.id.nav_header_username_display);
+        headerUser.setText(currentUser);
     }
+
 
     @Override
     public void onBackPressed() {
@@ -90,8 +101,11 @@ public class LandingActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.landingChat) {
-            // Handle the camera action
-            loadFragment(new ChatFragment());
+            Intent intent = new Intent(this, ChatActivity.class);
+            int chatId = 1;
+            intent.putExtra(getString(R.string.keys_json_chat_id_lowercase), chatId);
+            startActivity(intent);
+            //loadFragment(new ChatFragment());
         } else if (id == R.id.landingConnections) {
             loadFragment(new ConnectionsFragment());
         } else if (id == R.id.landingHome) {
@@ -102,7 +116,11 @@ public class LandingActivity extends AppCompatActivity
             loadFragment(new SettingsFragment());
         } else if (id == R.id.landingLogout) {
             onLogout();
+        } else if (id == R.id.landingChatList) {
+            Intent intent = new Intent(this, ChatListActivity.class);
+            startActivity(intent);
         }
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -118,7 +136,7 @@ public class LandingActivity extends AppCompatActivity
                 getString(R.string.keys_prefs_stay_logged_in),
                 false)
                 .apply();
-//the way to close an app programmaticaly
+//the way to close an app programmatically
         finishAndRemoveTask();
     }
 
