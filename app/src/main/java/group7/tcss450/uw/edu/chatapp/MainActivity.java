@@ -14,6 +14,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import group7.tcss450.uw.edu.chatapp.Async.SendPostAsyncTask;
+import group7.tcss450.uw.edu.chatapp.Fragment.HomeFragment;
 import group7.tcss450.uw.edu.chatapp.Front_End_Register_Login.Credentials;
 import group7.tcss450.uw.edu.chatapp.Front_End_Register_Login.LoginFragment;
 import group7.tcss450.uw.edu.chatapp.Front_End_Register_Login.RegisterFragment;
@@ -69,8 +70,15 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.OnF
                                         Context.MODE_PRIVATE);
                         if (prefs.getBoolean(getString(R.string.keys_prefs_stay_logged_in),
                                 false)) {
+                            //loadSuccessFragment();
                             loadHomeNavigation();
-
+                            // onLogOut isn't implement yet
+                            /*
+                            getSupportFragmentManager().beginTransaction()
+                                    .add(R.id.fragmentContainer,
+                                            new LoginFragment(),
+                                            getString(R.string.keys_fragment_login))
+                                    .commit(); */
                         } else {
                             getSupportFragmentManager().beginTransaction()
                                     .add(R.id.fragmentContainer,
@@ -86,7 +94,6 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.OnF
 
     private void loadHomeNavigation() {
         Intent intent = new Intent(this, LandingActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK  | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }
 
