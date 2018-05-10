@@ -126,6 +126,7 @@ public class ChatFragment extends Fragment {
             messageJson.put(getString(R.string.keys_json_message), msg);
             messageJson.put(getString(R.string.keys_json_chat_id), mChatId);
         } catch (JSONException e) {
+            Log.d("ERROR on sendMessage", "!!!!");
             e.printStackTrace();
         }
 
