@@ -117,7 +117,6 @@ public class LandingActivity extends AppCompatActivity
         } else if (id == R.id.landingLogout) {
             onLogout();
         } else if (id == R.id.landingChatList) {
-            //loadFragment(new ChatListFragment());
             Intent intent = new Intent(this, ChatListActivity.class);
             startActivity(intent);
         }

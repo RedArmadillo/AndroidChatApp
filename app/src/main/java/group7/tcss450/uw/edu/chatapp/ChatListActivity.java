@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
@@ -22,11 +23,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import group7.tcss450.uw.edu.chatapp.Async.SendPostAsyncTask;
+import group7.tcss450.uw.edu.chatapp.Fragment.CreateRoomDialogFragment;
 import group7.tcss450.uw.edu.chatapp.Models.ChatRoom;
 import group7.tcss450.uw.edu.chatapp.Utils.ChatRoomViewAdapter;
 import group7.tcss450.uw.edu.chatapp.Utils.ListenManager;
 
-public class ChatListActivity extends AppCompatActivity {
+public class ChatListActivity extends AppCompatActivity implements CreateRoomDialogFragment.NoticeDialogListener{
+
     private List<ChatRoom> chatRoomList = new ArrayList<>();
     private RecyclerView recyclerView;
     private ChatRoomViewAdapter mAdapter;
@@ -52,19 +55,30 @@ public class ChatListActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Toast.makeText(getApplication(), "Implementation needed", Toast.LENGTH_SHORT).show();
+                CreateRoomDialogFragment frag = new CreateRoomDialogFragment();
+                FragmentManager fm = getSupportFragmentManager();
+                frag.show(fm, "input room name");
+
             }
         });
-        fab.setOnClickListener(this::createNewRoom);
+
+        //fab.setOnClickListener(this::createNewRoom);
         //loadRooms("");
     }
 
-    public void createNewRoom(View view) {
+
+    public void createNewRoom(String roomName) {
         JSONObject messageJson = new JSONObject();
 
         try {
             //InputMethodManager imm = (InputMethodManager) getContext().getSystemService(INPUT_METHOD_SERVICE);
             //imm.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), 0);
-            messageJson.put("room name", "new room");
+            SharedPreferences prefs =
+                    getSharedPreferences(getString(R.string.keys_shared_prefs),
+                            Context.MODE_PRIVATE);
+            String currentUser = prefs.getString(getString(R.string.keys_prefs_username), "");
+            messageJson.put("room name", roomName);
+            messageJson.put("username", currentUser);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -109,7 +123,6 @@ public class ChatListActivity extends AppCompatActivity {
                 .scheme("https")
                 .authority(getString(R.string.ep_lab_url))
                 .appendPath(getString(R.string.ep_create_room))
-                .appendQueryParameter("username", currentUser)
                 .build()
                 .toString();
 
@@ -130,6 +143,7 @@ public class ChatListActivity extends AppCompatActivity {
 
     private void publishProgress(JSONObject result) {
         //final String[] ids;
+        Log.d("room", result.toString());
         if (result.has(getString(R.string.keys_json_success))) {
             List<ChatRoom> newList = new ArrayList<>();
             try {
@@ -138,7 +152,9 @@ public class ChatListActivity extends AppCompatActivity {
                     JSONObject id = jIds.getJSONObject(i);
                     int roomId = id.getInt(getString(R.string.keys_json_chat_id_lowercase));
                     String lastMsg = id.getString(getString(R.string.keys_json_message));
+                    String roomName = id.getString("name");
                     ChatRoom c = new ChatRoom(roomId);
+                    c.setName(roomName);
                     c.setLastMsg(lastMsg);
                     newList.add(c);
                 }
@@ -170,4 +186,12 @@ public class ChatListActivity extends AppCompatActivity {
         super.onStop();
         mListenManager.stopListening();
     }
+
+
+    @Override
+    public void onDialogReturn(String roomName) {
+        Log.d("DIALOG", "Creating room");
+        createNewRoom(roomName);
+    }
+
 }
