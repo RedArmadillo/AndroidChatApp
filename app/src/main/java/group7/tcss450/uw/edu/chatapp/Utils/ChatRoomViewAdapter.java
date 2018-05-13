@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import group7.tcss450.uw.edu.chatapp.ChatActivity;
+import group7.tcss450.uw.edu.chatapp.Activities.ChatActivity;
 import group7.tcss450.uw.edu.chatapp.Fragment.ChatFragment;
 import group7.tcss450.uw.edu.chatapp.Models.ChatRoom;
 import group7.tcss450.uw.edu.chatapp.R;

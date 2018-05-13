@@ -8,6 +8,7 @@
     <string name="keys_prefs_time_stamp">ts key</string>
     <string name="keys_prefs_memberid">memberid</string>
 
+    <string name="keys_fragment_resend">loginFragmentTag</string>
     <string name="keys_fragment_login">loginFragmentTag</string>
     <string name="keys_fragment_register">registerFragmentTag</string>
 

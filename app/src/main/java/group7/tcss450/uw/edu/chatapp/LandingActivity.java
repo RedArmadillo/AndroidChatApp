@@ -18,7 +18,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-import group7.tcss450.uw.edu.chatapp.Fragment.ConnectionsFragment;
+import group7.tcss450.uw.edu.chatapp.Activities.ChatActivity;
+import group7.tcss450.uw.edu.chatapp.Activities.ChatListActivity;
+import group7.tcss450.uw.edu.chatapp.Activities.Connections.ConnectionsActivity;
 import group7.tcss450.uw.edu.chatapp.Fragment.HomeFragment;
 import group7.tcss450.uw.edu.chatapp.Fragment.SettingsFragment;
 import group7.tcss450.uw.edu.chatapp.Fragment.WeatherFragment;
@@ -107,7 +109,8 @@ public class LandingActivity extends AppCompatActivity
             startActivity(intent);
             //loadFragment(new ChatFragment());
         } else if (id == R.id.landingConnections) {
-            loadFragment(new ConnectionsFragment());
+            Intent intent = new Intent(this, ConnectionsActivity.class);
+            startActivity(intent);
         } else if (id == R.id.landingHome) {
             loadFragment(new HomeFragment());
         } else if (id == R.id.landingWeather) {
