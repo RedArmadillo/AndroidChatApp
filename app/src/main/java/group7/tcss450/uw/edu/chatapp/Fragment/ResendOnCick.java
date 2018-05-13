@@ -60,7 +60,7 @@ class ResendOnCick implements View.OnClickListener {
             if (success) {
                 TextView frag =
                         myView.findViewById(R.id.ConfirmedEmailMessage);
-                frag.setText("Re-Send unsuccessful, please try again with another email.");
+                frag.setText("Re-Send Sucessfull! please go back and try to log in again!");
             }
             else {
                 EditText frag =
