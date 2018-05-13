@@ -1,6 +1,8 @@
 package group7.tcss450.uw.edu.chatapp;
 
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 
 import group7.tcss450.uw.edu.chatapp.Fragment.ChatFragment;
 import group7.tcss450.uw.edu.chatapp.Utils.SettingMenuActivity;
@@ -20,5 +22,12 @@ public class ChatActivity extends SettingMenuActivity {
                     .commit();
             //}
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.chat_menu, menu);
+        return true;
     }
 }
