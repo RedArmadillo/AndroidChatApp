@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 
 import group7.tcss450.uw.edu.chatapp.R;
 /**
@@ -30,7 +31,6 @@ public class ReSendEmailFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_re_send_email, container, false);
         Button b = view.findViewById(R.id.re_register_button);
-
         b.setOnClickListener(new ResendOnCick());
 
 
