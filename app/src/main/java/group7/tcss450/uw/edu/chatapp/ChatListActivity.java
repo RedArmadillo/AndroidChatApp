@@ -120,7 +120,7 @@ public class ChatListActivity extends AppCompatActivity implements CreateRoomDia
         mCreateRoomURL = new Uri.Builder()
                 .scheme("https")
                 .authority(getString(R.string.ep_lab_url))
-                .appendPath(getString(R.string.ep_create_room))
+                .appendPath(getString(R.string.ep_chat_room))
                 .build()
                 .toString();
 
@@ -128,7 +128,7 @@ public class ChatListActivity extends AppCompatActivity implements CreateRoomDia
         Uri retrieve = new Uri.Builder()
                 .scheme("https")
                 .authority(getString(R.string.ep_lab_url))
-                .appendPath(getString(R.string.ep_get_rooms))
+                .appendPath(getString(R.string.ep_chat_room))
                 .appendQueryParameter("username", currentUser)
                 .build();
 
