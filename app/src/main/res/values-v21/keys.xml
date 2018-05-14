@@ -25,5 +25,9 @@
     <string name="keys_json_success_value_true">true</string>
     <string name="keys_json_success_value_false">false</string>
     <string name="keys_json_new_chat_id">newchatid</string>
+    <string name="keys_json_sender">sender</string>
+    <string name="keys_json_receiver">receiver</string>
+
+
 
 </resources>
