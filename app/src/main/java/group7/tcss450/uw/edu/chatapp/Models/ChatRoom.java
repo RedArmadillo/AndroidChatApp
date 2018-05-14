@@ -19,6 +19,11 @@ public class ChatRoom {
         mLastSender = new StringBuilder(" ");
         mLastMsg = new StringBuilder(" ");
     }
+
+    public ChatRoom(String name, String lastSender) {
+        mName = new StringBuilder(name);
+        mLastSender = new StringBuilder(lastSender);
+    }
     public int getChatId() {
         return mChatId;
     }
