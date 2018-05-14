@@ -129,6 +129,7 @@ public class ChatListActivity extends AppCompatActivity implements CreateRoomDia
                 .appendQueryParameter("username", currentUser)
                 .build();
 
+
         mListenManager = new ListenManager.Builder(retrieve.toString(),
                 this::publishProgress)
                 .setExceptionHandler(this::handleError)
