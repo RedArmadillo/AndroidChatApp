@@ -123,7 +123,15 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.OnF
 //Login was successful. Switch to the loadSuccessFragment.
                 loadHomeNavigation();
 
-            } else {
+            } else if(result.equals("Account not verified")) {
+                getSupportFragmentManager().beginTransaction()
+                                    .add(R.id.fragmentContainer,
+                                            new group7.tcss450.uw.edu.chatapp.Fragment.ReSendEmailFragment(),
+                                            getString(R.string.keys_fragment_login))
+                                    .commit();
+            }
+
+            else {
                 LoginFragment frag =
                         (LoginFragment) getSupportFragmentManager()
                                 .findFragmentByTag(
@@ -156,7 +164,12 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.OnF
                         getString(R.string.keys_prefs_username),
                         mCredentials.getUsername())
                         .apply();
-                loadHomeNavigation();
+
+                getSupportFragmentManager().beginTransaction()
+                                    .add(R.id.fragmentContainer,
+                                            new LoginFragment(),
+                                            getString(R.string.keys_fragment_login))
+                                    .commit();
             } else {
                 Log.d("In Register Attempt Else", " NEY!");
 //Login was unsuccessful. Don’t switch fragments and inform the user
