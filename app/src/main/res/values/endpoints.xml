@@ -12,5 +12,6 @@
         <string name="ep_get_rooms">getRooms</string>
         <string name="ep_get_memberid">getMemberid</string>
         <string name="ep_chat_room">chatRoom</string>
+        <string name="ep_leave">leave</string>
         <string name="ep_invitation">roomInvitation</string>
 </resources>
