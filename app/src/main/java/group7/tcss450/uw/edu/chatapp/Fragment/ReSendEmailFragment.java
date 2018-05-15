@@ -3,6 +3,7 @@ package group7.tcss450.uw.edu.chatapp.Fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,8 @@ import group7.tcss450.uw.edu.chatapp.R;
  * A fragment with a Google +1 button.
  */
 public class ReSendEmailFragment extends Fragment {
+
+    public static View myView;
 
     // The request code must be 0 or greater.
     private static final int PLUS_ONE_REQUEST_CODE = 0;
@@ -30,11 +33,17 @@ public class ReSendEmailFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_re_send_email, container, false);
+        myView = view;
         Button b = view.findViewById(R.id.re_register_button);
+        Log.d("MHM", view.toString());
         b.setOnClickListener(new ResendOnCick());
 
 
         return view;
+    }
+
+    public static View returnView() {
+        return myView;
     }
 
     @Override

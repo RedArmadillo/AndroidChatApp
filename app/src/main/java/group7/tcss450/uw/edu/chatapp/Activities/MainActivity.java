@@ -1,5 +1,6 @@
 package group7.tcss450.uw.edu.chatapp.Activities;
 
+import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -117,24 +118,24 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.OnF
      * @param result the JSON formatted String response from the web service
      */
     private void handleLoginOnPost(String result) {
-        Log.i("onPostLogin", result);
         try {
             JSONObject resultsJSON = new JSONObject(result);
             boolean success = resultsJSON.getBoolean("success");
+            Log.d("Problem:", result);
             if (success) {
                 checkStayLoggedIn();
                 saveMemberid(mCredentials.getUsername());
 //Login was successful. Switch to the loadSuccessFragment.
                 loadHomeNavigation();
 
-            } else if(resultsJSON.get("message") == "account not verified") {
-
-                ReSendEmailFragment resendEmail = new ReSendEmailFragment();
-                FragmentTransaction transaction = getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.fragmentContainer, resendEmail).addToBackStack(null);
-// Commit the transaction
-                transaction.commit();
+            } else if(result.equals("{\"success\":false,\"message\":\"account not verified\"}")) {
+                Log.d("HUZZAH", "SUCCESS IS MINE");
+                getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragmentContainer,
+                                new ReSendEmailFragment(),
+                                getString(R.string.keys_fragment_ReSendEmailFragment))
+                        .commit();
             }
             else {
                 LoginFragment frag =
