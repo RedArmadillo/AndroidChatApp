@@ -132,7 +132,7 @@ public class ConnectionListenManager {
      * Starts the worker thread to ask for updates every delay milliseconds.
      */
     public void startListening() {
-        mThread = mPool.scheduleAtFixedRate(new ListenForMessages(),
+        mThread = mPool.scheduleAtFixedRate(new ListenForConnections(),
                 0,
                 mDelay,
                 TimeUnit.MILLISECONDS);
@@ -150,7 +150,7 @@ public class ConnectionListenManager {
     /**
      * Does the work!
      */
-    private class ListenForMessages implements Runnable {
+    private class ListenForConnections implements Runnable {
 
         @Override
         public void run() {
