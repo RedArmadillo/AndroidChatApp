@@ -2,6 +2,7 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:padding="1dp"
     android:layout_gravity="right">
 
     <TextView
@@ -20,6 +21,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
+        android:padding="4dp"
         android:layout_below="@+id/sentMessageSender"
         android:text="TextView" />
 </RelativeLayout>
