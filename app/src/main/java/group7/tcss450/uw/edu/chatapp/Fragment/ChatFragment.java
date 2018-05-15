@@ -126,6 +126,7 @@ public class ChatFragment extends Fragment {
             messageJson.put(getString(R.string.keys_json_message), msg);
             messageJson.put(getString(R.string.keys_json_chat_id), mChatId);
         } catch (JSONException e) {
+            Log.d("ERROR on sendMessage", "!!!!");
             e.printStackTrace();
         }
 
@@ -150,7 +151,8 @@ public class ChatFragment extends Fragment {
 
                 ((EditText) getView().findViewById(R.id.chatInputEditText))
                         .setText("");
-                mRecycleView.smoothScrollToPosition(mAdapter.getItemCount() - 1);
+                Log.d("endOfSendMsg", Integer.toString(mAdapter.getItemCount()));
+                //mRecycleView.smoothScrollToPosition(mAdapter.getItemCount() - 1);
             }
         } catch (JSONException e) {
             Log.d("endOfSend", "error");
@@ -169,7 +171,6 @@ public class ChatFragment extends Fragment {
 
                 JSONArray jMessages = messages.getJSONArray(getString(R.string.keys_json_messages));
 
-                //msgs = new String[jMessages.length()];
                 for (int i = 0; i < jMessages.length(); i++) {
 
                     JSONObject msg = jMessages.getJSONObject(i);
@@ -177,7 +178,6 @@ public class ChatFragment extends Fragment {
                     String userMessage = msg.get(getString(R.string.keys_json_message)).toString();
                     Message m = new Message(userMessage, username);
                     messageList.add(m);
-                    //msgs[i] = username + ":" + userMessage;
                 }
             } catch (JSONException e) {
                 e.printStackTrace();

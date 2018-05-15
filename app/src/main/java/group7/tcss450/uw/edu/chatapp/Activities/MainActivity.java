@@ -1,5 +1,6 @@
-package group7.tcss450.uw.edu.chatapp;
+package group7.tcss450.uw.edu.chatapp.Activities;
 
+import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -8,16 +9,21 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.ListView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import group7.tcss450.uw.edu.chatapp.Async.SendPostAsyncTask;
-import group7.tcss450.uw.edu.chatapp.Fragment.HomeFragment;
+import group7.tcss450.uw.edu.chatapp.Fragment.ReSendEmailFragment;
 import group7.tcss450.uw.edu.chatapp.Front_End_Register_Login.Credentials;
 import group7.tcss450.uw.edu.chatapp.Front_End_Register_Login.LoginFragment;
 import group7.tcss450.uw.edu.chatapp.Front_End_Register_Login.RegisterFragment;
+import group7.tcss450.uw.edu.chatapp.LandingActivity;
+import group7.tcss450.uw.edu.chatapp.R;
 
 public class MainActivity extends AppCompatActivity implements LoginFragment.OnFragmentInteractionListener, RegisterFragment.OnRegisterFragmentInteractionListener{
 
@@ -114,17 +120,26 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.OnF
      * @param result the JSON formatted String response from the web service
      */
     private void handleLoginOnPost(String result) {
-        Log.i("onPostLogin", result);
         try {
             JSONObject resultsJSON = new JSONObject(result);
             boolean success = resultsJSON.getBoolean("success");
+            Log.d("Problem:", result);
             if (success) {
                 checkStayLoggedIn();
                 saveMemberid(mCredentials.getUsername());
 //Login was successful. Switch to the loadSuccessFragment.
                 loadHomeNavigation();
 
-            } else {
+            } else if(result.equals("{\"success\":false,\"message\":\"account not verified\"}")) {
+                Log.d("HUZZAH", "SUCCESS IS MINE");
+                getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragmentContainer,
+                                new ReSendEmailFragment(),
+                                getString(R.string.keys_fragment_ReSendEmailFragment))
+                        .commit();
+            }
+            else {
                 LoginFragment frag =
                         (LoginFragment) getSupportFragmentManager()
                                 .findFragmentByTag(
@@ -251,6 +266,20 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.OnF
     }
 
 
+    public static class ThemeChangeActivity extends AppCompatActivity implements View.OnClickListener{
+        ListView mListView;
+        Button mChangeTheme;
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.activity_theme_change);
+        }
+
+        @Override
+        public void onClick(View view) {
+
+        }
+    }
 }
 
 

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linearLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:context=".Activities.Connections.IncomingConnections">
+
+
+    <SearchView
+        android:id="@+id/searchView"
+        android:layout_width="398dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="68dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/connectionTextView"
+        android:layout_width="293dp"
+        android:layout_height="42dp"
+        android:layout_marginStart="72dp"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/alegreya_sc"
+        android:text="Incoming Connections"
+        android:textAppearance="@style/TextAppearance.AppCompat"
+        android:textSize="24sp"
+        android:visibility="visible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="122dp"
+        android:layout_height="38dp"
+        android:layout_marginTop="16dp"
+        android:contentDescription="Right Arrow"
+        android:src="@drawable/ic_menu_send"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="122dp"
+        android:layout_height="38dp"
+        android:layout_marginEnd="316dp"
+        android:layout_marginTop="16dp"
+        android:contentDescription="Right Arrow"
+        android:rotation="180"
+        android:src="@drawable/ic_menu_send"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ListView
+        android:id="@+id/listConnections"
+        style="@android:style/Widget.DeviceDefault.ExpandableListView"
+        android:layout_width="346dp"
+        android:layout_height="304dp"
+        android:layout_marginStart="4dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/searchView" />
+</android.support.constraint.ConstraintLayout>

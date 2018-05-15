@@ -1,10 +1,12 @@
-package group7.tcss450.uw.edu.chatapp;
+package group7.tcss450.uw.edu.chatapp.Activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
+
+import group7.tcss450.uw.edu.chatapp.R;
 
 public class ThemeChangeActivity extends AppCompatActivity implements View.OnClickListener{
     ListView mListView;

@@ -1,4 +1,4 @@
-package group7.tcss450.uw.edu.chatapp;
+package group7.tcss450.uw.edu.chatapp.Activities;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -13,6 +13,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -24,6 +25,7 @@ import java.util.List;
 import group7.tcss450.uw.edu.chatapp.Async.SendPostAsyncTask;
 import group7.tcss450.uw.edu.chatapp.Fragment.CreateRoomDialogFragment;
 import group7.tcss450.uw.edu.chatapp.Models.ChatRoom;
+import group7.tcss450.uw.edu.chatapp.R;
 import group7.tcss450.uw.edu.chatapp.Utils.ChatRoomViewAdapter;
 import group7.tcss450.uw.edu.chatapp.Utils.ListenManager;
 
@@ -53,12 +55,16 @@ public class ChatListActivity extends AppCompatActivity implements CreateRoomDia
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Toast.makeText(getApplication(), "Implementation needed", Toast.LENGTH_SHORT).show();
                 CreateRoomDialogFragment frag = new CreateRoomDialogFragment();
                 FragmentManager fm = getSupportFragmentManager();
                 frag.show(fm, "input room name");
+
             }
         });
 
+        //fab.setOnClickListener(this::createNewRoom);
+        //loadRooms("");
     }
 
 
@@ -94,7 +100,7 @@ public class ChatListActivity extends AppCompatActivity implements CreateRoomDia
                 //int newChatID = res.getInt(getString(R.string.keys_json_new_chat_id));
                 //chatRoomList.add(new ChatRoom(newChatID, "new room", "hello", "me"));
                 //mAdapter.notifyDataSetChanged();
-                recyclerView.smoothScrollToPosition(0);
+                //recyclerView.smoothScrollToPosition(0);
             }
         } catch (JSONException e) {
             Log.d("endOfUpdateNewRoom", "error");
@@ -117,7 +123,7 @@ public class ChatListActivity extends AppCompatActivity implements CreateRoomDia
         mCreateRoomURL = new Uri.Builder()
                 .scheme("https")
                 .authority(getString(R.string.ep_lab_url))
-                .appendPath(getString(R.string.ep_chat_room))
+                .appendPath(getString(R.string.ep_create_room))
                 .build()
                 .toString();
 
@@ -125,15 +131,14 @@ public class ChatListActivity extends AppCompatActivity implements CreateRoomDia
         Uri retrieve = new Uri.Builder()
                 .scheme("https")
                 .authority(getString(R.string.ep_lab_url))
-                .appendPath(getString(R.string.ep_chat_room))
+                .appendPath(getString(R.string.ep_get_rooms))
                 .appendQueryParameter("username", currentUser)
                 .build();
-
 
         mListenManager = new ListenManager.Builder(retrieve.toString(),
                 this::publishProgress)
                 .setExceptionHandler(this::handleError)
-                .setDelay(1000)
+                .setDelay(100000)
                 .build();
     }
 
@@ -189,6 +194,5 @@ public class ChatListActivity extends AppCompatActivity implements CreateRoomDia
         Log.d("DIALOG", "Creating room");
         createNewRoom(roomName);
     }
-
 
 }

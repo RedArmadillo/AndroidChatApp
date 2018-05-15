@@ -1,0 +1,55 @@
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frameLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="Fragment.ReSendEmailFragment">
+
+    <Button
+        android:id="@+id/re_register_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="148dp"
+        android:layout_marginTop="292dp"
+        android:text="Resend Email"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="365dp"
+        android:layout_height="106dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="68dp"
+        android:text="We were unable to verify your account, if you wish to resend the verification email, click below"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/emailInputRe_Enter"
+        android:layout_width="330dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="64dp"
+        android:ems="10"
+        android:hint="Please Enter your Email"
+        android:inputType="textEmailAddress"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+    <TextView
+        android:id="@+id/ConfirmedEmailMessage"
+        android:layout_width="308dp"
+        android:layout_height="66dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="36dp"
+        android:fontFamily="@font/alegreya_sc"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/re_register_button" />
+
+</android.support.constraint.ConstraintLayout>

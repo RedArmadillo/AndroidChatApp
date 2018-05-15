@@ -8,8 +8,10 @@
     <string name="keys_prefs_time_stamp">ts key</string>
     <string name="keys_prefs_memberid">memberid</string>
 
+    <string name="keys_fragment_resend">loginFragmentTag</string>
     <string name="keys_fragment_login">loginFragmentTag</string>
     <string name="keys_fragment_register">registerFragmentTag</string>
+    <string name="keys_fragment_ReSendEmailFragment">ReSendEmailFragmentFragmentTag</string>
 
     <string name="keys_json_username">username</string>
     <string name="keys_json_password">password</string>
@@ -25,5 +27,9 @@
     <string name="keys_json_success_value_true">true</string>
     <string name="keys_json_success_value_false">false</string>
     <string name="keys_json_new_chat_id">newchatid</string>
+    <string name="keys_json_sender">sender</string>
+    <string name="keys_json_receiver">receiver</string>
+
+
 
 </resources>

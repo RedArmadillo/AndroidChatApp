@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-        <string name="ep_base_url">trinhpn-lab4-backend.herokuapp.com</string>
+        <string name="ep_base_url">group7-chatapp.herokuapp.com</string>
         <string name="ep_login">login</string>
         <string name="ep_register">register</string>
         <string name="ep_hello_args">params</string>
         <string name="ep_hello_delay">wait</string>
         <string name="ep_send_message">sendMessages</string>
         <string name="ep_get_message">getMessages</string>
-        <string name="ep_lab_url">trinhpn-lab4-backend.herokuapp.com</string>
-        <string name="ep_create_room">createRoom</string>
+        <string name="ep_lab_url">group7-chatapp.herokuapp.com</string>
+        <string name="ep_create_room">chatRoom</string>
         <string name="ep_get_rooms">getRooms</string>
         <string name="ep_get_memberid">getMemberid</string>
+        <string name="ep_chat_room">chatRoom</string>
+        <string name="ep_invitation">roomInvitation</string>
+        <string name="ep_reverify">reverify</string>
 </resources>
