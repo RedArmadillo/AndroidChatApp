@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:padding="1dp"
     android:layout_height="wrap_content">
 
     <TextView
@@ -13,11 +14,13 @@
 
     <TextView
         android:id="@+id/receivedMessage"
+        android:textColor="@android:color/black"
         android:textSize="10pt"
         android:background="@drawable/received_message_background"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/receivedMessageSender"
+        android:padding="4dp"
         android:text="TextView" />
 </RelativeLayout>
