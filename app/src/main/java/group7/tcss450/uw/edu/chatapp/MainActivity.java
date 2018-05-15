@@ -14,7 +14,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import group7.tcss450.uw.edu.chatapp.Async.SendPostAsyncTask;
-import group7.tcss450.uw.edu.chatapp.Fragment.HomeFragment;
 import group7.tcss450.uw.edu.chatapp.Front_End_Register_Login.Credentials;
 import group7.tcss450.uw.edu.chatapp.Front_End_Register_Login.LoginFragment;
 import group7.tcss450.uw.edu.chatapp.Front_End_Register_Login.RegisterFragment;
@@ -148,6 +147,15 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.OnF
             if (success) {
                 Log.d("In Register Attempt", " YAY!");
 //Login was successful. Switch to the loadSuccessFragment.
+                SharedPreferences prefs =
+                        getSharedPreferences(
+                                getString(R.string.keys_shared_prefs),
+                                Context.MODE_PRIVATE);
+//save the username for later usage
+                prefs.edit().putString(
+                        getString(R.string.keys_prefs_username),
+                        mCredentials.getUsername())
+                        .apply();
                 loadHomeNavigation();
             } else {
                 Log.d("In Register Attempt Else", " NEY!");
@@ -167,43 +175,44 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.OnF
         }
     }
 
-        private void checkStayLoggedIn() {
-            if (((CheckBox) findViewById(R.id.checkBox)).isChecked()) {
-                SharedPreferences prefs =
-                        getSharedPreferences(
-                                getString(R.string.keys_shared_prefs),
-                                Context.MODE_PRIVATE);
+    private void checkStayLoggedIn() {
+        SharedPreferences prefs =
+                getSharedPreferences(
+                        getString(R.string.keys_shared_prefs),
+                        Context.MODE_PRIVATE);
 //save the username for later usage
-                prefs.edit().putString(
-                        getString(R.string.keys_prefs_username),
-                        mCredentials.getUsername())
-                        .apply();
+        prefs.edit().putString(
+                getString(R.string.keys_prefs_username),
+                mCredentials.getUsername())
+                .apply();
+        if (((CheckBox) findViewById(R.id.checkBox)).isChecked()) {
 //save the users “want” to stay logged in
-                prefs.edit().putBoolean(
-                        getString(R.string.keys_prefs_stay_logged_in),
-                        true)
-                        .apply();
-            }
+            prefs.edit().putBoolean(
+                    getString(R.string.keys_prefs_stay_logged_in),
+                    true)
+                    .apply();
         }
+    }
 
-        private void saveMemberid(String username) {
-            Uri uri = new Uri.Builder()
-                    .scheme("https")
-                    .authority(getString(R.string.ep_base_url))
-                    .appendPath(getString(R.string.ep_get_memberid))
-                    .build();
-            JSONObject user = new JSONObject();
-            try {
-                user.put("username", username);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            // Retrieve member id from web service
-            new SendPostAsyncTask.Builder(uri.toString(), user)
-                    .onPostExecute(this::saveMemberidOnPost)
-                    .onCancelled(this::handleErrorsInTask)
-                    .build().execute();
+    private void saveMemberid(String username) {
+        Uri uri = new Uri.Builder()
+                .scheme("https")
+                .authority(getString(R.string.ep_base_url))
+                .appendPath(getString(R.string.ep_get_memberid))
+                .build();
+        JSONObject user = new JSONObject();
+        try {
+            user.put("username", username);
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
+        // Retrieve member id from web service
+        new SendPostAsyncTask.Builder(uri.toString(), user)
+                .onPostExecute(this::saveMemberidOnPost)
+                .onCancelled(this::handleErrorsInTask)
+                .build().execute();
+    }
+
 
     // Save memberid as preference
     private void saveMemberidOnPost(String result) {

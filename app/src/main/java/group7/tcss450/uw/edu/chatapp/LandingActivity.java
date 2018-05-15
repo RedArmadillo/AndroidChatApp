@@ -22,6 +22,7 @@ import group7.tcss450.uw.edu.chatapp.Fragment.ConnectionsFragment;
 import group7.tcss450.uw.edu.chatapp.Fragment.HomeFragment;
 import group7.tcss450.uw.edu.chatapp.Fragment.SettingsFragment;
 import group7.tcss450.uw.edu.chatapp.Fragment.WeatherFragment;
+import group7.tcss450.uw.edu.chatapp.Utils.SettingMenuActivity;
 
 public class LandingActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, WeatherFragment.OnFragmentInteractionListener,
@@ -113,7 +114,9 @@ public class LandingActivity extends AppCompatActivity
         } else if (id == R.id.landingWeather) {
             loadFragment(new WeatherFragment());
         } else if (id == R.id.landingSetting) {
-            loadFragment(new SettingsFragment());
+            //loadFragment(new SettingsFragment());
+            Intent intent = new Intent(this, SettingMenuActivity.class);
+            startActivity(intent);
         } else if (id == R.id.landingLogout) {
             onLogout();
         } else if (id == R.id.landingChatList) {
