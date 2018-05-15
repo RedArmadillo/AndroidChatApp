@@ -15,4 +15,8 @@
         <string name="ep_leave">leave</string>
         <string name="ep_invitation">roomInvitation</string>
         <string name="ep_reverify">reverify</string>
+        <string name="ep_connections">contacts</string>
+        <string name="ep_incoming_connections">contacts/incoming</string>
+        <string name="ep_outgoing_connections">contacts/outgoing</string>
+
 </resources>

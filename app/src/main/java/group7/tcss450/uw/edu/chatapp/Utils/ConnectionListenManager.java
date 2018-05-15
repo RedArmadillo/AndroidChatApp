@@ -119,7 +119,7 @@ public class ConnectionListenManager {
      *
      * @param builder the builder used to construct this object
      */
-    private ConnectionListenManager(final Builder builder) {
+    public ConnectionListenManager(final Builder builder) {
         mURL = builder.mURL;
         mActionToTake = builder.mActionToTake;
         mDelay = builder.mSleepTime;
