@@ -13,6 +13,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -30,11 +31,15 @@ import group7.tcss450.uw.edu.chatapp.Utils.ListenManager;
 public class ChatListActivity extends AppCompatActivity implements CreateRoomDialogFragment.NoticeDialogListener{
 
     private List<ChatRoom> chatRoomList = new ArrayList<>();
+    private List<ChatRoom> invitationList = new ArrayList<>();
     private RecyclerView recyclerView;
     private ChatRoomViewAdapter mAdapter;
     private String mCreateRoomURL;
+    private String mGetInvitationURL;
     private ListenManager mListenManager;
-
+    private ListenManager mInvitationListenManager;
+    private Button mRecentButton;
+    private Button mInvitationButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,7 +63,8 @@ public class ChatListActivity extends AppCompatActivity implements CreateRoomDia
                 frag.show(fm, "input room name");
             }
         });
-
+        mRecentButton = findViewById(R.id.chat_Recent);
+        mInvitationButton = findViewById(R.id.chat_Invitation);
     }
 
 
@@ -114,6 +120,7 @@ public class ChatListActivity extends AppCompatActivity implements CreateRoomDia
                 getSharedPreferences(getString(R.string.keys_shared_prefs),
                         Context.MODE_PRIVATE);
         String currentUser = prefs.getString(getString(R.string.keys_prefs_username), "");
+        int currentMemberId = prefs.getInt(getString(R.string.keys_prefs_memberid),0);
         mCreateRoomURL = new Uri.Builder()
                 .scheme("https")
                 .authority(getString(R.string.ep_lab_url))
@@ -134,11 +141,23 @@ public class ChatListActivity extends AppCompatActivity implements CreateRoomDia
                 .setExceptionHandler(this::handleError)
                 .setDelay(1000)
                 .build();
+
+        mGetInvitationURL = new Uri.Builder()
+                .scheme("https")
+                .authority(getString(R.string.ep_base_url))
+                .appendPath(getString(R.string.ep_invitation))
+                .appendQueryParameter("memberid", String.valueOf(currentMemberId))
+                .build().toString();
+
+        mInvitationListenManager = new ListenManager.Builder(mGetInvitationURL,
+                this::publishProgress)
+                .setExceptionHandler(this::handleError)
+                .setDelay(1000)
+                .build();
     }
 
     private void publishProgress(JSONObject result) {
         //final String[] ids;
-        Log.d("room", result.toString());
         if (result.has(getString(R.string.keys_json_success))) {
             List<ChatRoom> newList = new ArrayList<>();
             try {
