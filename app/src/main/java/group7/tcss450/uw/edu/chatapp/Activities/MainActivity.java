@@ -163,7 +163,12 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.OnF
             if (success) {
                 Log.d("In Register Attempt", " YAY!");
 //Login was successful. Switch to the loadSuccessFragment.
-                loadHomeNavigation();
+                getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragmentContainer,
+                                new LoginFragment(),
+                                getString(R.string.keys_fragment_login))
+                        .commit();
             } else {
                 Log.d("In Register Attempt Else", " NEY!");
 //Login was unsuccessful. Don’t switch fragments and inform the user

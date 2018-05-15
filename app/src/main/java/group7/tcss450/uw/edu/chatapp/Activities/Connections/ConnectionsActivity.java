@@ -113,7 +113,7 @@ public class ConnectionsActivity extends FragmentActivity {
                 return;
             }
             runOnUiThread(() -> {
-                mAdapter.updateData(newList);
+                //mAdapter.updateData(newList);
             });
         } else {
             Log.d("err", "received no room!!!");

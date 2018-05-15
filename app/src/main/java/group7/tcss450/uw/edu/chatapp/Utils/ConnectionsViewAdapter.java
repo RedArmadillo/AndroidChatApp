@@ -17,16 +17,16 @@ import group7.tcss450.uw.edu.chatapp.R;
 
 public class ConnectionsViewAdapter extends RecyclerView.Adapter<ConnectionsViewAdapter.ViewHolder> {
 
-    private List<ChatRoom> mChatList;
+    private List<String> mChatList;
     //private final OnListFragmentInteractionListener mListener;
 
-    public ConnectionsViewAdapter(List<ChatRoom> list) {
+    public ConnectionsViewAdapter(List<String> list) {
         mChatList = list;
         //mListener = listener;
     }
-    public void updateData(List<ChatRoom> roomList) {
+    public void updateData(List<String> ConnetctionsList) {
         mChatList.clear();
-        mChatList.addAll(roomList);
+        mChatList.addAll(ConnetctionsList);
         notifyDataSetChanged();
     }
 
@@ -40,7 +40,7 @@ public class ConnectionsViewAdapter extends RecyclerView.Adapter<ConnectionsView
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        ChatRoom c = mChatList.get(position);
+        String c = mChatList.get(position);
         ChatFragment frag = new ChatFragment(c.getChatId());
         holder.mLastMsg.setText(c.getLastMsg());
         holder.mLastSender.setText(c.getLastSender());
