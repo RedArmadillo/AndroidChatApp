@@ -29,7 +29,7 @@
             android:name=".LandingActivity"
             android:label="@string/title_activity_landing"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Activities.ThemeChangeActivity" />
+        <activity android:name=".Activities.MainActivity$ThemeChangeActivity" />
         <activity
             android:name=".Activities.ChatActivity"
             android:parentActivityName=".LandingActivity">
