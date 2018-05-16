@@ -1,8 +1,11 @@
-package group7.tcss450.uw.edu.chatapp.Fragment;
+package group7.tcss450.uw.edu.chatapp.Activities.Connections;
 
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,21 +20,17 @@ import group7.tcss450.uw.edu.chatapp.R;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ConnectionsFragment extends Fragment {
-
-
-    public ConnectionsFragment() {
-        // Required empty public constructor
-    }
+public class CurrentConnections extends Fragment {
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        ViewGroup rootView = (ViewGroup) inflater.inflate(
+                R.layout.fragment_connections, container, false);
         // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_connections, container, false);
 
-        ListView listView = (ListView) v.findViewById(R.id.listConnections);
+        ListView listView = (ListView) rootView.findViewById(R.id.listConnections);
         //I just put random values over here to testing display
         // When in used, we can change the array of strings to an array of Connections/Friends
         String[] values = new String[] { "Android", "iPhone", "WindowsMobile",
@@ -43,7 +42,8 @@ public class ConnectionsFragment extends Fragment {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(Objects.requireNonNull(getActivity()),
                 android.R.layout.simple_list_item_1, values);
         listView.setAdapter(adapter);
-        return v;
+
+        return rootView;
     }
 
 }
