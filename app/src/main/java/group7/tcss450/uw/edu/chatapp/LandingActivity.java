@@ -110,7 +110,7 @@ public class LandingActivity extends AppCompatActivity
             startActivity(intent);
             //loadFragment(new ChatFragment());
         } else if (id == R.id.landingConnections) {
-            Intent intent = new Intent(this, ConnectionsActivity.class);
+            Intent intent = new Intent(getApplicationContext(), ConnectionsActivity.class);
             startActivity(intent);
         } else if (id == R.id.landingHome) {
             loadFragment(new HomeFragment());
@@ -118,7 +118,7 @@ public class LandingActivity extends AppCompatActivity
             loadFragment(new WeatherFragment());
         } else if (id == R.id.landingSetting) {
             //loadFragment(new SettingsFragment());
-            Intent intent = new Intent(this, SettingMenuActivity.class);
+            Intent intent = new Intent(getApplicationContext(), SettingMenuActivity.class);
             startActivity(intent);
         } else if (id == R.id.landingLogout) {
             onLogout();
