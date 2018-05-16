@@ -19,6 +19,8 @@
     <string name="keys_json_message">message</string>
     <string name="keys_json_messages">messages</string>
     <string name="keys_json_success">success</string>
+    <string name="keys_json_invitations">invitations</string>
+
     <string name="keys_json_chat_id">chatId</string>
     <string name="keys_json_chat_id_lowercase">chatid</string>
 

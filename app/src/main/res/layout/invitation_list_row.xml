@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/invitationRowLayout"
+    android:padding="4dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -11,7 +12,7 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:text="TextView"
-        android:textColor="@android:color/black"
+        android:textColor="@color/colorPrimaryDark"
         android:textSize="18sp"
         android:textStyle="bold" />
 
@@ -25,8 +26,8 @@
 
     <Button
         android:id="@+id/invitationNoButton"
-        android:layout_width="68dp"
-        android:layout_height="37dp"
+        android:layout_width="62dp"
+        android:layout_height="38dp"
         android:layout_alignParentTop="true"
         android:layout_toStartOf="@+id/invitationJoinButton"
         android:text="No"
@@ -35,8 +36,8 @@
     <Button
         android:id="@+id/invitationJoinButton"
         style="@style/Widget.AppCompat.Button.Colored"
-        android:layout_width="68dp"
-        android:layout_height="37dp"
+        android:layout_width="62dp"
+        android:layout_height="38dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
         android:text="Join"
