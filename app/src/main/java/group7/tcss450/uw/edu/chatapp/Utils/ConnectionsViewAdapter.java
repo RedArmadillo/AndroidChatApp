@@ -40,17 +40,17 @@ public class ConnectionsViewAdapter extends RecyclerView.Adapter<ConnectionsView
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        String c = mChatList.get(position);
-        ChatFragment frag = new ChatFragment(c.getChatId());
-        holder.mLastMsg.setText(c.getLastMsg());
-        holder.mLastSender.setText(c.getLastSender());
-        holder.mRoomName.setText(c.getName());
-        holder.mView.setOnClickListener((View view) -> {
-            Intent intent = new Intent(holder.itemView.getContext(), ChatActivity.class);
-            intent.putExtra("chatid", c.getChatId());
-            holder.itemView.getContext().startActivity(intent);
-
-        });
+//        String c = mChatList.get(position);
+//        ChatFragment frag = new ChatFragment(c.getChatId());
+//        holder.mLastMsg.setText(c.getLastMsg());
+//        holder.mLastSender.setText(c.getLastSender());
+//        holder.mRoomName.setText(c.getName());
+//        holder.mView.setOnClickListener((View view) -> {
+//            Intent intent = new Intent(holder.itemView.getContext(), ChatActivity.class);
+//            intent.putExtra("chatid", c.getChatId());
+//            holder.itemView.getContext().startActivity(intent);
+//
+//        });
     }
 
     @Override

@@ -19,12 +19,10 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import group7.tcss450.uw.edu.chatapp.Async.SendGetAsyncTask;
 import group7.tcss450.uw.edu.chatapp.Models.ChatRoom;
 import group7.tcss450.uw.edu.chatapp.R;
-import group7.tcss450.uw.edu.chatapp.Utils.ChatRoomViewAdapter;
-import group7.tcss450.uw.edu.chatapp.Utils.ConnectionListenManager;
 import group7.tcss450.uw.edu.chatapp.Utils.ConnectionsViewAdapter;
-import group7.tcss450.uw.edu.chatapp.Utils.ListenManager;
 
 public class ConnectionsActivity extends FragmentActivity {
 
@@ -42,8 +40,6 @@ public class ConnectionsActivity extends FragmentActivity {
     private PagerAdapter mPagerAdapter;
     private ConnectionsViewAdapter mAdapter;
 
-
-    private ConnectionListenManager mListenManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,13 +67,56 @@ public class ConnectionsActivity extends FragmentActivity {
                 .appendPath(currentUser)
                 .build();
 
+        Log.d("URI:", retrieve.toString());
 
-        mListenManager = new ConnectionListenManager.Builder(retrieve.toString(),
-                this::publishProgress)
-                .setExceptionHandler(this::handleError)
-                .setDelay(3000)
-                .build();
+
+        JSONObject user = new JSONObject();
+        try {
+            user.put("username", currentUser);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        // Retrieve member id from web service
+        new SendGetAsyncTask.Builder(retrieve.toString(), user)
+                .onPostExecute(this::updateList)
+                .onCancelled(this::handleErrorsInTask)
+                .build().execute();
     }
+
+    private void updateList(String s) {
+
+        //final String[] ids;
+        Log.d("JSON Result:", s);
+//        if (result.has(getString(R.string.keys_json_success))) {
+//            List<ChatRoom> newList = new ArrayList<>();
+//            try {
+//                JSONArray jIds = result.getJSONArray(getString(R.string.keys_json_success));
+//                for (int i = 0; i < jIds.length(); i++) {
+//                    JSONObject id = jIds.getJSONObject(i);
+//                    int roomId = id.getInt(getString(R.string.keys_json_chat_id_lowercase));
+//                    String lastMsg = id.getString(getString(R.string.keys_json_message));
+//                    String roomName = id.getString("name");
+//                    ChatRoom c = new ChatRoom(roomId);
+//                    c.setName(roomName);
+//                    c.setLastMsg(lastMsg);
+//                    newList.add(c);
+//                }
+//            } catch (JSONException e) {
+//                e.printStackTrace();
+//                return;
+//            }
+//            runOnUiThread(() -> {
+//                //mAdapter.updateData(newList);
+//            });
+//        } else {
+//            Log.d("err", "received no room!!!");
+//        }
+    }
+
+    private void handleErrorsInTask(String result) {
+        Log.e("ASYNCT_TASK_ERROR", result);
+    }
+
 
     @Override
     public void onBackPressed() {
@@ -89,39 +128,6 @@ public class ConnectionsActivity extends FragmentActivity {
             // Otherwise, select the previous step.
             mPager.setCurrentItem(mPager.getCurrentItem() - 1);
         }
-    }
-
-    private void publishProgress(JSONObject result) {
-        //final String[] ids;
-        Log.d("room", result.toString());
-        if (result.has(getString(R.string.keys_json_success))) {
-            List<ChatRoom> newList = new ArrayList<>();
-            try {
-                JSONArray jIds = result.getJSONArray(getString(R.string.keys_json_success));
-                for (int i = 0; i < jIds.length(); i++) {
-                    JSONObject id = jIds.getJSONObject(i);
-                    int roomId = id.getInt(getString(R.string.keys_json_chat_id_lowercase));
-                    String lastMsg = id.getString(getString(R.string.keys_json_message));
-                    String roomName = id.getString("name");
-                    ChatRoom c = new ChatRoom(roomId);
-                    c.setName(roomName);
-                    c.setLastMsg(lastMsg);
-                    newList.add(c);
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-                return;
-            }
-            runOnUiThread(() -> {
-                //mAdapter.updateData(newList);
-            });
-        } else {
-            Log.d("err", "received no room!!!");
-        }
-    }
-
-    private void handleError(Exception e) {
-        Log.e("Error in listen", e.toString());
     }
 
     /**
