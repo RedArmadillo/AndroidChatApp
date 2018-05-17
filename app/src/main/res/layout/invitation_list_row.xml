@@ -31,7 +31,7 @@
         android:layout_alignParentTop="true"
         android:layout_toStartOf="@+id/invitationJoinButton"
         android:text="No"
-        android:visibility="gone" />
+        android:visibility="visible" />
 
     <Button
         android:id="@+id/invitationJoinButton"
@@ -41,5 +41,5 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
         android:text="Join"
-        android:visibility="gone" />
+        android:visibility="visible" />
 </RelativeLayout>

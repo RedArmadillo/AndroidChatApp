@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import org.json.JSONObject;
 
 import java.util.List;
 
+import group7.tcss450.uw.edu.chatapp.Async.SendPutAsyncTask;
 import group7.tcss450.uw.edu.chatapp.Models.Invitation;
 import group7.tcss450.uw.edu.chatapp.R;
 
@@ -57,12 +59,29 @@ public class InvitationViewAdapter extends RecyclerView.Adapter {
                 .appendPath(view.getContext().getString(R.string.ep_response))
                 .build().toString();
         JSONObject message = new JSONObject();
+        Log.d("response URL", mResponseURL);
         try {
             message.put(view.getContext().getString(R.string.keys_prefs_memberid),currentMemberId);
+            message.put(view.getContext().getString(R.string.keys_json_chat_id_lowercase), invitation.getChatId());
+            message.put(view.getContext().getString(R.string.keys_prefs_accept), accept);
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        new SendPutAsyncTask.Builder(mResponseURL, message)
+                .onPostExecute(this::onPostResponse)
+                .onCancelled(this::handleError)
+                .build().execute();
     }
+
+    private void handleError(String s) {
+        Log.d("ERROR IN RESPONSE TO INVITATION", s);
+    }
+
+    private void onPostResponse(String s) {
+        Log.d("RESPONSE from RESPONSE", s);
+    }
+
+
 
 
     @Override
@@ -99,7 +118,14 @@ public class InvitationViewAdapter extends RecyclerView.Adapter {
             mNoButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    sendResponse(false, itemView, i);
+                }
+            });
 
+            mJoinButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    sendResponse(true, itemView, i);
                 }
             });
         }

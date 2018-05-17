@@ -209,7 +209,7 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.OnF
                     .build();
             JSONObject user = new JSONObject();
             try {
-                user.put("username", username);
+                user.put(getString(R.string.keys_prefs_username), username);
             } catch (JSONException e) {
                 e.printStackTrace();
             }

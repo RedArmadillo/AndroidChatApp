@@ -196,7 +196,7 @@ public class ChatListActivity extends AppCompatActivity implements CreateRoomDia
         mInvitationListenManager = new ListenManager.Builder(mGetInvitationURL,
                 this::invitationPublishProgress)
                 .setExceptionHandler(this::handleInvitationError)
-                .setDelay(1000)
+                .setDelay(10000)
                 .build();
     }
 
@@ -204,7 +204,7 @@ public class ChatListActivity extends AppCompatActivity implements CreateRoomDia
         Log.i("INVITATION ERROR", e.toString());
     }
 
-    private void invitationPublishProgress(JSONObject result) {
+    public void invitationPublishProgress(JSONObject result) {
         Log.i("INVITATION PROGRESS", result.toString());
         if (result.has(getString(R.string.keys_json_invitations))) {
             List<Invitation> newList = new ArrayList<>();
