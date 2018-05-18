@@ -37,7 +37,7 @@
         <activity android:name=".Activities.Connections.ConnectionsActivity"></activity>
         <activity
             android:name=".Activities.ChatActivity"
-            android:parentActivityName=".LandingActivity">
+            android:parentActivityName="group7.tcss450.uw.edu.chatapp.Activities.ChatListActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="group7.tcss450.uw.edu.chatapp.Activities.ChatListActivity" />

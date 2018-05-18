@@ -111,14 +111,15 @@ public class InvitationViewAdapter extends RecyclerView.Adapter {
             mView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mNoButton.setVisibility(View.VISIBLE);
-                    mJoinButton.setVisibility(View.VISIBLE);
+
                 }
             });
             mNoButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     sendResponse(false, itemView, i);
+                    mNoButton.setEnabled(false);
+                    mJoinButton.setEnabled(false);
                 }
             });
 
@@ -126,6 +127,8 @@ public class InvitationViewAdapter extends RecyclerView.Adapter {
                 @Override
                 public void onClick(View v) {
                     sendResponse(true, itemView, i);
+                    mNoButton.setEnabled(false);
+                    mJoinButton.setEnabled(false);
                 }
             });
         }
