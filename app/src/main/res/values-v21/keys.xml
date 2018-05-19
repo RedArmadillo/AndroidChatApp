@@ -29,6 +29,10 @@
     <string name="keys_json_new_chat_id">newchatid</string>
     <string name="keys_json_sender">sender</string>
     <string name="keys_json_receiver">receiver</string>
+    <string name="keys_connection">Connection</string>
+    <string name="keys_incoming_connection">IncomingConnection</string>
+    <string name="keys_outgoing_connection">OutgoingConnection</string>
+
 
 
 

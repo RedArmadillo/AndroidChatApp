@@ -76,15 +76,7 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.OnF
                                         Context.MODE_PRIVATE);
                         if (prefs.getBoolean(getString(R.string.keys_prefs_stay_logged_in),
                                 false)) {
-                            //loadSuccessFragment();
                             loadHomeNavigation();
-                            // onLogOut isn't implement yet
-                            /*
-                            getSupportFragmentManager().beginTransaction()
-                                    .add(R.id.fragmentContainer,
-                                            new LoginFragment(),
-                                            getString(R.string.keys_fragment_login))
-                                    .commit(); */
                         } else {
                             getSupportFragmentManager().beginTransaction()
                                     .add(R.id.fragmentContainer,

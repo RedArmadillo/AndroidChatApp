@@ -22,6 +22,8 @@
         app:itemTextColor="@color/colorPrimaryDark"
         app:itemIconTint="@color/colorAccent"
         app:headerLayout="@layout/nav_header_landing"
-        app:menu="@menu/activity_landing_drawer" />
+        app:menu="@menu/activity_landing_drawer" >
+
+    </android.support.design.widget.NavigationView>
 
 </android.support.v4.widget.DrawerLayout>
