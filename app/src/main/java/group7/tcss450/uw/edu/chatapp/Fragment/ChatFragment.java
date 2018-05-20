@@ -179,6 +179,7 @@ public class ChatFragment extends Fragment {
                     Message m = new Message(userMessage, username);
                     messageList.add(m);
                 }
+                mRecycleView.scrollToPosition(mAdapter.getItemCount() - 1);
             } catch (JSONException e) {
                 e.printStackTrace();
                 return;

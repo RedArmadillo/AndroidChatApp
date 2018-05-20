@@ -14,6 +14,8 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ListView;
 
+import com.google.firebase.iid.FirebaseInstanceId;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -27,6 +29,7 @@ import group7.tcss450.uw.edu.chatapp.R;
 
 public class MainActivity extends AppCompatActivity implements LoginFragment.OnFragmentInteractionListener, RegisterFragment.OnRegisterFragmentInteractionListener{
 
+    private static final String TAG = "MAIN ACTIVITY";
     Credentials mCredentials;
 
     @Override
@@ -65,7 +68,7 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.OnF
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        updateToken();
         if (savedInstanceState == null) {
             if (findViewById(R.id.fragmentContainer) != null) {
                 if (savedInstanceState == null) {
@@ -78,13 +81,7 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.OnF
                                 false)) {
                             //loadSuccessFragment();
                             loadHomeNavigation();
-                            // onLogOut isn't implement yet
-                            /*
-                            getSupportFragmentManager().beginTransaction()
-                                    .add(R.id.fragmentContainer,
-                                            new LoginFragment(),
-                                            getString(R.string.keys_fragment_login))
-                                    .commit(); */
+
                         } else {
                             getSupportFragmentManager().beginTransaction()
                                     .add(R.id.fragmentContainer,
@@ -125,6 +122,7 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.OnF
             boolean success = resultsJSON.getBoolean("success");
             Log.d("Problem:", result);
             if (success) {
+                updateToken();
                 checkStayLoggedIn();
                 saveMemberid(mCredentials.getUsername());
 //Login was successful. Switch to the loadSuccessFragment.
@@ -161,6 +159,7 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.OnF
            // Log.d("In Register Attempt", resultsJSON.toString());
             boolean success = resultsJSON.getBoolean("success");
             if (success) {
+                updateToken();
                 Log.d("In Register Attempt", " YAY!");
 //Login was successful. Switch to the loadSuccessFragment.
                 loadHomeNavigation();
@@ -240,6 +239,42 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.OnF
         }
     }
 
+    // Every instance of our app will have a distinc firebase token
+    // This method retrieves that toke and save on server
+    public void updateToken() {
+        String refreshedToken = FirebaseInstanceId.getInstance().getToken();
+        Log.d(TAG, "Refreshed token: " + refreshedToken);
+
+        SharedPreferences prefs =
+                getSharedPreferences(
+                        getString(R.string.keys_shared_prefs),
+                        Context.MODE_PRIVATE);
+        prefs.edit().putString(getString(R.string.token), refreshedToken).apply();
+
+        int memberid = prefs.getInt(getString(R.string.keys_prefs_memberid), 0);
+        // Update user's token on server as well
+        Uri uri = new Uri.Builder()
+                .scheme("https")
+                .authority(getString(R.string.ep_base_url))
+                .appendPath(getString(R.string.ep_update_token))
+                .build();
+        JSONObject msg = new JSONObject();
+        try {
+            msg.put(getString(R.string.keys_prefs_memberid), memberid);
+            msg.put(getString(R.string.token), refreshedToken);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        new SendPostAsyncTask.Builder(uri.toString(), msg)
+                .onPostExecute(this::updateTokenOnPost)
+                .onCancelled(this::handleErrorsInTask)
+                .build().execute();
+    }
+
+    private void updateTokenOnPost(String result) {
+        Log.d(TAG + " result of update token", result);
+    }
 
     @Override
     public void onRegisterAttempt(Credentials creds) {

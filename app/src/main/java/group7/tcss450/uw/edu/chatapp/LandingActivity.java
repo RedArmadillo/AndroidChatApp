@@ -13,10 +13,13 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import group7.tcss450.uw.edu.chatapp.Activities.ChatActivity;
 import group7.tcss450.uw.edu.chatapp.Activities.ChatListActivity;
@@ -24,7 +27,6 @@ import group7.tcss450.uw.edu.chatapp.Activities.Connections.ConnectionsActivity;
 import group7.tcss450.uw.edu.chatapp.Fragment.HomeFragment;
 import group7.tcss450.uw.edu.chatapp.Fragment.SettingsFragment;
 import group7.tcss450.uw.edu.chatapp.Fragment.WeatherFragment;
-import group7.tcss450.uw.edu.chatapp.Utils.SettingMenuActivity;
 
 public class LandingActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, WeatherFragment.OnFragmentInteractionListener,
@@ -118,8 +120,10 @@ public class LandingActivity extends AppCompatActivity
             loadFragment(new WeatherFragment());
         } else if (id == R.id.landingSetting) {
             //loadFragment(new SettingsFragment());
-            Intent intent = new Intent(getApplicationContext(), SettingMenuActivity.class);
-            startActivity(intent);
+            String refreshedToken = FirebaseInstanceId.getInstance().getToken();
+            Log.d("TOKEN", "New token: " + refreshedToken);
+//            Intent intent = new Intent(getApplicationContext(), SettingMenuActivity.class);
+//            startActivity(intent);
         } else if (id == R.id.landingLogout) {
             onLogout();
         } else if (id == R.id.landingChatList) {
