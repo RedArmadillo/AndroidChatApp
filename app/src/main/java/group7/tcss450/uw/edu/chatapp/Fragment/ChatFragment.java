@@ -45,11 +45,13 @@ public class ChatFragment extends Fragment {
     private RecyclerView mRecycleView;
     private MessageListAdapter mAdapter;
     private int mChatId;
+    private String mRoomName;
     public ChatFragment() {
         mChatId = 1;
     }
     @SuppressLint("ValidFragment")
-    public ChatFragment(int chatId) {
+    public ChatFragment(int chatId, String roomname) {
+        mRoomName = roomname;
         mChatId = chatId;
     }
 
@@ -125,6 +127,7 @@ public class ChatFragment extends Fragment {
             messageJson.put(getString(R.string.keys_json_username), mUsername);
             messageJson.put(getString(R.string.keys_json_message), msg);
             messageJson.put(getString(R.string.keys_json_chat_id), mChatId);
+            messageJson.put(getContext().getString(R.string.keys_json_roomname), mRoomName);
         } catch (JSONException e) {
             Log.d("ERROR on sendMessage", "!!!!");
             e.printStackTrace();
@@ -167,24 +170,20 @@ public class ChatFragment extends Fragment {
     private void publishProgress(JSONObject messages) {
         //final String[] msgs;
         if(messages.has(getString(R.string.keys_json_messages))) {
+            mRecycleView.scrollToPosition(mAdapter.getItemCount() - 1);
             try {
-
                 JSONArray jMessages = messages.getJSONArray(getString(R.string.keys_json_messages));
-
                 for (int i = 0; i < jMessages.length(); i++) {
-
                     JSONObject msg = jMessages.getJSONObject(i);
                     String username = msg.get(getString(R.string.keys_json_username)).toString();
                     String userMessage = msg.get(getString(R.string.keys_json_message)).toString();
                     Message m = new Message(userMessage, username);
                     messageList.add(m);
                 }
-                mRecycleView.scrollToPosition(mAdapter.getItemCount() - 1);
             } catch (JSONException e) {
                 e.printStackTrace();
                 return;
             }
-
 
            getActivity().runOnUiThread(() -> {
                mAdapter.notifyDataSetChanged();

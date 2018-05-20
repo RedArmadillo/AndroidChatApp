@@ -26,6 +26,7 @@ import group7.tcss450.uw.edu.chatapp.Utils.SettingMenuActivity;
 public class ChatActivity extends SettingMenuActivity implements AddUserDialogFragment.AddUserDialogListener,
         ConfirmDialogFragment.LeaveRoomDialogListener{
     public int mChatId;
+    public String mRoomname;
     private String mInviteURL;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,8 +37,9 @@ public class ChatActivity extends SettingMenuActivity implements AddUserDialogFr
             //if (findViewById(R.id.chatLayout) != null) {
             int chatId = getIntent().getIntExtra(getString(R.string.keys_json_chat_id_lowercase), 1);
             mChatId = chatId;
+            mRoomname =  getIntent().getStringExtra(getString(R.string.keys_json_roomname));
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.chatLayout, new ChatFragment(chatId))
+                    .add(R.id.chatLayout, new ChatFragment(chatId, mRoomname))
                     .commit();
             //}
         }

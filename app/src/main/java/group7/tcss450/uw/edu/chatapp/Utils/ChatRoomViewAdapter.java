@@ -10,7 +10,6 @@ import android.widget.TextView;
 import java.util.List;
 
 import group7.tcss450.uw.edu.chatapp.Activities.ChatActivity;
-import group7.tcss450.uw.edu.chatapp.Fragment.ChatFragment;
 import group7.tcss450.uw.edu.chatapp.Models.ChatRoom;
 import group7.tcss450.uw.edu.chatapp.R;
 
@@ -41,13 +40,13 @@ public class ChatRoomViewAdapter extends RecyclerView.Adapter<ChatRoomViewAdapte
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         ChatRoom c = mChatList.get(position);
-        ChatFragment frag = new ChatFragment(c.getChatId());
         holder.mLastMsg.setText(c.getLastMsg());
         holder.mLastSender.setText(c.getLastSender());
         holder.mRoomName.setText(c.getName());
         holder.mView.setOnClickListener((View view) -> {
             Intent intent = new Intent(holder.itemView.getContext(), ChatActivity.class);
             intent.putExtra("chatid", c.getChatId());
+            intent.putExtra(holder.itemView.getContext().getString(R.string.keys_json_roomname), c.getName());
             holder.itemView.getContext().startActivity(intent);
 
         });
