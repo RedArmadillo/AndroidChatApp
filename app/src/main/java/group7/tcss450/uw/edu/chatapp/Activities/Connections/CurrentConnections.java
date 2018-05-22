@@ -6,6 +6,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -84,6 +85,12 @@ public class CurrentConnections extends Fragment {
                     String currentUser = prefs.getString(getString(R.string.keys_prefs_username), "");
                     JSONObject c = null;
                     try {
+                        c = new JSONObject();
+                        c.put("username_b", requestUser);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    try {
                         c = new JSONObject((requestUser));
                         //TODO: THIS IS WHERE ERROR IS HAPPENING.
                     } catch (JSONException e) {
@@ -95,10 +102,7 @@ public class CurrentConnections extends Fragment {
                             .appendPath(getString(R.string.ep_connections))
                             .appendPath(currentUser)
                             .appendPath(getString(R.string.ep_request_connection))
-                            .appendQueryParameter("username_b", requestUser)
                             .build();
-                    Log.d("retrieve", retrieve.toString());
-                    Log.d("SENDING THE TASK", "SENDING A TASK");
                     new SendPostAsyncTask.Builder(retrieve.toString(), c)
                             .onPostExecute(this::onSPostExecute)
                             .onCancelled(this::handleErrorsInTask)
@@ -122,17 +126,15 @@ public class CurrentConnections extends Fragment {
                         if (success) {
                             getDialog();
                             ((TextView) v.findViewById(R.id.ERRORTEXT)).setText("Request has been sucessfully sent");
-                            wait(10);
-                            ((TextView) v.findViewById(R.id.ERRORTEXT)).setText("");
+                            ((TextView) v.findViewById(R.id.ERRORTEXT)).setTextColor(Color.rgb(0,255,0));
+
 
                         } else {
                             ((TextView) v.findViewById(R.id.ERRORTEXT)).setText("We could not find that username");
-                            wait(10);
-                            ((TextView) v.findViewById(R.id.ERRORTEXT)).setText("");
+                            ((TextView) v.findViewById(R.id.ERRORTEXT)).setTextColor(Color.rgb(255,0,0));
+
                         }
                     } catch (JSONException e) {
-                        e.printStackTrace();
-                    } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
                 }
