@@ -11,6 +11,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.InputType;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +32,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Objects;
 
+import group7.tcss450.uw.edu.chatapp.Async.SendPostAsyncTask;
 import group7.tcss450.uw.edu.chatapp.R;
 
 
@@ -76,9 +78,62 @@ public class CurrentConnections extends Fragment {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     requestUser = input.getText().toString();
-                    RequestContactTask task1 = new RequestContactTask();
-                    task1.execute("", "", "");
+                    SharedPreferences prefs =
+                            getActivity().getSharedPreferences(getString(R.string.keys_shared_prefs),
+                                    Context.MODE_PRIVATE);
+                    String currentUser = prefs.getString(getString(R.string.keys_prefs_username), "");
+
+                    Uri retrieve = new Uri.Builder()
+                            .scheme("https")
+                            .authority(getString(R.string.ep_lab_url))
+                            .appendPath(getString(R.string.ep_connections))
+                            .appendPath(currentUser)
+                            .appendPath(getString(R.string.ep_request_connection))
+                            .appendQueryParameter("username_b", requestUser)
+                            .build();
+                    Log.d("retrieve", retrieve.toString());
+                    try {
+                        new SendPostAsyncTask.Builder(retrieve.toString(), new JSONObject("Placeholder"))
+                                .onPostExecute(this::onSPostExecute)
+                                .onCancelled(this::handleErrorsInTask)
+                                .build().execute();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
+
+                protected void handleErrorsInTask(String result) {
+                    Log.e("ASYNCT_TASK_ERROR", result);
+                }
+
+                protected void onSPostExecute(String s) {
+                    Log.d("result", s);
+                    JSONObject resultsJSON = null;
+                    try {
+                        resultsJSON = new JSONObject(s);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    try {
+                        boolean success = resultsJSON.getBoolean("success");
+                        if (success) {
+                            getDialog();
+                            ((TextView) v.findViewById(R.id.ERRORTEXT)).setText("Request has been sucessfully sent");
+                            wait(10);
+                            ((TextView) v.findViewById(R.id.ERRORTEXT)).setText("");
+
+                        } else {
+                            ((TextView) v.findViewById(R.id.ERRORTEXT)).setText("We could not find that username");
+                            wait(10);
+                            ((TextView) v.findViewById(R.id.ERRORTEXT)).setText("");
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+
             });
             builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                 @Override
@@ -170,16 +225,15 @@ public class CurrentConnections extends Fragment {
 
     private void updateList(JSONArray verified) {
         String[] l1 = verified.toString().split(",");
-        for (String a : l1) {
-            a = a.replace("[", "");
-            a = a.replace("]", "");
-            a.replace("\"", "");
+        String[] removal = new String[l1.length];
+        for (int x = 0; x < l1.length; x++) {
+            removal[x] = l1[x].replace("[", "").replace("]", "").replace("\"", "");
         }
 
         ListView cList = v.findViewById(R.id.listConnections);
 
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>( getActivity(), android.R.layout.simple_list_item_1, l1);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>( getActivity(), android.R.layout.simple_list_item_1, removal);
         cList.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }
@@ -256,78 +310,5 @@ public class CurrentConnections extends Fragment {
         }
     }
 
-    @SuppressLint("StaticFieldLeak")
-    class RequestContactTask extends AsyncTask<String, Void, String> {
-        @Override
-        protected String doInBackground(String... strings) {
 
-            String response = "";
-            HttpURLConnection urlConnection = null;
-
-
-            SharedPreferences prefs =
-                    getActivity().getSharedPreferences(getString(R.string.keys_shared_prefs),
-                            Context.MODE_PRIVATE);
-            String currentUser = prefs.getString(getString(R.string.keys_prefs_username), "");
-
-            Uri retrieve = new Uri.Builder()
-                    .scheme("https")
-                    .authority(getString(R.string.ep_lab_url))
-                    .appendPath(getString(R.string.ep_connections))
-                    .appendPath(currentUser)
-                    .appendPath(getString(R.string.ep_request_connection))
-                    .appendQueryParameter("username", requestUser)
-                    .build();
-            try {
-                requestUser = null;
-                URL urlObject = new URL(retrieve.toString());
-                urlConnection = (HttpURLConnection) urlObject.openConnection();
-                InputStream content = urlConnection.getInputStream();
-                BufferedReader buffer = new BufferedReader(new InputStreamReader(content));
-                String s = "";
-                while ((s = buffer.readLine()) != null) {
-                    response += s;
-                }
-            } catch (Exception e) {
-                response = "Unable to connect, Reason: "
-                        + e.getMessage();
-            } finally {
-                if (urlConnection != null)
-                    urlConnection.disconnect();
-            }
-
-            return response;
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-            JSONObject resultsJSON = null;
-            try {
-                resultsJSON = new JSONObject(s);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            try {
-                boolean success = resultsJSON.getBoolean("success");
-                if (success) {
-                    getDialog();
-                    ((TextView) v.findViewById(R.id.ERRORTEXT)).setText("Request has been sucessfully sent");
-                    wait(10);
-                    ((TextView) v.findViewById(R.id.ERRORTEXT)).setText("");
-
-
-
-                } else {
-                    ((TextView) v.findViewById(R.id.ERRORTEXT)).setText("We could not find that username");
-                    wait(10);
-                    ((TextView) v.findViewById(R.id.ERRORTEXT)).setText("");
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-    }
 }
