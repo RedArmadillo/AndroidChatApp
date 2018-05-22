@@ -69,11 +69,11 @@
 
     <TextView
         android:id="@+id/ERRORTEXT"
-        android:layout_width="119dp"
-        android:layout_height="163dp"
-        android:layout_marginEnd="16dp"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="140dp"
+        android:layout_height="92dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginTop="176dp"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

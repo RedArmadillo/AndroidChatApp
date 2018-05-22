@@ -113,6 +113,7 @@ public class CurrentConnections extends Fragment {
                     Log.e("ASYNCT_TASK_ERROR", result);
                 }
 
+                @SuppressLint("SetTextI18n")
                 protected void onSPostExecute(String s) {
                     Log.d("result", s);
                     JSONObject resultsJSON = null;
