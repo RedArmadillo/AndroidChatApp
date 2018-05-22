@@ -111,6 +111,11 @@ public class IncomingConnections extends Fragment {
 
     private void updateList(JSONArray incoming) {
         String[] l2 = incoming.toString().split(",");
+        for (String a : l2) {
+            a = a.replace("[", "");
+            a = a.replace("]", "");
+            a.replace("\"", "");
+        }
         ListView iList = v.findViewById(R.id.listIncomingConnections);
 
         ArrayAdapter<String> adapter2 = new ArrayAdapter<>( getActivity(), android.R.layout.simple_list_item_1, l2);

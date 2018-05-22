@@ -18,6 +18,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -45,6 +46,7 @@ public class CurrentConnections extends Fragment {
     private String removeUser;
     private String requestUser;
     private String m_Text;
+    private ImageButton myRequestButton;
 
 
     @Override
@@ -57,9 +59,9 @@ public class CurrentConnections extends Fragment {
         task.execute("", "", "");
         // Inflate the layout for this fragment
 
-        ImageButton b = (ImageButton) v.findViewById(R.id.AddContactButton);
+        myRequestButton = (ImageButton) v.findViewById(R.id.AddContactButton);
 
-        b.setOnClickListener(view -> {
+        myRequestButton.setOnClickListener(view -> {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
             builder.setTitle("Enter a contacts username");
 
@@ -168,6 +170,11 @@ public class CurrentConnections extends Fragment {
 
     private void updateList(JSONArray verified) {
         String[] l1 = verified.toString().split(",");
+        for (String a : l1) {
+            a = a.replace("[", "");
+            a = a.replace("]", "");
+            a.replace("\"", "");
+        }
 
         ListView cList = v.findViewById(R.id.listConnections);
 
@@ -230,12 +237,20 @@ public class CurrentConnections extends Fragment {
                 e.printStackTrace();
             }
             try {
+                assert resultsJSON != null;
                 boolean success = resultsJSON.getBoolean("success");
                 if (success) {
-                    getDialog();
-
+                    ((TextView) v.findViewById(R.id.ERRORTEXT)).setText("Contact has been sucessfully removed.");
+                    wait(10);
+                    ((TextView) v.findViewById(R.id.ERRORTEXT)).setText("");
+                } else {
+                    ((TextView) v.findViewById(R.id.ERRORTEXT)).setText("Internal Error, please try later.");
+                    wait(10);
+                    ((TextView) v.findViewById(R.id.ERRORTEXT)).setText("");
                 }
             } catch (JSONException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
@@ -287,14 +302,32 @@ public class CurrentConnections extends Fragment {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
+            JSONObject resultsJSON = null;
             try {
-                JSONObject resultsJSON = new JSONObject(s);
-                JSONArray verified = (JSONArray) resultsJSON.get("verified");
-                updateList(verified);
+                resultsJSON = new JSONObject(s);
             } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            try {
+                boolean success = resultsJSON.getBoolean("success");
+                if (success) {
+                    getDialog();
+                    ((TextView) v.findViewById(R.id.ERRORTEXT)).setText("Request has been sucessfully sent");
+                    wait(10);
+                    ((TextView) v.findViewById(R.id.ERRORTEXT)).setText("");
+
+
+
+                } else {
+                    ((TextView) v.findViewById(R.id.ERRORTEXT)).setText("We could not find that username");
+                    wait(10);
+                    ((TextView) v.findViewById(R.id.ERRORTEXT)).setText("");
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
     }
-
 }

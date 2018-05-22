@@ -49,10 +49,11 @@
         android:id="@+id/AddContactButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="44dp"
         android:src="@drawable/plus"
-        app:layout_constraintTop_toBottomOf="@+id/searchView"
-        tools:layout_editor_absoluteX="269dp" />
+        app:layout_constraintStart_toEndOf="@+id/listConnections"
+        app:layout_constraintTop_toBottomOf="@+id/searchView" />
 
     <TextView
         android:id="@+id/textView3"
@@ -66,5 +67,13 @@
         app:layout_constraintHorizontal_bias="0.421"
         app:layout_constraintStart_toEndOf="@+id/listConnections"
         app:layout_constraintTop_toBottomOf="@+id/AddContactButton" />
+
+    <TextView
+        android:id="@+id/ERRORTEXT"
+        android:layout_width="119dp"
+        android:layout_height="61dp"
+        android:textSize="16sp"
+        tools:layout_editor_absoluteX="274dp"
+        tools:layout_editor_absoluteY="313dp" />
 
 </android.support.constraint.ConstraintLayout>

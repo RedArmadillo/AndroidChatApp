@@ -114,6 +114,11 @@ public class OutgoingConnections extends Fragment {
 
 
         String[] l3 = outgoing.toString().split(",");
+        for (String a : l3) {
+            a = a.replace("[", "");
+            a = a.replace("]", "");
+            a.replace("\"", "");
+        }
         ListView oList = v.findViewById(R.id.outgoingListConnectionList);
 
 
