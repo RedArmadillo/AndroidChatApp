@@ -10,7 +10,6 @@ import android.widget.TextView;
 import java.util.List;
 
 import group7.tcss450.uw.edu.chatapp.Activities.ChatActivity;
-import group7.tcss450.uw.edu.chatapp.Fragment.ChatFragment;
 import group7.tcss450.uw.edu.chatapp.Models.ChatRoom;
 import group7.tcss450.uw.edu.chatapp.R;
 
@@ -41,7 +40,7 @@ public class ConnectionsViewAdapter extends RecyclerView.Adapter<ConnectionsView
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         ChatRoom c = mChatList.get(position);
-        ChatFragment frag = new ChatFragment(c.getChatId());
+        //ChatFragment frag = new ChatFragment(c.getChatId());
         holder.mLastMsg.setText(c.getLastMsg());
         holder.mLastSender.setText(c.getLastSender());
         holder.mRoomName.setText(c.getName());
