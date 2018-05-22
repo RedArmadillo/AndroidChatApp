@@ -26,4 +26,6 @@
     <string name="title_activity_setting_menu">SettingMenuActivity</string>
     <string name="chat_recent">Recent</string>
     <string name="chat_invitation">Invitation</string>
+    <string name="ep_remove_connection">remove</string>
+    <string name="ep_request_connection">request</string>
 </resources>

@@ -36,7 +36,7 @@
     <ListView
         android:id="@+id/listConnections"
         style="@android:style/Widget.DeviceDefault.ExpandableListView"
-        android:layout_width="365dp"
+        android:layout_width="258dp"
         android:layout_height="461dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
@@ -44,5 +44,27 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/searchView"
         app:layout_constraintVertical_bias="0.0" />
+
+    <ImageButton
+        android:id="@+id/AddContactButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="44dp"
+        android:src="@drawable/plus"
+        app:layout_constraintTop_toBottomOf="@+id/searchView"
+        tools:layout_editor_absoluteX="269dp" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="8dp"
+        android:text="Add New Contact"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.421"
+        app:layout_constraintStart_toEndOf="@+id/listConnections"
+        app:layout_constraintTop_toBottomOf="@+id/AddContactButton" />
 
 </android.support.constraint.ConstraintLayout>
