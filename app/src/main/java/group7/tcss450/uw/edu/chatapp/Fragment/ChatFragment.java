@@ -144,8 +144,6 @@ public class ChatFragment extends Fragment {
     }
 
     private void endOfSendMsgTask(final String result) {
-        Log.d("response from service", result);
-
         try {
             JSONObject res = new JSONObject(result);
 
@@ -154,8 +152,6 @@ public class ChatFragment extends Fragment {
 
                 ((EditText) getView().findViewById(R.id.chatInputEditText))
                         .setText("");
-                Log.d("endOfSendMsg", Integer.toString(mAdapter.getItemCount()));
-                //mRecycleView.smoothScrollToPosition(mAdapter.getItemCount() - 1);
             }
         } catch (JSONException e) {
             Log.d("endOfSend", "error");
@@ -168,7 +164,6 @@ public class ChatFragment extends Fragment {
     }
 
     private void publishProgress(JSONObject messages) {
-        //final String[] msgs;
         if(messages.has(getString(R.string.keys_json_messages))) {
             mRecycleView.scrollToPosition(mAdapter.getItemCount() - 1);
             try {
@@ -187,7 +182,6 @@ public class ChatFragment extends Fragment {
 
            getActivity().runOnUiThread(() -> {
                mAdapter.notifyDataSetChanged();
-
             });
 
         }

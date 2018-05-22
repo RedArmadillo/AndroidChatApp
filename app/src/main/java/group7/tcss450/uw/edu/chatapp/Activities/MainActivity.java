@@ -251,7 +251,7 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.OnF
                         Context.MODE_PRIVATE);
         prefs.edit().putString(getString(R.string.token), refreshedToken).apply();
 
-        int memberid = prefs.getInt(getString(R.string.keys_prefs_memberid), 0);
+        String u_name = prefs.getString(getString(R.string.keys_prefs_username), "");
         // Update user's token on server as well
         Uri uri = new Uri.Builder()
                 .scheme("https")
@@ -260,7 +260,7 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.OnF
                 .build();
         JSONObject msg = new JSONObject();
         try {
-            msg.put(getString(R.string.keys_prefs_memberid), memberid);
+            msg.put(getString(R.string.keys_prefs_username), u_name);
             msg.put(getString(R.string.token), refreshedToken);
         } catch (JSONException e) {
             e.printStackTrace();

@@ -17,11 +17,9 @@ import group7.tcss450.uw.edu.chatapp.R;
 public class ChatRoomViewAdapter extends RecyclerView.Adapter<ChatRoomViewAdapter.ViewHolder> {
 
     private List<ChatRoom> mChatList;
-    //private final OnListFragmentInteractionListener mListener;
 
     public ChatRoomViewAdapter(List<ChatRoom> list) {
         mChatList = list;
-        //mListener = listener;
     }
     public void updateData(List<ChatRoom> roomList) {
         mChatList.clear();
@@ -48,7 +46,6 @@ public class ChatRoomViewAdapter extends RecyclerView.Adapter<ChatRoomViewAdapte
             intent.putExtra("chatid", c.getChatId());
             intent.putExtra(holder.itemView.getContext().getString(R.string.keys_json_roomname), c.getName());
             holder.itemView.getContext().startActivity(intent);
-
         });
     }
 
