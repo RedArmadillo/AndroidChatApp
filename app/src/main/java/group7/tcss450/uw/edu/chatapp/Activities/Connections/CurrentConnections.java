@@ -82,7 +82,13 @@ public class CurrentConnections extends Fragment {
                             getActivity().getSharedPreferences(getString(R.string.keys_shared_prefs),
                                     Context.MODE_PRIVATE);
                     String currentUser = prefs.getString(getString(R.string.keys_prefs_username), "");
-
+                    JSONObject c = null;
+                    try {
+                        c = new JSONObject((requestUser));
+                        //TODO: THIS IS WHERE ERROR IS HAPPENING.
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                     Uri retrieve = new Uri.Builder()
                             .scheme("https")
                             .authority(getString(R.string.ep_lab_url))
@@ -92,14 +98,11 @@ public class CurrentConnections extends Fragment {
                             .appendQueryParameter("username_b", requestUser)
                             .build();
                     Log.d("retrieve", retrieve.toString());
-                    try {
-                        new SendPostAsyncTask.Builder(retrieve.toString(), new JSONObject("Placeholder"))
-                                .onPostExecute(this::onSPostExecute)
-                                .onCancelled(this::handleErrorsInTask)
-                                .build().execute();
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
+                    Log.d("SENDING THE TASK", "SENDING A TASK");
+                    new SendPostAsyncTask.Builder(retrieve.toString(), c)
+                            .onPostExecute(this::onSPostExecute)
+                            .onCancelled(this::handleErrorsInTask)
+                            .build().execute();
                 }
 
                 protected void handleErrorsInTask(String result) {
