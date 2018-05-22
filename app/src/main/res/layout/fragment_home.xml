@@ -20,7 +20,7 @@
         app:layout_constraintTop_toBottomOf="@+id/chatRoomButton" />
 
     <ImageButton
-        android:id="@+id/chatButton"
+        android:id="@+id/chatButton2"
         android:layout_width="259dp"
         android:layout_height="110dp"
         android:layout_marginTop="120dp"
@@ -29,7 +29,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
-        android:id="@+id/settingButton"
+        android:id="@+id/settingButton2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="336dp"
@@ -94,8 +94,8 @@
         android:text="Simple Chat"
         android:textColor="@color/colorAccent"
         android:textSize="24sp"
-        app:layout_constraintEnd_toStartOf="@+id/chatButton"
-        app:layout_constraintTop_toBottomOf="@+id/settingButton" />
+        app:layout_constraintEnd_toStartOf="@+id/chatButton2"
+        app:layout_constraintTop_toBottomOf="@+id/settingButton2" />
 
     <TextView
         android:id="@+id/textView7"
