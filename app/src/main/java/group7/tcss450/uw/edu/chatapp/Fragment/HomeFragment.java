@@ -47,12 +47,12 @@ public class HomeFragment extends Fragment {
         weather.setOnClickListener(
                 view -> getFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.FLAY, new WeatherFragment()).addToBackStack(null)
+                        .replace(R.id.landingContainer, new WeatherFragment()).addToBackStack(null)
                         .commit());
 
         chat.setOnClickListener(view -> getFragmentManager()
                 .beginTransaction()
-                .replace(R.id.FLAY, new ChatFragment()).addToBackStack(null)
+                .replace(R.id.landingContainer, new ChatFragment()).addToBackStack(null)
                 .commit());
 
         Chatlist.setOnClickListener(view -> {
