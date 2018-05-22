@@ -38,6 +38,7 @@ public class ChatActivity extends SettingMenuActivity implements AddUserDialogFr
             int chatId = getIntent().getIntExtra(getString(R.string.keys_json_chat_id_lowercase), 1);
             mChatId = chatId;
             mRoomname =  getIntent().getStringExtra(getString(R.string.keys_json_roomname));
+
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.chatLayout, new ChatFragment(chatId, mRoomname))
                     .commit();
@@ -106,8 +107,8 @@ public class ChatActivity extends SettingMenuActivity implements AddUserDialogFr
     private void endOfAdd(String result) {
         try {
             JSONObject res = new JSONObject(result);
-            Toast.makeText(this, result, Toast.LENGTH_SHORT).show();
-
+            Log.d("response from service for add a user to room", result);
+            Toast.makeText(this, "User added!", Toast.LENGTH_SHORT).show();
         } catch (JSONException e1) {
             e1.printStackTrace();
         }
