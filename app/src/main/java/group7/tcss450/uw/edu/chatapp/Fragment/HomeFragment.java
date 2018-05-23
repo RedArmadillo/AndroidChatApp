@@ -3,12 +3,14 @@ package group7.tcss450.uw.edu.chatapp.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.telecom.Connection;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 
 import group7.tcss450.uw.edu.chatapp.Activities.ChatListActivity;
+import group7.tcss450.uw.edu.chatapp.Activities.Connections.ConnectionsActivity;
 import group7.tcss450.uw.edu.chatapp.R;
 import group7.tcss450.uw.edu.chatapp.Utils.SettingMenuActivity;
 
@@ -38,20 +40,25 @@ public class HomeFragment extends Fragment {
         ImageButton weather = v.findViewById(R.id.weather);
         ImageButton chat = v.findViewById(R.id.chat);
         ImageButton chatlist = v.findViewById(R.id.chatroom);
+        ImageButton cconnections = v.findViewById(R.id.connectionsButton);
         weather.setOnClickListener(
                 view -> getFragmentManager()
                         .beginTransaction()
                         .replace(R.id.landingContainer, new WeatherFragment()).addToBackStack(null)
                         .commit());
+        chat.setOnClickListener(view2 -> getFragmentManager()
+            .beginTransaction()
+            .replace(R.id.landingContainer, new ChatFragment()).addToBackStack(null)
+            .commit());
 
-        chat.setOnClickListener(view -> getFragmentManager()
-                .beginTransaction()
-                .replace(R.id.landingContainer, new ChatFragment()).addToBackStack(null)
-                .commit());
-
-        chatlist.setOnClickListener(view -> {
+        chatlist.setOnClickListener(view3 -> {
             Intent intent = new Intent(getActivity(), ChatListActivity.class);
             startActivity(intent);
+        });
+
+        cconnections.setOnClickListener(view -> {
+            Intent intent4 = new Intent(getActivity(), ConnectionsActivity.class);
+            startActivity(intent4);
         });
         // Inflate the layout for this fragment
         return v;
