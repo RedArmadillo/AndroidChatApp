@@ -53,7 +53,6 @@ public class CurrentConnections extends Fragment {
     private String requestUser;
     private String confirmUser;
     private String m_Text;
-    private ImageButton myRequestButton;
     private String rejectUser;
 
 
@@ -67,7 +66,7 @@ public class CurrentConnections extends Fragment {
         task.execute("", "", "");
         // Inflate the layout for this fragment
 
-        myRequestButton = (ImageButton) v.findViewById(R.id.AddContactButton);
+        ImageButton myRequestButton = (ImageButton) v.findViewById(R.id.AddContactButton);
 
         ListView con = v.findViewById(R.id.listConnections);
         ListView inc = v.findViewById(R.id.listIncoming);
@@ -288,28 +287,65 @@ public class CurrentConnections extends Fragment {
             try {
                 JSONObject resultsJSON = new JSONObject(s);
                 JSONArray verified = (JSONArray) resultsJSON.get("verified");
-                updateList(verified);
+                JSONArray inc = (JSONArray) resultsJSON.get("incoming");
+                JSONArray out = (JSONArray) resultsJSON.get("outgoing");
+                updateList(verified,inc,out);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
     }
 
-    private void updateList(JSONArray verified) {
+    private void updateList(JSONArray verified, JSONArray incoming, JSONArray outgoing) {
         String[] l1 = verified.toString().split(",");
         String[] removal = new String[l1.length];
         for (int x = 0; x < l1.length; x++) {
             removal[x] = l1[x].replace("[", "").replace("]", "").replace("\"", "");
         }
-
         ListView cList = v.findViewById(R.id.listConnections);
-
-
         ArrayAdapter<String> adapter = new ArrayAdapter<String>( getActivity(), android.R.layout.simple_list_item_1, removal);
         cList.setAdapter(adapter);
         adapter.notifyDataSetChanged();
+
+        //////////////////////////////////////////////////////////
+
+
+        String[] l5 = incoming.toString().split(",");
+        String[] sorry = new String[l5.length];
+        for (int x = 0; x < l5.length; x++) {
+            if(l5[x].equals("[]")) {
+                sorry[x] = l5[x].replace("[", "").replace("]", "Empty");
+            } else {
+                sorry[x] = l5[x].replace("[", "").replace("]", "")
+                        .replace("\"", "")  + " (pending)";;
+            }
+        }
+        ListView iList = v.findViewById(R.id.listIncoming);
+        ArrayAdapter<String> adapter5 = new ArrayAdapter<String>( getActivity(), android.R.layout.simple_list_item_1, sorry);
+        iList.setAdapter(adapter5);
+        adapter5.notifyDataSetChanged();
+
+
+        /////////////////////////////////////////////////////////////////////////////////////////
+
+
+        String[] l3 = outgoing.toString().split(",");
+        String[] news = new String[l3.length];
+        for (int x = 0; x < l3.length; x++) {
+            if(l3[x].equals("[]")) {
+                news[x] = l3[x].replace("[", "").replace("]", "Empty");
+            } else {
+                news[x] = l3[x].replace("[", "").replace("]", "")
+                        .replace("\"", "")  + " (pending)";;
+            }
+        }
+        ListView oList = v.findViewById(R.id.listOutgoing);
+        ArrayAdapter<String> adapter3 = new ArrayAdapter<String>( getActivity(), android.R.layout.simple_list_item_1, news);
+        oList.setAdapter(adapter3);
+        adapter3.notifyDataSetChanged();
     }
 
+    @SuppressLint("StaticFieldLeak")
     class RemoveContactTask extends AsyncTask<String, Void, String> {
         @Override
         protected String doInBackground(String... strings) {
@@ -381,6 +417,7 @@ public class CurrentConnections extends Fragment {
         }
     }
 
+    @SuppressLint("StaticFieldLeak")
     class ConfirmContactTask extends AsyncTask<String, Void, String> {
         @Override
         protected String doInBackground(String... strings) {
@@ -451,6 +488,7 @@ public class CurrentConnections extends Fragment {
         }
     }
 
+    @SuppressLint("StaticFieldLeak")
     class RejectContactTask extends AsyncTask<String, Void, String> {
         @Override
         protected String doInBackground(String... strings) {

@@ -41,7 +41,7 @@ public class ConnectionsActivity extends FragmentActivity {
 
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.FLAY,
-                        new cFrag(),
+                        new CurrentConnections(),
                        "cFrag")
                 .commit();
 

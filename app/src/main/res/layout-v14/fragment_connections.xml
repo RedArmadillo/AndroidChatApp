@@ -11,7 +11,7 @@
 
     <SearchView
         android:id="@+id/searchView"
-        android:layout_width="398dp"
+        android:layout_width="295dp"
         android:layout_height="44dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
@@ -37,23 +37,12 @@
         android:id="@+id/AddContactButton"
         android:layout_width="131dp"
         android:layout_height="136dp"
-        android:layout_marginStart="280dp"
+        android:layout_marginStart="292dp"
         android:scaleX=".5"
         android:scaleY=".5"
         android:src="@drawable/plus"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchView" />
-
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="4dp"
-        android:layout_marginTop="100dp"
-        android:text="Add New Contact"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/AddContactButton" />
+        app:layout_constraintTop_toTopOf="@+id/connectionTextView2" />
 
     <TextView
         android:id="@+id/ERRORTEXT"
