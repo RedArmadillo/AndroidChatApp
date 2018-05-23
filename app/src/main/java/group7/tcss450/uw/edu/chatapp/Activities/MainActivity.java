@@ -15,6 +15,7 @@ import android.widget.CheckBox;
 import android.widget.ListView;
 
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -182,16 +183,20 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.OnF
     }
 
         private void checkStayLoggedIn() {
-            if (((CheckBox) findViewById(R.id.checkBox)).isChecked()) {
-                SharedPreferences prefs =
-                        getSharedPreferences(
-                                getString(R.string.keys_shared_prefs),
-                                Context.MODE_PRIVATE);
+            SharedPreferences prefs =
+                    getSharedPreferences(
+                            getString(R.string.keys_shared_prefs),
+                            Context.MODE_PRIVATE);
 //save the username for later usage
-                prefs.edit().putString(
-                        getString(R.string.keys_prefs_username),
-                        mCredentials.getUsername())
-                        .apply();
+            prefs.edit().putString(
+                    getString(R.string.keys_prefs_username),
+                    mCredentials.getUsername())
+                    .apply();
+            // subscribe to a "user" topic for future Firebase tasks
+            FirebaseMessaging.getInstance().subscribeToTopic(mCredentials.getUsername());
+
+            if (((CheckBox) findViewById(R.id.checkBox)).isChecked()) {
+
 //save the users “want” to stay logged in
                 prefs.edit().putBoolean(
                         getString(R.string.keys_prefs_stay_logged_in),

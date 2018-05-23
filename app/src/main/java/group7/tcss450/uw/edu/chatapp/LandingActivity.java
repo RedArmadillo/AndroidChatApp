@@ -21,6 +21,8 @@ import android.widget.TextView;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 
+import java.io.IOException;
+
 import group7.tcss450.uw.edu.chatapp.Activities.ChatActivity;
 import group7.tcss450.uw.edu.chatapp.Activities.ChatListActivity;
 import group7.tcss450.uw.edu.chatapp.Activities.Connections.ConnectionsActivity;
@@ -32,6 +34,7 @@ public class LandingActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, WeatherFragment.OnFragmentInteractionListener,
         SettingsFragment.OnFragmentInteractionListener {
 
+    private final String TAG = "LandingActivity";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -137,6 +140,8 @@ public class LandingActivity extends AppCompatActivity
         return true;
     }
     public void onLogout() {
+
+
         SharedPreferences prefs =
                 getSharedPreferences(
                         getString(R.string.keys_shared_prefs),
@@ -146,6 +151,12 @@ public class LandingActivity extends AppCompatActivity
                 getString(R.string.keys_prefs_stay_logged_in),
                 false)
                 .apply();
+        try {
+            FirebaseInstanceId.getInstance().deleteInstanceId();
+        } catch (IOException e) {
+            Log.d(TAG, "Can't delete instanceID");
+            e.printStackTrace();
+        }
 //the way to close an app programmatically
         finishAndRemoveTask();
     }
