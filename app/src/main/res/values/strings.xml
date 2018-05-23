@@ -1,6 +1,6 @@
 <resources>
-    <string name="app_name">Red Armodillo Chat</string>
-    <string name="welcome">Welcome to Red Armodillo Chat!</string>
+    <string name="app_name">Red Armadillo Chat</string>
+    <string name="welcome">Welcome to Red Armadillo Chat!</string>
     <string name="loginEmail">Email</string>
     <string name="loginPassword">Password</string>
     <string name="loginStayLoggedIn">Stay logged in?</string>
@@ -28,4 +28,6 @@
     <string name="chat_invitation">Invitation</string>
     <string name="ep_remove_connection">remove</string>
     <string name="ep_request_connection">request</string>
+    <string name="ep_confirm_connection">confirm</string>
+    <string name="ep_reject_connection">reject</string>
 </resources>

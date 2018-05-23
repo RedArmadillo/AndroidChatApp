@@ -23,11 +23,6 @@ public class HomeFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private ImageButton weather;
-    private ImageButton chat;
-    private ImageButton Chatlist;
-    private ImageButton settings;
-
 
     //private OnSuccessFragmentInteractionListener mListener;
 
@@ -40,10 +35,9 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_home, container, false);
-        weather = v.findViewById(R.id.weatherButton);
-        chat = v.findViewById(R.id.chatButton2);
-        Chatlist = v.findViewById(R.id.chatRoomButton);
-        settings = v.findViewById(R.id.settingButton2);
+        ImageButton weather = v.findViewById(R.id.weather);
+        ImageButton chat = v.findViewById(R.id.chat);
+        ImageButton chatlist = v.findViewById(R.id.chatroom);
         weather.setOnClickListener(
                 view -> getFragmentManager()
                         .beginTransaction()
@@ -55,17 +49,12 @@ public class HomeFragment extends Fragment {
                 .replace(R.id.landingContainer, new ChatFragment()).addToBackStack(null)
                 .commit());
 
-        Chatlist.setOnClickListener(view -> {
+        chatlist.setOnClickListener(view -> {
             Intent intent = new Intent(getActivity(), ChatListActivity.class);
             startActivity(intent);
         });
-
-        settings.setOnClickListener(view -> {
-            Intent intent = new Intent(getActivity(), SettingMenuActivity.class);
-            startActivity(intent);
-        });
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        return v;
     }
 
 }

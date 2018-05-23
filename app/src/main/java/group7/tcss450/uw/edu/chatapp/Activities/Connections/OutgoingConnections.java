@@ -114,16 +114,15 @@ public class OutgoingConnections extends Fragment {
 
 
         String[] l3 = outgoing.toString().split(",");
-        for (String a : l3) {
-            a = a.replace("[", "");
-            a = a.replace("]", "");
-            a.replace("\"", "");
+        String[] removal = new String[l3.length];
+        for (int x = 0; x < l3.length; x++) {
+            removal[x] = l3[x].replace("[", "").replace("]", "").replace("\"", "") + " (pending)";
         }
         ListView oList = v.findViewById(R.id.outgoingListConnectionList);
 
 
 
-        ArrayAdapter<String> adapter3 = new ArrayAdapter<>( getActivity(), android.R.layout.simple_list_item_1, l3);
+        ArrayAdapter<String> adapter3 = new ArrayAdapter<>( getActivity(), android.R.layout.simple_list_item_1, removal);
         oList.setAdapter(adapter3);
         adapter3.notifyDataSetChanged();
 

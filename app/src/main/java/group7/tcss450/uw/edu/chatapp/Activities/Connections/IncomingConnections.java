@@ -110,15 +110,14 @@ public class IncomingConnections extends Fragment {
     }
 
     private void updateList(JSONArray incoming) {
-        String[] l2 = incoming.toString().split(",");
-        for (String a : l2) {
-            a = a.replace("[", "");
-            a = a.replace("]", "");
-            a.replace("\"", "");
+        String[] l1 = incoming.toString().split(",");
+        String[] removal = new String[l1.length];
+        for (int x = 0; x < l1.length; x++) {
+            removal[x] = l1[x].replace("[", "").replace("]", "").replace("\"", "")  + " (pending)";;
         }
         ListView iList = v.findViewById(R.id.listIncomingConnections);
 
-        ArrayAdapter<String> adapter2 = new ArrayAdapter<>( getActivity(), android.R.layout.simple_list_item_1, l2);
+        ArrayAdapter<String> adapter2 = new ArrayAdapter<String>( getActivity(), android.R.layout.simple_list_item_1, removal);
         iList.setAdapter(adapter2);
         adapter2.notifyDataSetChanged();
 
