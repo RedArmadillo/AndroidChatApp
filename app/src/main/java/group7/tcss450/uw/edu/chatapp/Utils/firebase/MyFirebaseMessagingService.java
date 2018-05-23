@@ -44,7 +44,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         Uri notificationSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         createNotificationChannel();
         NotificationCompat.Builder notifiBuilder =  new NotificationCompat.Builder(this, CHANNEL_ID)
-                .setSmallIcon(R.drawable.uwtlogo)
+                .setSmallIcon(R.drawable.ic_chat)
                 .setContentTitle("Firebase Cloud Messaging")
                 .setAutoCancel(true)
                 .setContentText(body)

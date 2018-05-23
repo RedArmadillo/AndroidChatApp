@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import org.json.JSONException;
@@ -73,12 +74,16 @@ public class InvitationViewAdapter extends RecyclerView.Adapter {
                 .build().execute();
     }
 
+
+
+
     private void handleError(String s) {
         Log.d("ERROR IN RESPONSE TO INVITATION", s);
     }
 
     private void onPostResponse(String s) {
         Log.d("RESPONSE from RESPONSE", s);
+
     }
 
 
@@ -95,6 +100,7 @@ public class InvitationViewAdapter extends RecyclerView.Adapter {
         public TextView mRoomName;
         public Button mNoButton;
         public Button mJoinButton;
+        public ProgressBar mBar;
         public InvitationViewHolder(View view) {
             super(view);
             mView = view;
@@ -103,29 +109,34 @@ public class InvitationViewAdapter extends RecyclerView.Adapter {
             mRoomName = (TextView) view.findViewById(R.id.invitationRoomName);
             mJoinButton = (Button) view.findViewById(R.id.invitationJoinButton);
             mNoButton = (Button) view.findViewById(R.id.invitationNoButton);
+            mBar = (ProgressBar) view.findViewById((R.id.invitationProgressBar));
         }
 
         public void bind(Invitation i, InvitationViewHolder holder) {
             mSender.setText(i.getSender());
             mRoomName.setText(i.getRoomName());
-            mView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mNoButton.setVisibility(View.VISIBLE);
-                    mJoinButton.setVisibility(View.VISIBLE);
-                }
-            });
+//            mView.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    mNoButton.setVisibility(View.VISIBLE);
+//                    mJoinButton.setVisibility(View.VISIBLE);
+//                }
+//            });
             mNoButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     sendResponse(false, itemView, i);
+                    mNoButton.setEnabled(false);
+                    mJoinButton.setEnabled(false);
                 }
             });
 
             mJoinButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    sendResponse(true, itemView, i);
+                    mNoButton.setEnabled(false);
+                    mJoinButton.setEnabled(false);
+                    sendResponse(true, itemView,i);
                 }
             });
         }

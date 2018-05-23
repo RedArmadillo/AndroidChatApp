@@ -13,7 +13,8 @@
         android:id="@+id/addDialogTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Enter a username" />
+        android:text="Enter a username"
+        android:textSize="18sp" />
 
     <EditText
         android:id="@+id/addDialogInput"
