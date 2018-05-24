@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import org.json.JSONException;
@@ -22,10 +23,10 @@ import group7.tcss450.uw.edu.chatapp.R;
 
 public class InvitationViewAdapter extends RecyclerView.Adapter {
     private List<Invitation> mInvitationList;
-
     public InvitationViewAdapter(List<Invitation> list) {
         mInvitationList = list;
     }
+    private ProgressBar mBar;
 
 
     public void updateData(List<Invitation> roomList) {
@@ -37,7 +38,7 @@ public class InvitationViewAdapter extends RecyclerView.Adapter {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.invitation_list_row, parent, false);
+                .inflate(R.layout.row_invitation_list, parent, false);
         return new InvitationViewHolder(view);
     }
 
@@ -47,7 +48,7 @@ public class InvitationViewAdapter extends RecyclerView.Adapter {
         ((InvitationViewHolder) holder).bind(i, (InvitationViewHolder) holder);
     }
 
-    public void sendResponse(Boolean accept, View view, Invitation invitation) {
+    public void sendResponse(Boolean accept, View view, Invitation invitation, InvitationViewHolder holder) {
         SharedPreferences prefs =
                 view.getContext().getSharedPreferences(view.getContext().getString(R.string.keys_shared_prefs),
                         Context.MODE_PRIVATE);
@@ -67,18 +68,26 @@ public class InvitationViewAdapter extends RecyclerView.Adapter {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        mBar = holder.mBar;
         new SendPutAsyncTask.Builder(mResponseURL, message)
+                .onPreExecute(this::onPreResponse)
                 .onPostExecute(this::onPostResponse)
                 .onCancelled(this::handleError)
                 .build().execute();
     }
+
+    private void onPreResponse() {
+        mBar.setVisibility(View.VISIBLE);
+    }
+
 
     private void handleError(String s) {
         Log.d("ERROR IN RESPONSE TO INVITATION", s);
     }
 
     private void onPostResponse(String s) {
-        Log.d("RESPONSE from RESPONSE", s);
+        mBar.setVisibility(View.GONE);
+        notifyDataSetChanged();
     }
 
 
@@ -90,12 +99,13 @@ public class InvitationViewAdapter extends RecyclerView.Adapter {
     }
 
     public class InvitationViewHolder extends RecyclerView.ViewHolder  {
-        public View mView;
-        public TextView mSender;
-        public TextView mRoomName;
-        public Button mNoButton;
-        public Button mJoinButton;
-        public InvitationViewHolder(View view) {
+        private View mView;
+        private TextView mSender;
+        private TextView mRoomName;
+        private Button mNoButton;
+        private Button mJoinButton;
+        private ProgressBar mBar;
+        private InvitationViewHolder(View view) {
             super(view);
             mView = view;
             mView.setClickable(true);
@@ -103,29 +113,34 @@ public class InvitationViewAdapter extends RecyclerView.Adapter {
             mRoomName = (TextView) view.findViewById(R.id.invitationRoomName);
             mJoinButton = (Button) view.findViewById(R.id.invitationJoinButton);
             mNoButton = (Button) view.findViewById(R.id.invitationNoButton);
+            mBar = (ProgressBar) view.findViewById((R.id.invitationProgressBar));
         }
 
-        public void bind(Invitation i, InvitationViewHolder holder) {
+        void bind(final Invitation i, InvitationViewHolder holder) {
             mSender.setText(i.getSender());
             mRoomName.setText(i.getRoomName());
-            mView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mNoButton.setVisibility(View.VISIBLE);
-                    mJoinButton.setVisibility(View.VISIBLE);
-                }
-            });
+//            mView.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    mNoButton.setVisibility(View.VISIBLE);
+//                    mJoinButton.setVisibility(View.VISIBLE);
+//                }
+//            });
             mNoButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    sendResponse(false, itemView, i);
+                    sendResponse(false, mView, i, holder);
+//                    mNoButton.setEnabled(false);
+//                    mJoinButton.setEnabled(false);
                 }
             });
 
             mJoinButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    sendResponse(true, itemView, i);
+//                    mNoButton.setEnabled(false);
+//                    mJoinButton.setEnabled(false);
+                    sendResponse(true, mView,i, holder);
                 }
             });
         }
