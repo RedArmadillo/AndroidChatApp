@@ -27,7 +27,7 @@
     <string name="chat_invitation">Invitation</string>
     <string name="ep_remove_connection">remove</string>
     <string name="ep_request_connection">request</string>
-    <string name="ep_confirm_connection">confirm</string>
+    <string name="ep_confirm_connection">accept</string>
     <string name="ep_reject_connection">reject</string>
     <string name="token">token</string>
     <string name="default_notification_channel_name" translatable="true">News</string>
