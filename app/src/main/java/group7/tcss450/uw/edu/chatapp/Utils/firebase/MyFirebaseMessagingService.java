@@ -34,11 +34,11 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
         if (remoteMessage.getNotification() != null) {
             Log.d(TAG, "Message body: " + remoteMessage.getNotification().getBody());
-            sendNotification(remoteMessage.getNotification().getBody(), remoteMessage.getCollapseKey());
+            //sendNotification(remoteMessage.getNotification());
         }
     }
 
-    private void sendNotification(String body, String collapseKey) {
+    private void sendNotification(RemoteMessage.Notification noti) {
         Intent intent = new Intent(this, ChatListActivity.class);
         intent.setFlags((Intent.FLAG_ACTIVITY_CLEAR_TOP));
         PendingIntent pendingIntent = PendingIntent
@@ -47,15 +47,15 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         createNotificationChannel();
         NotificationCompat.Builder notifiBuilder =  new NotificationCompat.Builder(this, CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_chat)
-                .setGroup(collapseKey)
+                .setContentTitle(noti.getTitle())
+//                .setGroup(collapseKey)
                 .setAutoCancel(true)
-                .setContentText(body)
+                .setContentText(noti.getBody())
                 .setContentIntent(pendingIntent)
                 .setSound(notificationSound)
                 .setOnlyAlertOnce(true);
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
-        notificationManager.notify(notiID++, notifiBuilder.build());
-
+        notificationManager.notify(notiID, notifiBuilder.build());
     }
 
     private void createNotificationChannel() {
