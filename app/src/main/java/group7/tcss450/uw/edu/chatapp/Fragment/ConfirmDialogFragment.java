@@ -35,7 +35,7 @@ public class ConfirmDialogFragment extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_confirm_dialog, container, false);
+        View v = inflater.inflate(R.layout.dialog_confirm, container, false);
         mNoButton = v.findViewById(R.id.cancelLeaveDialogButton);
         mYesButton = v.findViewById(R.id.okLeaveDialogButton);
         return v;

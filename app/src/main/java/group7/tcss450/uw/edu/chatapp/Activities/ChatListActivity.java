@@ -95,16 +95,13 @@ public class ChatListActivity extends AppCompatActivity implements CreateRoomDia
     public void chatRoomInCharge() {
         myFabButton.setVisibility(View.VISIBLE);
         recyclerView.setVisibility(View.VISIBLE);
-
         invRecyclerView.setVisibility(View.INVISIBLE);
-
     }
 
     public void invitationInCharge() {
         // "turn off" chat stuff
         myFabButton.setVisibility(View.INVISIBLE);
         recyclerView.setVisibility(View.INVISIBLE);
-
         invRecyclerView.setVisibility(View.VISIBLE);
 
     }
@@ -137,9 +134,6 @@ public class ChatListActivity extends AppCompatActivity implements CreateRoomDia
 
             if (res.get(getString(R.string.keys_json_success)).toString()
                     .equals(getString(R.string.keys_json_success_value_true))) {
-                //int newChatID = res.getInt(getString(R.string.keys_json_new_chat_id));
-                //chatRoomList.add(new ChatRoom(newChatID, "new room", "hello", "me"));
-                //mAdapter.notifyDataSetChanged();
                 recyclerView.smoothScrollToPosition(0);
             }
         } catch (JSONException e) {
@@ -147,7 +141,6 @@ public class ChatListActivity extends AppCompatActivity implements CreateRoomDia
             e.printStackTrace();
         }
     }
-
 
     private void handleError(final String msg) {
         Log.e("Can't create new room!!!", msg.toString());
@@ -273,7 +266,6 @@ public class ChatListActivity extends AppCompatActivity implements CreateRoomDia
         super.onStop();
         mListenManager.stopListening();
         mInvitationListenManager.stopListening();
-
     }
 
 

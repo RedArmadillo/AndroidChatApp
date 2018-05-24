@@ -82,7 +82,6 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.OnF
                                 false)) {
                             //loadSuccessFragment();
                             loadHomeNavigation();
-
                         } else {
                             getSupportFragmentManager().beginTransaction()
                                     .add(R.id.fragmentContainer,
@@ -194,9 +193,7 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.OnF
                     .apply();
             // subscribe to a "user" topic for future Firebase tasks
             FirebaseMessaging.getInstance().subscribeToTopic(mCredentials.getUsername());
-
             if (((CheckBox) findViewById(R.id.checkBox)).isChecked()) {
-
 //save the users “want” to stay logged in
                 prefs.edit().putBoolean(
                         getString(R.string.keys_prefs_stay_logged_in),
