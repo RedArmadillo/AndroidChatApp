@@ -2,8 +2,10 @@ package group7.tcss450.uw.edu.chatapp.Fragment;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
@@ -15,9 +17,13 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlacePicker;
 import com.google.android.gms.tasks.OnSuccessListener;
 
 import org.json.JSONArray;
@@ -26,6 +32,8 @@ import org.json.JSONObject;
 
 import group7.tcss450.uw.edu.chatapp.Async.SendGetAsyncTask;
 import group7.tcss450.uw.edu.chatapp.R;
+
+import static android.app.Activity.RESULT_OK;
 
 
 /**
@@ -75,6 +83,7 @@ public class WeatherFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_weather, container, false);
         v.findViewById(R.id.btnWeatherZip).setOnClickListener(this::getWeatherByZip);
         v.findViewById(R.id.btnWeatherLoc).setOnClickListener(this::getWeatherByCurrentLoc);
+        v.findViewById(R.id.btnWeatherMap).setOnClickListener(this::getWeatherByPlacePicker);
         return v;
     }
 
@@ -234,6 +243,35 @@ public class WeatherFragment extends Fragment {
                 .onPostExecute(this::endOfWeatherByZipTask)
                 .onCancelled(this::handleError)
                 .build().execute();
+    }
+
+    private void getWeatherByPlacePicker (final View theButton) {
+        PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
+        try {
+            startActivityForResult(builder.build(getActivity()), 1);
+        } catch (GooglePlayServicesNotAvailableException e) {
+            Log.e("Location Picker", "Play services not available");
+            Log.e("Location Picker", e.toString());
+        } catch (GooglePlayServicesRepairableException e) {
+            Log.e("Location Picker", "Play services repairable exception");
+            Log.e("Location Picker", e.toString());
+        }
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 1) {
+            if (resultCode == RESULT_OK) {
+
+                Place place = PlacePicker.getPlace(getContext(), data);
+                double lat = place.getLatLng().latitude;
+                double lon = place.getLatLng().longitude;
+                Location loc = new Location(LocationManager.GPS_PROVIDER);
+                loc.setLatitude(lat);
+                loc.setLongitude(lon);
+                endOfGetWeatherByCurrentLocTask(loc);
+
+            }
+        }
     }
 
 
