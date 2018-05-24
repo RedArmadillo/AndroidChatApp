@@ -4,10 +4,16 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import group7.tcss450.uw.edu.chatapp.Async.SendGetAsyncTask;
 import group7.tcss450.uw.edu.chatapp.R;
 
 
@@ -66,7 +72,10 @@ public class WeatherFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_weather, container, false);
+
+        View v = inflater.inflate(R.layout.fragment_weather, container, false);
+        v.findViewById(R.id.chatSendButton).setOnClickListener(this::getWeatherByZip);
+        return v;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -107,4 +116,56 @@ public class WeatherFragment extends Fragment {
         // TODO: Update argument type and name
         void OnWeatherFragmentInteractionListener(Uri uri);
     }
+
+
+    /***
+     * Takes a zip code from the weather fragment zipcode EditText box and sends a GET request
+     * to our weather service, setting the appropriate TextViews to the requested weather data.
+     *
+     * @param theButton The get weather by zipcode button
+     */
+    private void getWeatherByZip(final View theButton) {
+
+        String zip = ((EditText) getView().findViewById(R.id.etWeatherZip))
+                .getText().toString();
+
+        Uri uri10Day = new Uri.Builder()
+                .scheme("https")
+                .authority(getString(R.string.ep_weather_base_url))
+                .appendPath(getString(R.string.ep_weather_forecast))
+                .appendQueryParameter(getString(R.string.param_weather_zip), zip)
+                .appendQueryParameter(getString(R.string.param_weather_api),
+                        getString(R.string.keys_weather_API))
+                .build();
+
+        new SendGetAsyncTask.Builder(uri10Day.toString(), null)
+                .onPostExecute(this::endOfWeatherByZipTask)
+                .onCancelled(this::handleError)
+                .build().execute();
+    }
+
+    private void endOfWeatherByZipTask(final String result) {
+        Log.d("response from weather service", result);
+
+        try {
+            JSONObject res = new JSONObject(result).getJSONObject("data");
+            String currTemp = res.getString("temp");
+            String maxTemp = res.getString("max_temp");
+            String minTemp = res.getString("min_temp");
+            String desc = res.getJSONObject("weather").getString("description");
+
+            ((EditText) getView().findViewById(R.id.tvWeatherCond))
+                    .setText("");
+
+        } catch (JSONException e) {
+            Log.d("endOfSend", "error");
+            e.printStackTrace();
+        }
+    }
+
+    private void handleError(final String msg) {
+        Log.e("WeatherFragment Error", msg);
+    }
+
+
 }

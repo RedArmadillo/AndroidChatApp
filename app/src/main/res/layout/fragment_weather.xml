@@ -23,7 +23,7 @@
         android:src="@android:drawable/ic_dialog_map"
         android:tint="@color/colorPrimary"
         app:layout_constraintStart_toEndOf="@+id/btnWeatherLoc"
-        app:layout_constraintTop_toBottomOf="@+id/tvWeatherTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
     <ImageButton
         android:id="@+id/btnWeatherLoc"
@@ -39,11 +39,11 @@
         android:scaleType="fitCenter"
         android:src="@android:drawable/ic_menu_mylocation"
         android:tint="@color/colorPrimary"
-        app:layout_constraintStart_toEndOf="@+id/chatSendButton2"
-        app:layout_constraintTop_toBottomOf="@+id/tvWeatherTitle" />
+        app:layout_constraintStart_toEndOf="@+id/btnWeatherZip"
+        app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
     <ImageButton
-        android:id="@+id/chatSendButton2"
+        android:id="@+id/btnWeatherZip"
         android:layout_width="29dp"
         android:layout_height="39dp"
         android:layout_gravity="bottom"
@@ -57,7 +57,7 @@
         android:src="@drawable/ic_send_button"
         android:tint="@color/colorPrimary"
         app:layout_constraintStart_toEndOf="@+id/etWeatherZip"
-        app:layout_constraintTop_toBottomOf="@+id/tvWeatherTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
     <EditText
         android:id="@+id/etWeatherZip"
@@ -71,10 +71,10 @@
         android:inputType="textPersonName|number"
         app:layout_constraintEnd_toStartOf="@+id/divider"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvWeatherTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
     <TextView
-        android:id="@+id/tvWeatherTitle"
+        android:id="@+id/textView5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -89,121 +89,97 @@
     <View
         android:id="@+id/divider"
         android:layout_width="1dp"
-        android:layout_height="495dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
         android:background="?android:attr/listDivider"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="8dp" />
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <TableLayout
+    <TextView
+        android:id="@+id/tvWeatherTemp"
         android:layout_width="0dp"
-        android:layout_height="408dp"
-        android:layout_marginEnd="16dp"
+        android:layout_height="39dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
+        android:text="-"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toStartOf="@+id/divider"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toBottomOf="@+id/etWeatherZip" />
+
+    <TextView
+        android:id="@+id/tvWeatherHighLow"
+        android:layout_width="0dp"
+        android:layout_height="39dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
+        android:text="-"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tvWeatherHiLoText"
+        app:layout_constraintTop_toBottomOf="@+id/etWeatherZip" />
+
+    <TextView
+        android:id="@+id/tvWeatherNowText"
+        android:layout_width="0dp"
+        android:layout_height="39dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:text="@string/weather_current"
+        android:textAlignment="textEnd"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/guideline"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etWeatherZip" />
+
+    <TextView
+        android:id="@+id/tvWeatherHiLoText"
+        android:layout_width="0dp"
+        android:layout_height="39dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="32dp"
+        android:text="@string/weather_hi_low"
+        android:textAlignment="textEnd"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/divider"
+        app:layout_constraintTop_toBottomOf="@+id/etWeatherZip" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="97dp" />
+
+    <TextView
+        android:id="@+id/tvWeatherCond"
+        android:layout_width="0dp"
+        android:layout_height="39dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
+        android:text="-"
+        android:textAlignment="center"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etWeatherZip">
+        app:layout_constraintTop_toBottomOf="@+id/tvWeatherNowText" />
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" >
+    <View
+        android:id="@+id/divider4"
+        android:layout_width="368dp"
+        android:layout_height="1dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="12dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvWeatherCond" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/weather_current"
-                android:textStyle="bold" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/weather_hi_low" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/weather_conditions" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" >
-
-            <View
-                android:id="@+id/divider2"
-                android:layout_width="wrap_content"
-                android:layout_height="2dp"
-                android:background="?android:attr/listDivider"
-                android:visibility="visible" />
-
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/weather_24_hour"
-                android:textStyle="bold" />
-
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/weather_hi_low" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/weather_conditions" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/weather_5_day"
-                android:textStyle="bold" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" >
-
-        </TableRow>
-    </TableLayout>
 </android.support.constraint.ConstraintLayout>
