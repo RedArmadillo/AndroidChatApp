@@ -57,6 +57,8 @@
     <LinearLayout
         android:layout_width="258dp"
         android:layout_height="497dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:orientation="vertical"
         android:outlineProvider="bounds"
         app:layout_constraintStart_toStartOf="parent"

@@ -10,7 +10,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -21,10 +20,13 @@ import group7.tcss450.uw.edu.chatapp.Fragment.ChatFragment;
 import group7.tcss450.uw.edu.chatapp.Fragment.ConfirmDialogFragment;
 import group7.tcss450.uw.edu.chatapp.R;
 import group7.tcss450.uw.edu.chatapp.Utils.SettingMenuActivity;
+//import group7.tcss450.uw.edu.chatapp.Utils.SettingMenuActivity;
 
 public class ChatActivity extends SettingMenuActivity implements AddUserDialogFragment.AddUserDialogListener,
         ConfirmDialogFragment.LeaveRoomDialogListener{
+    private static final String TAG = "CHATACTIVITY";
     public int mChatId;
+    public String mRoomname;
     private String mInviteURL;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,8 +37,10 @@ public class ChatActivity extends SettingMenuActivity implements AddUserDialogFr
             //if (findViewById(R.id.chatLayout) != null) {
             int chatId = getIntent().getIntExtra(getString(R.string.keys_json_chat_id_lowercase), 1);
             mChatId = chatId;
+            mRoomname =  getIntent().getStringExtra(getString(R.string.keys_json_roomname));
+
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.chatLayout, new ChatFragment(chatId))
+                    .add(R.id.chatLayout, new ChatFragment(chatId, mRoomname))
                     .commit();
             //}
         }
@@ -68,6 +72,7 @@ public class ChatActivity extends SettingMenuActivity implements AddUserDialogFr
         }
     }
 
+    // The return username from AddUserDialog
     @Override
     public void onDialogReturn(String username) {
         JSONObject messageJson = new JSONObject();
@@ -97,20 +102,14 @@ public class ChatActivity extends SettingMenuActivity implements AddUserDialogFr
     }
 
     private void handleError(String s) {
-        Log.d("CHATACTIVITY", "can't add a user");
+        Log.d(TAG ,"can't add a user");
     }
 
     private void endOfAdd(String result) {
-        try {
-            JSONObject res = new JSONObject(result);
-            Log.d("response from service for add a user to room", result);
-            Toast.makeText(this, "User added!", Toast.LENGTH_SHORT).show();
-
-        } catch (JSONException e1) {
-            e1.printStackTrace();
-        }
+            Log.d(TAG, result);
     }
 
+    // The confirmation return from LeaveRoomDialog
     @Override
     public void onLeaveDialogReturn() {
         JSONObject messageJson = new JSONObject();
@@ -140,14 +139,8 @@ public class ChatActivity extends SettingMenuActivity implements AddUserDialogFr
     }
 
     private void endOfLeave(String result) {
-        try {
-            JSONObject res = new JSONObject(result);
-            Log.d("response from service for leaving room", result);
+            Log.d(TAG, result);
             Intent intent = new Intent(this, ChatListActivity.class);
             startActivity(intent);
-
-        } catch (JSONException e1) {
-            e1.printStackTrace();
-        }
     }
 }

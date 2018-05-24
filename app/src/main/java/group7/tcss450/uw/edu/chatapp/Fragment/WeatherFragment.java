@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
@@ -44,18 +45,8 @@ import group7.tcss450.uw.edu.chatapp.Utils.WeatherViewAdapter;
 import static android.app.Activity.RESULT_OK;
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link WeatherFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link WeatherFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class WeatherFragment extends Fragment {
-
     private static final int MY_PERMISSIONS_LOCATIONS = 814;
-
     private OnFragmentInteractionListener mListener;
     private FusedLocationProviderClient mFusedLocationClient;
     private LocationRequest mLocationRequest;
@@ -90,7 +81,7 @@ public class WeatherFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        
+
         View v = inflater.inflate(R.layout.fragment_weather, container, false);
 
         super.onCreate(savedInstanceState);
@@ -105,15 +96,11 @@ public class WeatherFragment extends Fragment {
         v.findViewById(R.id.btnWeatherZip).setOnClickListener(this::getWeatherByZip);
         v.findViewById(R.id.btnWeatherLoc).setOnClickListener(this::getWeatherByCurrentLoc);
         v.findViewById(R.id.btnWeatherMap).setOnClickListener(this::getWeatherByPlacePicker);
+
         return v;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.OnWeatherFragmentInteractionListener(uri);
-        }
-    }
+
 
     @Override
     public void onAttach(Context context) {

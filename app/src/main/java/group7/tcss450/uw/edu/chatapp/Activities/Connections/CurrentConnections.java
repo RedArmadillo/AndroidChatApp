@@ -18,9 +18,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.TextView;
 
 import org.json.JSONArray;
@@ -32,8 +34,13 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Locale;
 import java.util.Objects;
 
+import group7.tcss450.uw.edu.chatapp.Activities.MainActivity;
 import group7.tcss450.uw.edu.chatapp.Async.SendPostAsyncTask;
 import group7.tcss450.uw.edu.chatapp.R;
 
@@ -47,6 +54,7 @@ public class CurrentConnections extends Fragment {
     private View v;
     protected DialogInterface.OnClickListener confirmrejectdialogClickListener;
     protected DialogInterface.OnClickListener removedialogClickListener;
+    protected CListViewAdapter cAdapter;
 
     protected AlertDialog.Builder builder;
     private String removeUser;
@@ -54,6 +62,14 @@ public class CurrentConnections extends Fragment {
     private String confirmUser;
     private String m_Text;
     private String rejectUser;
+
+    private final ArrayList<String> cListFiltered;
+    //private final Collection<? extends String> oListFiltered;
+    //private final Collection<? extends String> iListFiltered;
+
+    public CurrentConnections() {
+        cListFiltered = new ArrayList<String>();
+    }
 
 
     @Override
@@ -65,6 +81,11 @@ public class CurrentConnections extends Fragment {
         v = rootView;
         task.execute("", "", "");
         // Inflate the layout for this fragment
+
+
+
+
+        //END OF ADAPTER CODE
 
         ImageButton myRequestButton = (ImageButton) v.findViewById(R.id.AddContactButton);
 
@@ -194,6 +215,7 @@ public class CurrentConnections extends Fragment {
         });
 
 
+
         removedialogClickListener = (dialog, which) -> {
             switch (which) {
                 case DialogInterface.BUTTON_POSITIVE:
@@ -290,6 +312,28 @@ public class CurrentConnections extends Fragment {
                 JSONArray inc = (JSONArray) resultsJSON.get("incoming");
                 JSONArray out = (JSONArray) resultsJSON.get("outgoing");
                 updateList(verified,inc,out);
+
+                /**
+                 * RESETING ADAPTER TO SEARCH CONTACTS
+                 */
+                SearchView search = (SearchView) v.findViewById(R.id.searchView);
+                cAdapter = new CListViewAdapter(getActivity());
+                search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
+                    @Override
+                    public boolean onQueryTextSubmit(String s) {
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onQueryTextChange(String s) {
+                        ListView la = v.findViewById(R.id.listConnections);
+                        la.setAdapter(cAdapter);
+                        String text = s;
+                        cAdapter.filter(text);
+                        return false;
+                    }
+                });
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -306,6 +350,8 @@ public class CurrentConnections extends Fragment {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>( getActivity(), android.R.layout.simple_list_item_1, removal);
         cList.setAdapter(adapter);
         adapter.notifyDataSetChanged();
+        cListFiltered.addAll(Arrays.asList(removal));
+
 
         //////////////////////////////////////////////////////////
 
@@ -326,6 +372,7 @@ public class CurrentConnections extends Fragment {
         adapter5.notifyDataSetChanged();
 
 
+
         /////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -343,6 +390,7 @@ public class CurrentConnections extends Fragment {
         ArrayAdapter<String> adapter3 = new ArrayAdapter<String>( getActivity(), android.R.layout.simple_list_item_1, news);
         oList.setAdapter(adapter3);
         adapter3.notifyDataSetChanged();
+
     }
 
     @SuppressLint("StaticFieldLeak")
@@ -557,6 +605,76 @@ public class CurrentConnections extends Fragment {
                 e.printStackTrace();
             }
         }
+    }
+
+    public class CListViewAdapter extends BaseAdapter {
+
+
+        // Declare Variables
+
+        Context mContext;
+        LayoutInflater inflater;
+        private ArrayList<String> arraylist;
+
+        public CListViewAdapter(Context context ) {
+            mContext = context;
+            inflater = LayoutInflater.from(mContext);
+            this.arraylist = new ArrayList<String>();
+            this.arraylist.addAll(cListFiltered);
+        }
+
+        public class ViewHolder {
+            TextView name;
+        }
+
+        @Override
+        public int getCount() {
+            return cListFiltered.size();
+        }
+
+        @Override
+        public String getItem(int position) {
+            return cListFiltered.get(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        public View getView(final int position, View view, ViewGroup parent) {
+            final ViewHolder holder;
+            if (view == null) {
+                holder = new ViewHolder();
+                view = inflater.inflate(R.layout.listview_item, null);
+                // Locate the TextViews in listview_item.xml
+                holder.name = (TextView) view.findViewById(R.id.name);
+                view.setTag(holder);
+            } else {
+                holder = (ViewHolder) view.getTag();
+            }
+            // Set the results into TextViews
+            holder.name.setText(cListFiltered.get(position));
+            return view;
+        }
+
+        // Filter Class
+        public void filter(String charText) {
+            Log.d("ArrayList[0]", arraylist.get(0));
+            charText = charText.toLowerCase(Locale.getDefault());
+            cListFiltered.clear();
+            if (charText.length() == 0) {
+                cListFiltered.addAll(arraylist);
+            } else {
+                for (String wp : arraylist) {
+                    if (wp.toLowerCase(Locale.getDefault()).contains(charText)) {
+                        cListFiltered.add(wp);
+                    }
+                }
+            }
+            notifyDataSetChanged();
+        }
+
     }
 
 

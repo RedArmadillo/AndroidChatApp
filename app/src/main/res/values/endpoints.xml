@@ -15,10 +15,11 @@
         <string name="ep_leave">leave</string>
         <string name="ep_invitation">roomInvitation</string>
         <string name="ep_reverify">reverify</string>
+        <string name="ep_response">response</string>
+        <string name="ep_update_token">updateToken</string>
         <string name="ep_connections">contacts</string>
         <string name="ep_incoming_connections">contacts/incoming</string>
         <string name="ep_outgoing_connections">contacts/outgoing</string>
-
         <string name="ep_weather_base_url">api.weatherbit.io</string>
         <string name="ep_weather_v2.0">v2.0</string>
         <string name="ep_weather_forecast">forecast</string>
@@ -29,6 +30,4 @@
         <string name="param_weather_units">units</string>
         <string name="param_weather_lat">lat</string>
         <string name="param_weather_lon">lon</string>
-
-
 </resources>

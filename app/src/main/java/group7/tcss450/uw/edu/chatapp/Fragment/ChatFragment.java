@@ -45,11 +45,13 @@ public class ChatFragment extends Fragment {
     private RecyclerView mRecycleView;
     private MessageListAdapter mAdapter;
     private int mChatId;
+    private String mRoomName;
     public ChatFragment() {
         mChatId = 1;
     }
     @SuppressLint("ValidFragment")
-    public ChatFragment(int chatId) {
+    public ChatFragment(int chatId, String roomname) {
+        mRoomName = roomname;
         mChatId = chatId;
     }
 
@@ -118,13 +120,13 @@ public class ChatFragment extends Fragment {
         JSONObject messageJson = new JSONObject();
         String msg = ((EditText) getView().findViewById(R.id.chatInputEditText))
                 .getText().toString();
-
         try {
             InputMethodManager imm = (InputMethodManager) getContext().getSystemService(INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), 0);
             messageJson.put(getString(R.string.keys_json_username), mUsername);
             messageJson.put(getString(R.string.keys_json_message), msg);
             messageJson.put(getString(R.string.keys_json_chat_id), mChatId);
+            messageJson.put(getContext().getString(R.string.keys_json_roomname), mRoomName);
         } catch (JSONException e) {
             Log.d("ERROR on sendMessage", "!!!!");
             e.printStackTrace();
@@ -141,8 +143,6 @@ public class ChatFragment extends Fragment {
     }
 
     private void endOfSendMsgTask(final String result) {
-        Log.d("response from service", result);
-
         try {
             JSONObject res = new JSONObject(result);
 
@@ -151,8 +151,6 @@ public class ChatFragment extends Fragment {
 
                 ((EditText) getView().findViewById(R.id.chatInputEditText))
                         .setText("");
-                Log.d("endOfSendMsg", Integer.toString(mAdapter.getItemCount()));
-                //mRecycleView.smoothScrollToPosition(mAdapter.getItemCount() - 1);
             }
         } catch (JSONException e) {
             Log.d("endOfSend", "error");
@@ -165,14 +163,11 @@ public class ChatFragment extends Fragment {
     }
 
     private void publishProgress(JSONObject messages) {
-        //final String[] msgs;
         if(messages.has(getString(R.string.keys_json_messages))) {
+            mRecycleView.scrollToPosition(mAdapter.getItemCount() - 1);
             try {
-
                 JSONArray jMessages = messages.getJSONArray(getString(R.string.keys_json_messages));
-
                 for (int i = 0; i < jMessages.length(); i++) {
-
                     JSONObject msg = jMessages.getJSONObject(i);
                     String username = msg.get(getString(R.string.keys_json_username)).toString();
                     String userMessage = msg.get(getString(R.string.keys_json_message)).toString();
@@ -184,10 +179,8 @@ public class ChatFragment extends Fragment {
                 return;
             }
 
-
            getActivity().runOnUiThread(() -> {
                mAdapter.notifyDataSetChanged();
-
             });
 
         }
