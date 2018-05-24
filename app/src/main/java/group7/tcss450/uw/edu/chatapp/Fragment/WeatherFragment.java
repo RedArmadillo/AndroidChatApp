@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
 
@@ -37,8 +38,11 @@ import group7.tcss450.uw.edu.chatapp.R;
  */
 public class WeatherFragment extends Fragment {
 
+    private static final int MY_PERMISSIONS_LOCATIONS = 814;
+
     private OnFragmentInteractionListener mListener;
     private FusedLocationProviderClient mFusedLocationClient;
+    private LocationRequest mLocationRequest;
 
     public WeatherFragment() {
         // Required empty public constructor
@@ -174,28 +178,19 @@ public class WeatherFragment extends Fragment {
      */
     private void getWeatherByCurrentLoc(final View theButton) {
 
-        class Cont {
-            Location mLoc;
-
-            void setLoc(Location theLoc) {
-                mLoc = theLoc;
-            }
-
-            Location getLoc() {
-                return mLoc;
-            }
-        }
-
-        Cont cont = new Cont();
-
         if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION)
                         == PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(getActivity(),
+                    new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
+                    MY_PERMISSIONS_LOCATIONS);
+
             mFusedLocationClient.getLastLocation().addOnSuccessListener(getActivity(),
                     new OnSuccessListener<Location>() {
                         @Override
                         public void onSuccess(Location location) {
                             if (location != null) {
-                                cont.setLoc(location);
+                                endOfGetWeatherByCurrentLoc(location);
                                 Log.d("Weather by current loc",
                                         Double.toString(location.getLatitude())
                                         + " " + Double.toString(location.getLatitude())
@@ -206,55 +201,33 @@ public class WeatherFragment extends Fragment {
                             }
                         }
                     });
-
-            Location loc = cont.getLoc();
-            String lat = Double.toString(loc.getLatitude());
-            String lon = Double.toString(loc.getLongitude());
-
-            Uri uri10Day = new Uri.Builder()
-                    .scheme("https")
-                    .authority(getString(R.string.ep_weather_base_url))
-                    .appendPath(getString(R.string.ep_weather_v2_0))
-                    .appendPath(getString(R.string.ep_weather_forecast))
-                    .appendPath(getString(R.string.ep_weather_daily))
-                    .appendQueryParameter(getString(R.string.param_weather_lat), lat)
-                    .appendQueryParameter(getString(R.string.param_weather_lon), lon)
-                    .appendQueryParameter(getString(R.string.param_weather_units), "I")
-                    .appendQueryParameter(getString(R.string.param_weather_api),
-                            getString(R.string.keys_weather_API))
-                    .build();
-
-            new SendGetAsyncTask.Builder(uri10Day.toString(), new JSONObject())
-                    .onPostExecute(this::endOfWeatherByZipTask)
-                    .onCancelled(this::handleError)
-                    .build().execute();
-        }
-
-
-    }
-
-    private void endOfWeatherByCurrentLocTask(final String result) {
-        Log.d("response from weather service", result);
-
-        try {
-            JSONArray data = new JSONObject(result).getJSONArray("data");
-            JSONObject res = data.getJSONObject(0);
-            String currTemp = res.getString("temp");
-            String maxTemp = res.getString("max_temp");
-            String minTemp = res.getString("min_temp");
-            String desc = res.getJSONObject("weather").getString("description");
-
-            ((TextView) getView().findViewById(R.id.tvWeatherTemp)).setText(currTemp);
-            ((TextView) getView().findViewById(R.id.tvWeatherHighLow)).setText(
-                    maxTemp + " / " + minTemp
-            );
-            ((TextView) getView().findViewById(R.id.tvWeatherCond)).setText(desc);
-
-        } catch (JSONException e) {
-            Log.d("endOfSend", "error");
-            e.printStackTrace();
         }
     }
+
+    public void endOfGetWeatherByCurrentLoc (Location theLocation) {
+        Location loc = theLocation;
+        String lat = Double.toString(loc.getLatitude());
+        String lon = Double.toString(loc.getLongitude());
+
+        Uri uri10Day = new Uri.Builder()
+                .scheme("https")
+                .authority(getString(R.string.ep_weather_base_url))
+                .appendPath(getString(R.string.ep_weather_v2_0))
+                .appendPath(getString(R.string.ep_weather_forecast))
+                .appendPath(getString(R.string.ep_weather_daily))
+                .appendQueryParameter(getString(R.string.param_weather_lat), lat)
+                .appendQueryParameter(getString(R.string.param_weather_lon), lon)
+                .appendQueryParameter(getString(R.string.param_weather_units), "I")
+                .appendQueryParameter(getString(R.string.param_weather_api),
+                        getString(R.string.keys_weather_API))
+                .build();
+
+        new SendGetAsyncTask.Builder(uri10Day.toString(), new JSONObject())
+                .onPostExecute(this::endOfWeatherByZipTask)
+                .onCancelled(this::handleError)
+                .build().execute();
+    }
+    
 
     private void handleError(final String msg) {
         Log.e("WeatherFragment Error", msg);
