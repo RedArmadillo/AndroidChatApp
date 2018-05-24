@@ -68,8 +68,11 @@
             android:id="@+id/textView7"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="monospace"
             android:text="Current Contacts"
-            android:textSize="20sp" />
+            android:textColor="@color/colorAccent"
+            android:textSize="22sp"
+            android:textStyle="bold" />
 
         <ListView
             android:id="@+id/listConnections"
@@ -89,8 +92,11 @@
             android:id="@+id/textView6"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="monospace"
             android:text="Incoming Requests"
-            android:textSize="20sp" />
+            android:textColor="@color/colorAccent"
+            android:textSize="22sp"
+            android:textStyle="bold" />
 
         <ListView
             android:id="@+id/listIncoming"
@@ -101,8 +107,11 @@
             android:id="@+id/textView5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="monospace"
             android:text="Outgoing Requests"
-            android:textSize="20sp" />
+            android:textColor="@color/colorAccent"
+            android:textSize="22sp"
+            android:textStyle="bold" />
 
         <ListView
             android:id="@+id/listOutgoing"
