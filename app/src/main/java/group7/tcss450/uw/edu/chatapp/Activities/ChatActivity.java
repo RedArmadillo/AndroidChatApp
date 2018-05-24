@@ -10,7 +10,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -108,7 +107,6 @@ public class ChatActivity extends SettingMenuActivity implements AddUserDialogFr
 
     private void endOfAdd(String result) {
             Log.d(TAG, result);
-            Toast.makeText(this, "Invitation sent", Toast.LENGTH_SHORT).show();
     }
 
     // The confirmation return from LeaveRoomDialog

@@ -3,6 +3,7 @@ package group7.tcss450.uw.edu.chatapp.Utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.support.v7.widget.RecyclerView;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -85,8 +86,8 @@ public class InvitationViewAdapter extends RecyclerView.Adapter {
     }
 
     private void onPostResponse(String s) {
-        Log.d("RESPONSE from RESPONSE", s);
         mBar.setVisibility(View.GONE);
+        notifyDataSetChanged();
     }
 
 
@@ -129,16 +130,16 @@ public class InvitationViewAdapter extends RecyclerView.Adapter {
                 @Override
                 public void onClick(View v) {
                     sendResponse(false, mView, i, holder);
-                    mNoButton.setEnabled(false);
-                    mJoinButton.setEnabled(false);
+//                    mNoButton.setEnabled(false);
+//                    mJoinButton.setEnabled(false);
                 }
             });
 
             mJoinButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mNoButton.setEnabled(false);
-                    mJoinButton.setEnabled(false);
+//                    mNoButton.setEnabled(false);
+//                    mJoinButton.setEnabled(false);
                     sendResponse(true, mView,i, holder);
                 }
             });
