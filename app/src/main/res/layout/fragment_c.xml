@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frameLayout2"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activities.Connections.cFrag">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/FragCont"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </android.support.constraint.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/CT2"
+        android:layout_width="270dp"
+        android:layout_height="94dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="212dp"
+        android:fontFamily="@font/alegreya_sc"
+        android:text="Contacts"
+        android:textAlignment="center"
+        android:textColor="@color/colorPrimary"
+        android:textSize="46sp"
+        android:textStyle="bold|italic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.466"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/b"
+        android:layout_width="264dp"
+        android:layout_height="205dp"
+        android:layout_marginStart="72dp"
+        android:backgroundTint="@android:color/background_light"
+        android:src="@drawable/d1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:background="?attr/actionModeShareDrawable" />
+
+    <ImageButton
+        android:id="@+id/b4"
+        android:layout_width="115dp"
+        android:layout_height="115dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="324dp"
+        android:backgroundTint="@android:color/background_light"
+        android:src="@drawable/c1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/b5"
+        android:layout_width="115dp"
+        android:layout_height="115dp"
+        android:layout_marginEnd="68dp"
+        android:layout_marginTop="324dp"
+        android:backgroundTint="@android:color/background_light"
+        android:src="@drawable/c2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/PI3"
+        android:layout_width="112dp"
+        android:layout_height="64dp"
+        android:layout_marginStart="228dp"
+        android:layout_marginTop="436dp"
+        android:text="Pending Incoming"
+        android:textAlignment="center"
+        android:textColor="@color/colorAccent"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/PI4"
+        android:layout_width="112dp"
+        android:layout_height="64dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="444dp"
+        android:text="Pending Outgoing"
+        android:textAlignment="center"
+        android:textColor="@color/colorAccent"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</android.support.constraint.ConstraintLayout>

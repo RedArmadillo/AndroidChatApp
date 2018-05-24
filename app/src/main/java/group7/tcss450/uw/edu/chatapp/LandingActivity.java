@@ -54,7 +54,7 @@ public class LandingActivity extends AppCompatActivity
         if(savedInstanceState == null) {
             if (findViewById(R.id.landingContainer) != null) {
                 getSupportFragmentManager().beginTransaction()
-                        .add(R.id.landingContainer, new WeatherFragment())
+                        .add(R.id.landingContainer, new HomeFragment())
                         .commit();
             }
         }
