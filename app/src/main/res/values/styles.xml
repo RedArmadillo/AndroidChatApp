@@ -8,17 +8,43 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="AppTheme2" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorPrimary">#FFC107</item>
-        <item name="colorPrimaryDark">#FFA000</item>
-        <item name="colorAccent">#8BC34A</item>
+    <style name="RedLightBlue" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">#F44336</item>
+        <item name="colorPrimaryDark">#D32F2F</item>
+        <item name="colorAccent">#03A9F4</item>
         <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
     </style>
 
-    <style name="AppTheme3" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorPrimary">#4b2e83</item>
-        <item name="colorPrimaryDark">#b7a57a</item>
-        <item name="colorAccent">#85754d</item>
+    <style name="LimeTeal" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">#CDDC39</item>
+        <item name="colorPrimaryDark">#AFB42B</item>
+        <item name="colorAccent">#009688</item>
+        <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
+    </style>
+
+    <style name="OrangeBrown" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">#FF9800</item>
+        <item name="colorPrimaryDark">#F57C00</item>
+        <item name="colorAccent">#795548</item>
+        <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
+    </style>
+
+    <style name="IndigoGrey" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">#9E9E9E</item>
+        <item name="colorPrimaryDark">#616161</item>
+        <item name="colorAccent">#536DFE</item>
+        <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
+    </style>
+    <style name="BluePurple" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">#2196F3</item>
+        <item name="colorPrimaryDark">#1976D2</item>
+        <item name="colorAccent">#E040FB</item>
+        <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
+    </style>
+    <style name="YellowOrange" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">#FFEB3B</item>
+        <item name="colorPrimaryDark">#FBC02D</item>
+        <item name="colorAccent">#FF5722</item>
         <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
     </style>
 

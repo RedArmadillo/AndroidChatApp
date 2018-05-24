@@ -34,14 +34,15 @@ import group7.tcss450.uw.edu.chatapp.Fragment.WeatherFragment;
 import group7.tcss450.uw.edu.chatapp.Front_End_Register_Login.LoginFragment;
 
 public class LandingActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, WeatherFragment.OnFragmentInteractionListener,
-        SettingsFragment.OnFragmentInteractionListener {
+        implements NavigationView.OnNavigationItemSelectedListener, WeatherFragment.OnFragmentInteractionListener{
 
     private final String TAG = "LandingActivity";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_landing);
+
+        
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -125,11 +126,10 @@ public class LandingActivity extends AppCompatActivity
         } else if (id == R.id.landingWeather) {
             loadFragment(new WeatherFragment());
         } else if (id == R.id.landingSetting) {
-            //loadFragment(new SettingsFragment());
+            loadFragment(new SettingsFragment());
             String refreshedToken = FirebaseInstanceId.getInstance().getToken();
             Log.d("TOKEN", "New token: " + refreshedToken);
-//            Intent intent = new Intent(getApplicationContext(), SettingMenuActivity.class);
-//            startActivity(intent);
+
         } else if (id == R.id.landingLogout) {
             onLogout();
         } else if (id == R.id.landingChatList) {
@@ -175,14 +175,9 @@ public class LandingActivity extends AppCompatActivity
     }
 
 
-
-    @Override
-    public void OnSettingFragmentInteractionListener(Uri uri) {
-
-    }
-
     @Override
     public void OnWeatherFragmentInteractionListener(Uri uri) {
 
     }
+
 }

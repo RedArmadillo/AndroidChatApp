@@ -96,8 +96,8 @@ public class CurrentConnections extends Fragment {
         con.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                        @Override
                                        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                                           confirmUser = con.getItemAtPosition(i).toString();
-                                           Log.d("ConfirmationUser = ", confirmUser);
+                                           removeUser = con.getItemAtPosition(i).toString();
+                                           Log.d("RemoveUser = ", removeUser);
                                            getRemoveDialog();
 
                                        }
@@ -116,17 +116,6 @@ public class CurrentConnections extends Fragment {
                                    }
         );
 
-        out.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                                       @Override
-                                       public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                                           confirmUser = con.getItemAtPosition(i).toString();
-                                           rejectUser = con.getItemAtPosition(i).toString();
-                                           Log.d("ConfirmationUser = ", confirmUser);
-                                           getConfirmRejectDialog();
-
-                                       }
-                                   }
-        );
 
         myRequestButton.setOnClickListener(view -> {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -413,7 +402,8 @@ public class CurrentConnections extends Fragment {
                 e.printStackTrace();
             }
             try {
-                c = new JSONObject((requestUser));
+                c = new JSONObject();
+                c.put("username_b", removeUser);
                 //TODO: THIS IS WHERE ERROR IS HAPPENING.
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -423,10 +413,10 @@ public class CurrentConnections extends Fragment {
                     .authority(getString(R.string.ep_lab_url))
                     .appendPath(getString(R.string.ep_connections))
                     .appendPath(currentUser)
-                    .appendPath(getString(R.string.ep_request_connection))
+                    .appendPath(getString(R.string.ep_remove_connection))
                     .build();
             new SendPostAsyncTask.Builder(retrieve.toString(), c)
-                    .onPostExecute(this::onPostExecute)
+                    .onPostExecute(this::onPostRExecute)
                     .onCancelled(this::handleErrorsInTask)
                     .build().execute();
             return response;
@@ -436,9 +426,7 @@ public class CurrentConnections extends Fragment {
             Log.d("ERROR IN TASK", s);
         }
 
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
+        protected void onPostRExecute(String s) {
             JSONObject resultsJSON = null;
             try {
                 resultsJSON = new JSONObject(s);
@@ -457,9 +445,7 @@ public class CurrentConnections extends Fragment {
                     wait(10);
                     ((TextView) v.findViewById(R.id.ERRORTEXT)).setText("");
                 }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            } catch (InterruptedException e) {
+            } catch (JSONException | InterruptedException e) {
                 e.printStackTrace();
             }
         }
@@ -528,9 +514,7 @@ public class CurrentConnections extends Fragment {
                     wait(10);
                     ((TextView) v.findViewById(R.id.ERRORTEXT)).setText("");
                 }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            } catch (InterruptedException e) {
+            } catch (JSONException | InterruptedException e) {
                 e.printStackTrace();
             }
         }
@@ -591,7 +575,7 @@ public class CurrentConnections extends Fragment {
                 assert resultsJSON != null;
                 boolean success = resultsJSON.getBoolean("success");
                 if (success) {
-                    ((TextView) v.findViewById(R.id.ERRORTEXT)).setText("Contact has been sucessfully removed.");
+                    ((TextView) v.findViewById(R.id.ERRORTEXT)).setText("Contact Rejected!");
                     wait(10);
                     ((TextView) v.findViewById(R.id.ERRORTEXT)).setText("");
                 } else {
