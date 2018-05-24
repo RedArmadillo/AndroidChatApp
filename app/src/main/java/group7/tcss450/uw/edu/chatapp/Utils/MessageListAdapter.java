@@ -76,7 +76,7 @@ public class MessageListAdapter extends RecyclerView.Adapter {
 
     public class SentMessageHolder extends RecyclerView.ViewHolder {
         TextView message, username;
-        public SentMessageHolder(View itemView) {
+        SentMessageHolder(View itemView) {
             super(itemView);
             message = itemView.findViewById(R.id.sentMessage);
             username = itemView.findViewById(R.id.sentMessageSender);
@@ -90,7 +90,7 @@ public class MessageListAdapter extends RecyclerView.Adapter {
 
     public class ReceivedMessageHolder extends RecyclerView.ViewHolder {
         TextView message, username;
-        public ReceivedMessageHolder(View itemView) {
+        ReceivedMessageHolder(View itemView) {
             super(itemView);
             message = itemView.findViewById(R.id.receivedMessage);
             username = itemView.findViewById(R.id.receivedMessageSender);

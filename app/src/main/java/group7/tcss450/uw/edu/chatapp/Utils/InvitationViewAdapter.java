@@ -26,7 +26,7 @@ public class InvitationViewAdapter extends RecyclerView.Adapter {
     public InvitationViewAdapter(List<Invitation> list) {
         mInvitationList = list;
     }
-    public ProgressBar mBar;
+    private ProgressBar mBar;
 
 
     public void updateData(List<Invitation> roomList) {
@@ -99,13 +99,13 @@ public class InvitationViewAdapter extends RecyclerView.Adapter {
     }
 
     public class InvitationViewHolder extends RecyclerView.ViewHolder  {
-        public View mView;
-        public TextView mSender;
-        public TextView mRoomName;
-        public Button mNoButton;
-        public Button mJoinButton;
-        public ProgressBar mBar;
-        public InvitationViewHolder(View view) {
+        private View mView;
+        private TextView mSender;
+        private TextView mRoomName;
+        private Button mNoButton;
+        private Button mJoinButton;
+        private ProgressBar mBar;
+        private InvitationViewHolder(View view) {
             super(view);
             mView = view;
             mView.setClickable(true);
@@ -116,7 +116,7 @@ public class InvitationViewAdapter extends RecyclerView.Adapter {
             mBar = (ProgressBar) view.findViewById((R.id.invitationProgressBar));
         }
 
-        public void bind(final Invitation i, InvitationViewHolder holder) {
+        void bind(final Invitation i, InvitationViewHolder holder) {
             mSender.setText(i.getSender());
             mRoomName.setText(i.getRoomName());
 //            mView.setOnClickListener(new View.OnClickListener() {
