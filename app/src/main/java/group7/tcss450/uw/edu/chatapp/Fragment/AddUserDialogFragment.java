@@ -38,7 +38,7 @@ public class AddUserDialogFragment extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_add_user_dialog, container, false);
+        View v = inflater.inflate(R.layout.dialog_add_user, container, false);
         mInputUsername = v.findViewById(R.id.addDialogInput);
         mSendButton = v.findViewById(R.id.sendAddDialogButton);
         mCancelButton = v.findViewById(R.id.cancelAddDialogButton);

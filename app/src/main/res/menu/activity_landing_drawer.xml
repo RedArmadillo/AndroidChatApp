@@ -5,25 +5,25 @@
 
     <group android:checkableBehavior="single">
         <item
+            android:id="@+id/landingHome"
+            android:icon="@drawable/ic_home"
+            android:title="Home" />
+        <item
+        android:id="@+id/landingChatList"
+        android:icon="@drawable/ic_chat"
+        android:title="Chat Rooms" />
+        <item
             android:id="@+id/landingConnections"
             android:icon="@drawable/ic_connections"
             android:title="Connections" />
         <item
             android:id="@+id/landingChat"
-            android:icon="@drawable/ic_chat"
+            android:icon="@drawable/ic_menu_send"
             android:title="Chat" />
         <item
             android:id="@+id/landingWeather"
             android:icon="@drawable/ic_weather"
             android:title="Weather" />
-        <item
-            android:id="@+id/landingHome"
-            android:icon="@drawable/ic_home"
-            android:title="Home" />
-        <item
-            android:id="@+id/landingChatList"
-            android:icon="@drawable/ic_home"
-            android:title="ChatList" />
     </group>
 
     <item android:title="Communicate">
