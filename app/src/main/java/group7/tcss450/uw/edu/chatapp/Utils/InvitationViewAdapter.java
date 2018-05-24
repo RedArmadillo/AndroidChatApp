@@ -29,6 +29,7 @@ public class InvitationViewAdapter extends RecyclerView.Adapter {
     private ProgressBar mBar;
 
 
+
     public void updateData(List<Invitation> roomList) {
         mInvitationList.clear();
         mInvitationList.addAll(roomList);
@@ -79,7 +80,6 @@ public class InvitationViewAdapter extends RecyclerView.Adapter {
     private void onPreResponse() {
         mBar.setVisibility(View.VISIBLE);
     }
-
 
     private void handleError(String s) {
         Log.d("ERROR IN RESPONSE TO INVITATION", s);

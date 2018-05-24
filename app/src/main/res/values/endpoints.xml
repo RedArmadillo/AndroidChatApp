@@ -20,4 +20,14 @@
         <string name="ep_connections">contacts</string>
         <string name="ep_incoming_connections">contacts/incoming</string>
         <string name="ep_outgoing_connections">contacts/outgoing</string>
+        <string name="ep_weather_base_url">api.weatherbit.io</string>
+        <string name="ep_weather_v2.0">v2.0</string>
+        <string name="ep_weather_forecast">forecast</string>
+        <string name="ep_weather_daily">daily</string>
+        <string name="param_weather_zip">postal_code</string>
+        <string name="param_weather_days">days</string>
+        <string name="param_weather_api">key</string>
+        <string name="param_weather_units">units</string>
+        <string name="param_weather_lat">lat</string>
+        <string name="param_weather_lon">lon</string>
 </resources>
