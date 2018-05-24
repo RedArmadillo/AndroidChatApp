@@ -27,12 +27,11 @@ import group7.tcss450.uw.edu.chatapp.Activities.ChatActivity;
 import group7.tcss450.uw.edu.chatapp.Activities.ChatListActivity;
 import group7.tcss450.uw.edu.chatapp.Activities.Connections.ConnectionsActivity;
 import group7.tcss450.uw.edu.chatapp.Fragment.HomeFragment;
-import group7.tcss450.uw.edu.chatapp.Fragment.SettingsFragment;
 import group7.tcss450.uw.edu.chatapp.Fragment.WeatherFragment;
 
 public class LandingActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, WeatherFragment.OnFragmentInteractionListener,
-        SettingsFragment.OnFragmentInteractionListener {
+        implements NavigationView.OnNavigationItemSelectedListener, WeatherFragment.OnFragmentInteractionListener
+         {
 
     private final String TAG = "LandingActivity";
     @Override
@@ -122,18 +121,13 @@ public class LandingActivity extends AppCompatActivity
         } else if (id == R.id.landingWeather) {
             loadFragment(new WeatherFragment());
         } else if (id == R.id.landingSetting) {
-            //loadFragment(new SettingsFragment());
-            String refreshedToken = FirebaseInstanceId.getInstance().getToken();
-            Log.d("TOKEN", "New token: " + refreshedToken);
-//            Intent intent = new Intent(getApplicationContext(), SettingMenuActivity.class);
-//            startActivity(intent);
+
         } else if (id == R.id.landingLogout) {
             onLogout();
         } else if (id == R.id.landingChatList) {
             Intent intent = new Intent(this, ChatListActivity.class);
             startActivity(intent);
         }
-
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -171,14 +165,8 @@ public class LandingActivity extends AppCompatActivity
     }
 
 
+             @Override
+             public void OnWeatherFragmentInteractionListener(Uri uri) {
 
-    @Override
-    public void OnSettingFragmentInteractionListener(Uri uri) {
-
-    }
-
-    @Override
-    public void OnWeatherFragmentInteractionListener(Uri uri) {
-
-    }
-}
+             }
+         }
