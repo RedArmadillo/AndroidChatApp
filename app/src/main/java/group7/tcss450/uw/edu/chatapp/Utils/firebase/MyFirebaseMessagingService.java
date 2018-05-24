@@ -9,6 +9,7 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.util.Log;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
@@ -22,21 +23,22 @@ import group7.tcss450.uw.edu.chatapp.R;
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
     private static final String TAG = "MyFirebaseMessagingService";
     private static final String CHANNEL_ID = "my_chanel_0";
+    private static int notiID = 0;
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
-        Log.d(TAG, "From: " + remoteMessage.getFrom());
+        Log.d(TAG, "RECEIVED NEW MESSAGE");
         if(remoteMessage.getData().size() > 0) {
             Log.d(TAG, "Message data: " + remoteMessage.getData());
         }
 
         if (remoteMessage.getNotification() != null) {
             Log.d(TAG, "Message body: " + remoteMessage.getNotification().getBody());
-            sendNotification(remoteMessage.getNotification().getBody());
+            sendNotification(remoteMessage.getNotification().getBody(), remoteMessage.getCollapseKey());
         }
     }
 
-    private void sendNotification(String body) {
+    private void sendNotification(String body, String collapseKey) {
         Intent intent = new Intent(this, ChatListActivity.class);
         intent.setFlags((Intent.FLAG_ACTIVITY_CLEAR_TOP));
         PendingIntent pendingIntent = PendingIntent
@@ -45,13 +47,15 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         createNotificationChannel();
         NotificationCompat.Builder notifiBuilder =  new NotificationCompat.Builder(this, CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_chat)
-                .setContentTitle("Firebase Cloud Messaging")
+                .setGroup(collapseKey)
                 .setAutoCancel(true)
                 .setContentText(body)
                 .setContentIntent(pendingIntent)
-                .setSound(notificationSound);
-        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.notify(0, notifiBuilder.build());
+                .setSound(notificationSound)
+                .setOnlyAlertOnce(true);
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+        notificationManager.notify(notiID++, notifiBuilder.build());
+
     }
 
     private void createNotificationChannel() {
@@ -63,7 +67,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
             // Register the channel with the system; you can't change the importance
             // or other notification behaviors after this
-            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
             notificationManager.createNotificationChannel(channel);
         }
     }
