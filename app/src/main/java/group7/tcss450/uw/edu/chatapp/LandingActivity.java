@@ -41,13 +41,7 @@ public class LandingActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_landing);
 
-
-
-        SharedPreferences settings = getSharedPreferences("theme", 0);
-        //"theme" is the same key 0 is the default value
-        int theme = settings.getInt("theme", 0);
-        setTheme(theme);
-
+        
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
