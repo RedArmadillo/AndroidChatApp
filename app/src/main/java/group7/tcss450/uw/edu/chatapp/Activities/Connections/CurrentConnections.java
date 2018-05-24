@@ -208,8 +208,31 @@ public class CurrentConnections extends Fragment {
         removedialogClickListener = (dialog, which) -> {
             switch (which) {
                 case DialogInterface.BUTTON_POSITIVE:
-                    RemoveContactTask task1 = new RemoveContactTask();
-                    task1.execute("", "", "");
+                    String response = "";
+                    HttpURLConnection urlConnection = null;
+                    SharedPreferences prefs =
+                            getActivity().getSharedPreferences(getString(R.string.keys_shared_prefs),
+                                    Context.MODE_PRIVATE);
+                    String currentUser = prefs.getString(getString(R.string.keys_prefs_username), "");
+                    JSONObject c = null;
+                    try {
+                        c = new JSONObject();
+                        c.put("username_b", removeUser);
+                        removeUser = null;
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    Uri retrieve = new Uri.Builder()
+                            .scheme("https")
+                            .authority(getString(R.string.ep_lab_url))
+                            .appendPath(getString(R.string.ep_connections))
+                            .appendPath(currentUser)
+                            .appendPath(getString(R.string.ep_remove_connection))
+                            .build();
+                    new SendPostAsyncTask.Builder(retrieve.toString(), c)
+                            .onPostExecute(this::onPostRExecute)
+                            .onCancelled(this::handleErrorsInTask)
+                            .build().execute();
                     break;
 
                 case DialogInterface.BUTTON_NEGATIVE:
@@ -221,18 +244,129 @@ public class CurrentConnections extends Fragment {
         confirmrejectdialogClickListener = (dialog, which) -> {
             switch (which) {
                 case DialogInterface.BUTTON_POSITIVE:
-                    ConfirmContactTask task1 = new ConfirmContactTask();
-                    task1.execute("", "", "");
+                    SharedPreferences prefs =
+                            getActivity().getSharedPreferences(getString(R.string.keys_shared_prefs),
+                                    Context.MODE_PRIVATE);
+                    String currentUser = prefs.getString(getString(R.string.keys_prefs_username), "");
+                    JSONObject c = null;
+                    try {
+                        c = new JSONObject();
+                        c.put("username_b", confirmUser);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                    Uri retrieve = new Uri.Builder()
+                            .scheme("https")
+                            .authority(getString(R.string.ep_lab_url))
+                            .appendPath(getString(R.string.ep_connections))
+                            .appendPath(currentUser)
+                            .appendPath(getString(R.string.ep_confirm_connection))
+                            .build();
+                    new SendPostAsyncTask.Builder(retrieve.toString(), c)
+                            .onPostExecute(this::onKPostExecute)
+                            .onCancelled(this::handleErrorsInTask)
+                            .build().execute();
                     break;
 
                 case DialogInterface.BUTTON_NEGATIVE:
-                    RejectContactTask task2 = new RejectContactTask();
-                    task2.execute("", "", "");
+                    SharedPreferences prefs2 =
+                            getActivity().getSharedPreferences(getString(R.string.keys_shared_prefs),
+                                    Context.MODE_PRIVATE);
+                    String tcurrentUser = prefs2.getString(getString(R.string.keys_prefs_username), "");
+                    JSONObject cd = null;
+                    try {
+                        cd = new JSONObject();
+                        cd.put("username_b", rejectUser);
+                        rejectUser = null;
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    Uri tretrieve = new Uri.Builder()
+                            .scheme("https")
+                            .authority(getString(R.string.ep_lab_url))
+                            .appendPath(getString(R.string.ep_connections))
+                            .appendPath(tcurrentUser)
+                            .appendPath(getString(R.string.ep_reject_connection))
+                            .build();
+                    new SendPostAsyncTask.Builder(tretrieve.toString(), cd)
+                            .onPostExecute(this::onRPostExecute)
+                            .onCancelled(this::handleErrorsInTask)
+                            .build().execute();
                     break;
             }
         };
 
         return rootView;
+    }
+
+    private void onRPostExecute(String s) {
+        JSONObject resultsJSON = null;
+        try {
+            resultsJSON = new JSONObject(s);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
+            assert resultsJSON != null;
+            boolean success = resultsJSON.getBoolean("success");
+            if (success) {
+                ((TextView) v.findViewById(R.id.ERRORTEXT)).setText("Contact Rejected!");
+
+            } else {
+                ((TextView) v.findViewById(R.id.ERRORTEXT)).setText("Internal Error, please try later.");
+
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void onKPostExecute(String s) {
+        JSONObject resultsJSON = null;
+        try {
+            resultsJSON = new JSONObject(s);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
+            assert resultsJSON != null;
+            boolean success = resultsJSON.getBoolean("success");
+            if (success) {
+                ((TextView) v.findViewById(R.id.ERRORTEXT)).setText("Contact has been sucessfully removed.");
+
+            } else {
+                ((TextView) v.findViewById(R.id.ERRORTEXT)).setText("Internal Error, please try later.");
+
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void handleErrorsInTask(String s) {
+    }
+
+    private void onPostRExecute(String s) {
+        JSONObject resultsJSON = null;
+        try {
+            resultsJSON = new JSONObject(s);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
+            assert resultsJSON != null;
+            boolean success = resultsJSON.getBoolean("success");
+            if (success) {
+                ((TextView) v.findViewById(R.id.ERRORTEXT)).setText("Contact has been sucessfully removed.");
+
+            } else {
+                ((TextView) v.findViewById(R.id.ERRORTEXT)).setText("Internal Error, please try later.");
+
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     public void getRemoveDialog() {
@@ -352,7 +486,7 @@ public class CurrentConnections extends Fragment {
                 sorry[x] = l5[x].replace("[", "").replace("]", "Empty");
             } else {
                 sorry[x] = l5[x].replace("[", "").replace("]", "")
-                        .replace("\"", "")  + " (pending)";;
+                        .replace("\"", "");
             }
         }
         ListView iList = v.findViewById(R.id.listIncoming);
@@ -372,7 +506,7 @@ public class CurrentConnections extends Fragment {
                 news[x] = l3[x].replace("[", "").replace("]", "Empty");
             } else {
                 news[x] = l3[x].replace("[", "").replace("]", "")
-                        .replace("\"", "")  + " (pending)";;
+                        .replace("\"", "");
             }
         }
         ListView oList = v.findViewById(R.id.listOutgoing);
@@ -380,215 +514,6 @@ public class CurrentConnections extends Fragment {
         oList.setAdapter(adapter3);
         adapter3.notifyDataSetChanged();
 
-    }
-
-    @SuppressLint("StaticFieldLeak")
-    class RemoveContactTask extends AsyncTask<String, Void, String> {
-        @Override
-        protected String doInBackground(String... strings) {
-
-            String response = "";
-            HttpURLConnection urlConnection = null;
-            SharedPreferences prefs =
-                    getActivity().getSharedPreferences(getString(R.string.keys_shared_prefs),
-                            Context.MODE_PRIVATE);
-            String currentUser = prefs.getString(getString(R.string.keys_prefs_username), "");
-            JSONObject c = null;
-            try {
-                c = new JSONObject();
-                c.put("username_b", removeUser);
-                removeUser = null;
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            try {
-                c = new JSONObject();
-                c.put("username_b", removeUser);
-                //TODO: THIS IS WHERE ERROR IS HAPPENING.
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            Uri retrieve = new Uri.Builder()
-                    .scheme("https")
-                    .authority(getString(R.string.ep_lab_url))
-                    .appendPath(getString(R.string.ep_connections))
-                    .appendPath(currentUser)
-                    .appendPath(getString(R.string.ep_remove_connection))
-                    .build();
-            new SendPostAsyncTask.Builder(retrieve.toString(), c)
-                    .onPostExecute(this::onPostRExecute)
-                    .onCancelled(this::handleErrorsInTask)
-                    .build().execute();
-            return response;
-        }
-
-        private void handleErrorsInTask(String s) {
-            Log.d("ERROR IN TASK", s);
-        }
-
-        protected void onPostRExecute(String s) {
-            JSONObject resultsJSON = null;
-            try {
-                resultsJSON = new JSONObject(s);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            try {
-                assert resultsJSON != null;
-                boolean success = resultsJSON.getBoolean("success");
-                if (success) {
-                    ((TextView) v.findViewById(R.id.ERRORTEXT)).setText("Contact has been sucessfully removed.");
-                    wait(10);
-                    ((TextView) v.findViewById(R.id.ERRORTEXT)).setText("");
-                } else {
-                    ((TextView) v.findViewById(R.id.ERRORTEXT)).setText("Internal Error, please try later.");
-                    wait(10);
-                    ((TextView) v.findViewById(R.id.ERRORTEXT)).setText("");
-                }
-            } catch (JSONException | InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    @SuppressLint("StaticFieldLeak")
-    class ConfirmContactTask extends AsyncTask<String, Void, String> {
-        @Override
-        protected String doInBackground(String... strings) {
-
-            String response = "";
-            HttpURLConnection urlConnection = null;
-            SharedPreferences prefs =
-                    getActivity().getSharedPreferences(getString(R.string.keys_shared_prefs),
-                            Context.MODE_PRIVATE);
-            String currentUser = prefs.getString(getString(R.string.keys_prefs_username), "");
-            JSONObject c = null;
-            try {
-                c = new JSONObject();
-                c.put("username_b", confirmUser);
-                confirmUser = null;
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            try {
-                c = new JSONObject((requestUser));
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            Uri retrieve = new Uri.Builder()
-                    .scheme("https")
-                    .authority(getString(R.string.ep_lab_url))
-                    .appendPath(getString(R.string.ep_connections))
-                    .appendPath(currentUser)
-                    .appendPath(getString(R.string.ep_confirm_connection))
-                    .build();
-            new SendPostAsyncTask.Builder(retrieve.toString(), c)
-                    .onPostExecute(this::onPostExecute)
-                    .onCancelled(this::handleErrorsInTask)
-                    .build().execute();
-            return response;
-        }
-
-        private void handleErrorsInTask(String s) {
-            Log.d("ERROR IN TASK", s);
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-            JSONObject resultsJSON = null;
-            try {
-                resultsJSON = new JSONObject(s);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            try {
-                assert resultsJSON != null;
-                boolean success = resultsJSON.getBoolean("success");
-                if (success) {
-                    ((TextView) v.findViewById(R.id.ERRORTEXT)).setText("Contact has been sucessfully removed.");
-                    wait(10);
-                    ((TextView) v.findViewById(R.id.ERRORTEXT)).setText("");
-                } else {
-                    ((TextView) v.findViewById(R.id.ERRORTEXT)).setText("Internal Error, please try later.");
-                    wait(10);
-                    ((TextView) v.findViewById(R.id.ERRORTEXT)).setText("");
-                }
-            } catch (JSONException | InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    @SuppressLint("StaticFieldLeak")
-    class RejectContactTask extends AsyncTask<String, Void, String> {
-        @Override
-        protected String doInBackground(String... strings) {
-
-            String response = "";
-            HttpURLConnection urlConnection = null;
-            SharedPreferences prefs =
-                    getActivity().getSharedPreferences(getString(R.string.keys_shared_prefs),
-                            Context.MODE_PRIVATE);
-            String currentUser = prefs.getString(getString(R.string.keys_prefs_username), "");
-            JSONObject c = null;
-            try {
-                c = new JSONObject();
-                c.put("username_b", rejectUser);
-                confirmUser = null;
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            try {
-                c = new JSONObject((rejectUser));
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            Uri retrieve = new Uri.Builder()
-                    .scheme("https")
-                    .authority(getString(R.string.ep_lab_url))
-                    .appendPath(getString(R.string.ep_connections))
-                    .appendPath(currentUser)
-                    .appendPath(getString(R.string.ep_reject_connection))
-                    .build();
-            new SendPostAsyncTask.Builder(retrieve.toString(), c)
-                    .onPostExecute(this::onPostExecute)
-                    .onCancelled(this::handleErrorsInTask)
-                    .build().execute();
-            return response;
-        }
-
-        private void handleErrorsInTask(String s) {
-            Log.d("ERROR IN TASK", s);
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-            JSONObject resultsJSON = null;
-            try {
-                resultsJSON = new JSONObject(s);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            try {
-                assert resultsJSON != null;
-                boolean success = resultsJSON.getBoolean("success");
-                if (success) {
-                    ((TextView) v.findViewById(R.id.ERRORTEXT)).setText("Contact Rejected!");
-                    wait(10);
-                    ((TextView) v.findViewById(R.id.ERRORTEXT)).setText("");
-                } else {
-                    ((TextView) v.findViewById(R.id.ERRORTEXT)).setText("Internal Error, please try later.");
-                    wait(10);
-                    ((TextView) v.findViewById(R.id.ERRORTEXT)).setText("");
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
     }
 
     public class CListViewAdapter extends BaseAdapter {

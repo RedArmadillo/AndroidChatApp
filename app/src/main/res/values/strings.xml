@@ -34,7 +34,7 @@
     <string name="chat_invitation">Invitation</string>
     <string name="ep_remove_connection">remove</string>
     <string name="ep_request_connection">request</string>
-    <string name="ep_confirm_connection">confirm</string>
+    <string name="ep_confirm_connection">accept</string>
     <string name="ep_reject_connection">reject</string>
     <string name="token">token</string>
     <string name="default_notification_channel_name" translatable="true">News</string>
@@ -43,6 +43,7 @@
     <string name="notifications_admin_channel_name">Global channel</string>
     <string name="notifications_admin_channel_description">Notifications sent from the app admin</string>
     <string name="channel_name">general channel</string>
+
     <string name="weather_sunny">&#xf00d;</string>
     <string name="weather_clear_night">&#xf02e;</string>
     <string name="weather_foggy">&#xf014;</string>
@@ -53,5 +54,8 @@
     <string name="weather_drizzle">&#xf01c;</string>
     <string name="fb_body">body</string>
     <string name="fb_sender">sender</string>
+
+
+
 
 </resources>
