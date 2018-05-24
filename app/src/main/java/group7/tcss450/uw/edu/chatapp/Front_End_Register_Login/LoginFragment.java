@@ -82,7 +82,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
                 .build();
 
         if (Validation(v, creds, pasword.getText().toString())) {
-
+            username.setText("");
+            pasword.setText("");
             mListener.onLoginAttempt(creds);
         } else {
             Log.d("NOT VALID", "FAILED VALIDATION");

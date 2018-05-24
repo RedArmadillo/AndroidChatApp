@@ -11,6 +11,13 @@
     <string name="registerFName">First name</string>
     <string name="registerLName">Last name</string>
     <string name="nickname">Username (used for in app display)</string>
+    <string name="weather_header">Weather</string>
+    <string name="weather_temp">Temperature</string>
+    <string name="weather_hi_low">High / Low</string>
+    <string name="weather_conditions">Conditions</string>
+    <string name="weather_current">Now</string>
+    <string name="weather_24_hour">Today</string>
+    <string name="weather_10_day">Extended Forecast</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_home">Home</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
