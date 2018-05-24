@@ -20,7 +20,7 @@
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
-    <string name="RedArmodillo_Chat">Red Armodillo Chat</string>
+    <string name="RedArmodillo_Chat">Red Armadillo Chat</string>
     <string name="title_activity_home_nav">HomeNavActivity</string>
     <string name="title_activity_landing">Home</string>
     <string name="title_activity_setting_menu">SettingMenuActivity</string>
