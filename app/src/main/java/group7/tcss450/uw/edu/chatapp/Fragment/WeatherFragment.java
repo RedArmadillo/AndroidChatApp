@@ -147,6 +147,10 @@ public class WeatherFragment extends Fragment {
                 .build().execute();
     }
 
+    /***
+     * Callback method called by getWeatherByZip
+     * @param result
+     */
     private void endOfWeatherByZipTask(final String result) {
         Log.d("response from weather service", result);
 
@@ -171,10 +175,10 @@ public class WeatherFragment extends Fragment {
     }
 
     /***
-     * Takes a zip code from the weather fragment zipcode EditText box and sends a GET request
+     * Takes the device's current location and sends a GET request
      * to our weather service, setting the appropriate TextViews to the requested weather data.
      *
-     * @param theButton The get weather by zipcode button
+     * @param theButton The location button
      */
     private void getWeatherByCurrentLoc(final View theButton) {
 
@@ -190,7 +194,7 @@ public class WeatherFragment extends Fragment {
                         @Override
                         public void onSuccess(Location location) {
                             if (location != null) {
-                                endOfGetWeatherByCurrentLoc(location);
+                                endOfGetWeatherByCurrentLocTask(location);
                                 Log.d("Weather by current loc",
                                         Double.toString(location.getLatitude())
                                         + " " + Double.toString(location.getLatitude())
@@ -204,7 +208,11 @@ public class WeatherFragment extends Fragment {
         }
     }
 
-    public void endOfGetWeatherByCurrentLoc (Location theLocation) {
+    /***
+     * Callback method called by getWeatherByCurrentLoc
+     * @param theLocation
+     */
+    public void endOfGetWeatherByCurrentLocTask (Location theLocation) {
         Location loc = theLocation;
         String lat = Double.toString(loc.getLatitude());
         String lon = Double.toString(loc.getLongitude());
@@ -227,8 +235,12 @@ public class WeatherFragment extends Fragment {
                 .onCancelled(this::handleError)
                 .build().execute();
     }
-    
 
+
+    /***
+     * Generic error handler helper
+     * @param msg
+     */
     private void handleError(final String msg) {
         Log.e("WeatherFragment Error", msg);
     }
