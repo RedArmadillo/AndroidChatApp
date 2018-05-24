@@ -164,18 +164,21 @@ public class WeatherFragment extends Fragment {
         Log.d("response from weather service", result);
 
         try {
-            JSONArray data = new JSONObject(result).getJSONArray("data");
+            JSONObject raw = new JSONObject(result);
+            JSONArray data = raw.getJSONArray("data");
             JSONObject res = data.getJSONObject(0);
             String currTemp = res.getString("temp");
             String maxTemp = res.getString("max_temp");
             String minTemp = res.getString("min_temp");
             String desc = res.getJSONObject("weather").getString("description");
+            String city = raw.getString("city_name");
 
             ((TextView) getView().findViewById(R.id.tvWeatherTemp)).setText(currTemp);
             ((TextView) getView().findViewById(R.id.tvWeatherHighLow)).setText(
                     maxTemp + " / " + minTemp
             );
             ((TextView) getView().findViewById(R.id.tvWeatherCond)).setText(desc);
+            ((TextView) getView().findViewById(R.id.tvWeatherCity)).setText(city);
 
         } catch (JSONException e) {
             Log.d("endOfSend", "error");
