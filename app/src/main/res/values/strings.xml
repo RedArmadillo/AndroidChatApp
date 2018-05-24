@@ -18,7 +18,7 @@
     <string name="weather_conditions">Conditions</string>
     <string name="weather_current">Now</string>
     <string name="weather_24_hour">Today</string>
-    <string name="weather_5_day">5-day Forecast</string>
+    <string name="weather_10_day">Extended Forecast</string>
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_home">Home</string>

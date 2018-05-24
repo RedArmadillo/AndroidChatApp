@@ -27,5 +27,8 @@
         <string name="param_weather_days">days</string>
         <string name="param_weather_api">key</string>
         <string name="param_weather_units">units</string>
+        <string name="param_weather_lat">lat</string>
+        <string name="param_weather_lon">lon</string>
+
 
 </resources>
