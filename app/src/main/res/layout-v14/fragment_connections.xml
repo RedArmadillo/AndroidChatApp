@@ -2,7 +2,7 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/linearLayout2"
+    android:id="@+id/LayoutC"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
@@ -11,57 +11,104 @@
 
     <SearchView
         android:id="@+id/searchView"
-        android:layout_width="398dp"
-        android:layout_height="40dp"
-        android:layout_marginBottom="485dp"
-        android:layout_marginStart="16dp"
+        android:layout_width="295dp"
+        android:layout_height="44dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/imageView"
-        app:layout_constraintHorizontal_bias="0.025"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/connectionTextView2"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/connectionTextView2" />
 
     <TextView
         android:id="@+id/connectionTextView2"
-        android:layout_width="wrap_content"
-        android:layout_height="38dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_width="179dp"
+        android:layout_height="37dp"
+        android:layout_marginStart="116dp"
         android:fontFamily="@font/alegreya_sc"
         android:text="Connections"
         android:textAppearance="@style/TextAppearance.AppCompat"
         android:textSize="24sp"
         android:visibility="visible"
-        app:layout_constraintEnd_toStartOf="@+id/imageView"
         app:layout_constraintHorizontal_bias="0.204"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Connections" />
 
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="122dp"
-        android:layout_height="38dp"
-        android:layout_marginEnd="120dp"
-        android:layout_marginTop="8dp"
-        android:contentDescription="Right Arrow"
-        android:src="@drawable/ic_menu_send"
-        android:visibility="visible"
+    <ImageButton
+        android:id="@+id/AddContactButton"
+        android:layout_width="131dp"
+        android:layout_height="136dp"
+        android:layout_marginStart="292dp"
+        android:scaleX=".5"
+        android:scaleY=".5"
+        android:src="@drawable/plus"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/connectionTextView2" />
+
+    <TextView
+        android:id="@+id/ERRORTEXT"
+        android:layout_width="140dp"
+        android:layout_height="92dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginTop="252dp"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ListView
-        android:id="@+id/listConnections"
-        style="@android:style/Widget.DeviceDefault.ExpandableListView"
-        android:layout_width="365dp"
-        android:layout_height="461dp"
-        android:layout_marginStart="16dp"
+    <LinearLayout
+        android:layout_width="258dp"
+        android:layout_height="497dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:orientation="vertical"
+        android:outlineProvider="bounds"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchView"
-        app:layout_constraintVertical_bias="0.04" />
+        app:layout_constraintTop_toBottomOf="@+id/searchView">
+
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Current Contacts"
+            android:textSize="20sp" />
+
+        <ListView
+            android:id="@+id/listConnections"
+            style="@android:style/Widget.DeviceDefault.ExpandableListView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/searchView"
+            app:layout_constraintVertical_bias="0.0">
+
+        </ListView>
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Incoming Requests"
+            android:textSize="20sp" />
+
+        <ListView
+            android:id="@+id/listIncoming"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Outgoing Requests"
+            android:textSize="20sp" />
+
+        <ListView
+            android:id="@+id/listOutgoing"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>
