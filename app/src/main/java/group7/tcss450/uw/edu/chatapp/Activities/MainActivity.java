@@ -82,7 +82,6 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.OnF
                                 false)) {
                             //loadSuccessFragment();
                             loadHomeNavigation();
-
                         } else {
                             getSupportFragmentManager().beginTransaction()
                                     .add(R.id.fragmentContainer,
