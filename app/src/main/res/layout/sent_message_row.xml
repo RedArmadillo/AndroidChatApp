@@ -21,7 +21,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:padding="4dp"
+        android:paddingVertical="4dp"
+        android:paddingHorizontal="15dp"
         android:layout_below="@+id/sentMessageSender"
         android:text="TextView" />
 </RelativeLayout>

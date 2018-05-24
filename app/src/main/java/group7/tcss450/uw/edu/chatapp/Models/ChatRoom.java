@@ -7,11 +7,8 @@ public class ChatRoom {
     private StringBuilder mLastSender;
 
 
-    public ChatRoom(int chatId, String name, String lastMsg, String lastSender) {
-        this.mChatId = chatId;
-        mName = new StringBuilder(name);
-        mLastSender = new StringBuilder(lastSender);
-        mLastMsg = new StringBuilder(lastMsg);
+    public ChatRoom() {
+
     }
     public ChatRoom(int chatId) {
         mChatId = chatId;
