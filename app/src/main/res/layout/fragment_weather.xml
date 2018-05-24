@@ -13,7 +13,7 @@
         android:layout_width="39dp"
         android:layout_height="39dp"
         android:layout_gravity="bottom"
-        android:layout_marginStart="14dp"
+        android:layout_marginEnd="16dp"
         android:layout_marginTop="8dp"
         android:background="@color/colorPrimary"
         android:backgroundTint="@android:color/transparent"
@@ -22,7 +22,7 @@
         android:scaleType="fitCenter"
         android:src="@android:drawable/ic_dialog_map"
         android:tint="@color/colorPrimary"
-        app:layout_constraintStart_toEndOf="@+id/btnWeatherLoc"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
     <ImageButton
@@ -30,6 +30,7 @@
         android:layout_width="39dp"
         android:layout_height="39dp"
         android:layout_gravity="bottom"
+        android:layout_marginEnd="8dp"
         android:layout_marginStart="14dp"
         android:layout_marginTop="8dp"
         android:background="@color/colorPrimary"
@@ -39,6 +40,7 @@
         android:scaleType="fitCenter"
         android:src="@android:drawable/ic_menu_mylocation"
         android:tint="@color/colorPrimary"
+        app:layout_constraintEnd_toStartOf="@+id/btnWeatherMap"
         app:layout_constraintStart_toEndOf="@+id/btnWeatherZip"
         app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
@@ -47,7 +49,7 @@
         android:layout_width="29dp"
         android:layout_height="39dp"
         android:layout_gravity="bottom"
-        android:layout_marginStart="14dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:background="@color/colorPrimary"
         android:backgroundTint="@android:color/transparent"
@@ -56,7 +58,7 @@
         android:scaleType="fitCenter"
         android:src="@drawable/ic_send_button"
         android:tint="@color/colorPrimary"
-        app:layout_constraintStart_toEndOf="@+id/etWeatherZip"
+        app:layout_constraintStart_toEndOf="@+id/divider"
         app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
     <EditText
@@ -69,6 +71,7 @@
         android:ems="10"
         android:hint="Enter a Zip Code"
         android:inputType="textPersonName|number"
+        android:textAlignment="center"
         app:layout_constraintEnd_toStartOf="@+id/divider"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView5" />
@@ -92,6 +95,7 @@
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
         android:background="?android:attr/listDivider"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
