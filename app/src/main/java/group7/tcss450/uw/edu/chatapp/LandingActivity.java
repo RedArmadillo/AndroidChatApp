@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -142,8 +143,6 @@ public class LandingActivity extends AppCompatActivity
         return true;
     }
     public void onLogout() {
-
-
         SharedPreferences prefs =
                 getSharedPreferences(
                         getString(R.string.keys_shared_prefs),
@@ -159,8 +158,11 @@ public class LandingActivity extends AppCompatActivity
             Log.d(TAG, "Can't delete instanceID");
             e.printStackTrace();
         }
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+
+//the way to close an app programmatically
+        finishAndRemoveTask();
     }
 
     private void loadFragment(Fragment frag) {
