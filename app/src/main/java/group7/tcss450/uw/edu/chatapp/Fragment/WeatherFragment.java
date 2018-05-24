@@ -10,6 +10,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,8 +32,14 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+
 import group7.tcss450.uw.edu.chatapp.Async.SendGetAsyncTask;
+import group7.tcss450.uw.edu.chatapp.Models.Forecast;
 import group7.tcss450.uw.edu.chatapp.R;
+import group7.tcss450.uw.edu.chatapp.Utils.WeatherViewAdapter;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -51,6 +59,10 @@ public class WeatherFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
     private FusedLocationProviderClient mFusedLocationClient;
     private LocationRequest mLocationRequest;
+    private RecyclerView mRecyclerView;
+    private WeatherViewAdapter mWeatherViewAdapter;
+    private List<Forecast> mForecasts = new ArrayList<Forecast>();
+    private String mDays[] = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
 
     public WeatherFragment() {
         // Required empty public constructor
@@ -69,11 +81,10 @@ public class WeatherFragment extends Fragment {
         return fragment;
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(getContext());
-    }
+//    @Override
+//    public void onCreate(Bundle savedInstanceState) {
+//
+//    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -81,6 +92,16 @@ public class WeatherFragment extends Fragment {
         // Inflate the layout for this fragment
         
         View v = inflater.inflate(R.layout.fragment_weather, container, false);
+
+        super.onCreate(savedInstanceState);
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(getContext());
+
+        mRecyclerView = v.findViewById(R.id.rvWeatherExtended);
+        mWeatherViewAdapter = new WeatherViewAdapter(mForecasts);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.setAdapter(mWeatherViewAdapter);
+
         v.findViewById(R.id.btnWeatherZip).setOnClickListener(this::getWeatherByZip);
         v.findViewById(R.id.btnWeatherLoc).setOnClickListener(this::getWeatherByCurrentLoc);
         v.findViewById(R.id.btnWeatherMap).setOnClickListener(this::getWeatherByPlacePicker);
@@ -164,6 +185,7 @@ public class WeatherFragment extends Fragment {
         Log.d("response from weather service", result);
 
         try {
+            // Today forecast
             JSONObject raw = new JSONObject(result);
             JSONArray data = raw.getJSONArray("data");
             JSONObject res = data.getJSONObject(0);
@@ -173,12 +195,43 @@ public class WeatherFragment extends Fragment {
             String desc = res.getJSONObject("weather").getString("description");
             String city = raw.getString("city_name");
 
+            // Set views for today's forecast
             ((TextView) getView().findViewById(R.id.tvWeatherTemp)).setText(currTemp);
             ((TextView) getView().findViewById(R.id.tvWeatherHighLow)).setText(
                     maxTemp + " / " + minTemp
             );
             ((TextView) getView().findViewById(R.id.tvWeatherCond)).setText(desc);
             ((TextView) getView().findViewById(R.id.tvWeatherCity)).setText(city);
+
+            // Extended forecast
+            List<Forecast> forecasts = new ArrayList<Forecast>();
+            for (int i = 1; i < 10; i++) {
+                JSONObject dailyRes = data.getJSONObject(i);
+                String dailyMaxTemp = dailyRes.getString("max_temp");
+                String dailyMinTemp = dailyRes.getString("min_temp");
+                String dailyDesc = dailyRes.getJSONObject("weather").getString("description");
+
+                // format high/low
+                String dailyHighLow = dailyMaxTemp + "/" + dailyMinTemp;
+
+                // Get the name of day from date
+                Calendar c = Calendar.getInstance();
+                String unformattedDate = dailyRes.getString("datetime");
+                String[] splits = unformattedDate.split("-");
+                int year = Integer.parseInt(splits[0]);
+                int month = Integer.parseInt(splits[1]);
+                int day = Integer.parseInt(splits[2]);
+                c.set(year, month, day);
+                int dayIndex = c.get(Calendar.DAY_OF_WEEK);
+                String dailyDayName = mDays[dayIndex - 1];
+
+                Forecast f = new Forecast(dailyDayName, dailyHighLow, dailyDesc);
+                forecasts.add(f);
+            }
+
+            getActivity().runOnUiThread(() -> {
+                mWeatherViewAdapter.updateData(forecasts);
+            });
 
         } catch (JSONException e) {
             Log.d("endOfSend", "error");
@@ -285,6 +338,11 @@ public class WeatherFragment extends Fragment {
     private void handleError(final String msg) {
         Log.e("WeatherFragment Error", msg);
     }
+
+
+
+
+
 
 
 }
