@@ -38,7 +38,7 @@ public class CreateRoomDialogFragment extends DialogFragment  {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View v = inflater.inflate(R.layout.fragment_create_room_diaglog, container, false);
+        View v = inflater.inflate(R.layout.dialog_create_room, container, false);
         mInputRoomName = v.findViewById(R.id.createDialogInput);
         mCreateButton = v.findViewById(R.id.createDialogButton);
         mCancelButton = v.findViewById(R.id.cancelDialogButton);
