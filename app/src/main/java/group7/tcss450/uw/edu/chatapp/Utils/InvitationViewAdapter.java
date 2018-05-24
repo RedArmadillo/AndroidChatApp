@@ -3,7 +3,6 @@ package group7.tcss450.uw.edu.chatapp.Utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.Uri;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
+import android.support.v7.widget.RecyclerView;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -23,10 +22,10 @@ import group7.tcss450.uw.edu.chatapp.R;
 
 public class InvitationViewAdapter extends RecyclerView.Adapter {
     private List<Invitation> mInvitationList;
-
     public InvitationViewAdapter(List<Invitation> list) {
         mInvitationList = list;
     }
+    public ProgressBar mBar;
 
 
     public void updateData(List<Invitation> roomList) {
@@ -48,7 +47,7 @@ public class InvitationViewAdapter extends RecyclerView.Adapter {
         ((InvitationViewHolder) holder).bind(i, (InvitationViewHolder) holder);
     }
 
-    public void sendResponse(Boolean accept, View view, Invitation invitation) {
+    public void sendResponse(Boolean accept, View view, Invitation invitation, InvitationViewHolder holder) {
         SharedPreferences prefs =
                 view.getContext().getSharedPreferences(view.getContext().getString(R.string.keys_shared_prefs),
                         Context.MODE_PRIVATE);
@@ -68,13 +67,17 @@ public class InvitationViewAdapter extends RecyclerView.Adapter {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        mBar = holder.mBar;
         new SendPutAsyncTask.Builder(mResponseURL, message)
+                .onPreExecute(this::onPreResponse)
                 .onPostExecute(this::onPostResponse)
                 .onCancelled(this::handleError)
                 .build().execute();
     }
 
-
+    private void onPreResponse() {
+        mBar.setVisibility(View.VISIBLE);
+    }
 
 
     private void handleError(String s) {
@@ -83,7 +86,7 @@ public class InvitationViewAdapter extends RecyclerView.Adapter {
 
     private void onPostResponse(String s) {
         Log.d("RESPONSE from RESPONSE", s);
-
+        mBar.setVisibility(View.GONE);
     }
 
 
@@ -112,7 +115,7 @@ public class InvitationViewAdapter extends RecyclerView.Adapter {
             mBar = (ProgressBar) view.findViewById((R.id.invitationProgressBar));
         }
 
-        public void bind(Invitation i, InvitationViewHolder holder) {
+        public void bind(final Invitation i, InvitationViewHolder holder) {
             mSender.setText(i.getSender());
             mRoomName.setText(i.getRoomName());
 //            mView.setOnClickListener(new View.OnClickListener() {
@@ -125,7 +128,7 @@ public class InvitationViewAdapter extends RecyclerView.Adapter {
             mNoButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    sendResponse(false, itemView, i);
+                    sendResponse(false, mView, i, holder);
                     mNoButton.setEnabled(false);
                     mJoinButton.setEnabled(false);
                 }
@@ -136,7 +139,7 @@ public class InvitationViewAdapter extends RecyclerView.Adapter {
                 public void onClick(View v) {
                     mNoButton.setEnabled(false);
                     mJoinButton.setEnabled(false);
-                    sendResponse(true, itemView,i);
+                    sendResponse(true, mView,i, holder);
                 }
             });
         }

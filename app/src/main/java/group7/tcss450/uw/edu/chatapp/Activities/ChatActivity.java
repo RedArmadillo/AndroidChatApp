@@ -25,6 +25,7 @@ import group7.tcss450.uw.edu.chatapp.Utils.SettingMenuActivity;
 
 public class ChatActivity extends SettingMenuActivity implements AddUserDialogFragment.AddUserDialogListener,
         ConfirmDialogFragment.LeaveRoomDialogListener{
+    private static final String TAG = "CHATACTIVITY";
     public int mChatId;
     public String mRoomname;
     private String mInviteURL;
@@ -72,6 +73,7 @@ public class ChatActivity extends SettingMenuActivity implements AddUserDialogFr
         }
     }
 
+    // The return username from AddUserDialog
     @Override
     public void onDialogReturn(String username) {
         JSONObject messageJson = new JSONObject();
@@ -101,19 +103,15 @@ public class ChatActivity extends SettingMenuActivity implements AddUserDialogFr
     }
 
     private void handleError(String s) {
-        Log.d("CHATACTIVITY", "can't add a user");
+        Log.d(TAG ,"can't add a user");
     }
 
     private void endOfAdd(String result) {
-        try {
-            JSONObject res = new JSONObject(result);
-            Log.d("response from service for add a user to room", result);
-            Toast.makeText(this, "User added!", Toast.LENGTH_SHORT).show();
-        } catch (JSONException e1) {
-            e1.printStackTrace();
-        }
+            Log.d(TAG, result);
+            Toast.makeText(this, "Invitation sent", Toast.LENGTH_SHORT).show();
     }
 
+    // The confirmation return from LeaveRoomDialog
     @Override
     public void onLeaveDialogReturn() {
         JSONObject messageJson = new JSONObject();
@@ -143,14 +141,8 @@ public class ChatActivity extends SettingMenuActivity implements AddUserDialogFr
     }
 
     private void endOfLeave(String result) {
-        try {
-            JSONObject res = new JSONObject(result);
-            Log.d("response from service for leaving room", result);
+            Log.d(TAG, result);
             Intent intent = new Intent(this, ChatListActivity.class);
             startActivity(intent);
-
-        } catch (JSONException e1) {
-            e1.printStackTrace();
-        }
     }
 }
