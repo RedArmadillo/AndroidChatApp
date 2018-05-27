@@ -30,4 +30,9 @@
         <string name="param_weather_units">units</string>
         <string name="param_weather_lat">lat</string>
         <string name="param_weather_lon">lon</string>
+        <string name="ep_password">changePassword</string>
+        <string name="ep_password_request_token">requestToken</string>
+        <string name="ep_password_forgot">forgot</string>
+
+
 </resources>

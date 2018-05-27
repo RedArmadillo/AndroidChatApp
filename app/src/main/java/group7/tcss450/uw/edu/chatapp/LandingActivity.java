@@ -27,11 +27,9 @@ import java.io.IOException;
 import group7.tcss450.uw.edu.chatapp.Activities.ChatActivity;
 import group7.tcss450.uw.edu.chatapp.Activities.ChatListActivity;
 import group7.tcss450.uw.edu.chatapp.Activities.Connections.ConnectionsActivity;
-import group7.tcss450.uw.edu.chatapp.Activities.MainActivity;
 import group7.tcss450.uw.edu.chatapp.Fragment.HomeFragment;
 import group7.tcss450.uw.edu.chatapp.Fragment.SettingsFragment;
 import group7.tcss450.uw.edu.chatapp.Fragment.WeatherFragment;
-import group7.tcss450.uw.edu.chatapp.Front_End_Register_Login.LoginFragment;
 
 public class LandingActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, WeatherFragment.OnFragmentInteractionListener{

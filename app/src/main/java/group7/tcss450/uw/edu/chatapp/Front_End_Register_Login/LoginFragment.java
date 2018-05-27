@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import group7.tcss450.uw.edu.chatapp.Fragment.ForgotPasswordFragment;
 import group7.tcss450.uw.edu.chatapp.R;
 
 
@@ -21,6 +22,7 @@ import group7.tcss450.uw.edu.chatapp.R;
  */
 public class LoginFragment extends Fragment implements View.OnClickListener{
 
+    private final String TAG = "LOGIN FRAGMENT";
     private OnFragmentInteractionListener mListener;
 
     public LoginFragment() {
@@ -36,6 +38,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
         Button b = (Button) v.findViewById(R.id.register_l_Button);
         b.setOnClickListener(view -> mListener.onRegisterLoadClicked());
         b = (Button) v.findViewById(R.id.loginButton2);
+        b.setOnClickListener(this::onClick);
+        b = (Button) v.findViewById(R.id.loginForgotButton);
         b.setOnClickListener(this::onClick);
         return v;
     }
@@ -65,6 +69,20 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
                 break;
             case R.id.register_l_Button:
                 mListener.onRegisterLoadClicked();
+                break;
+            case R.id.loginForgotButton:
+                //getActivity().getSupportFragmentManager().beginTransaction().replace()
+
+                Bundle bundle = new Bundle();
+                bundle.putBoolean("from login", true );
+                ForgotPasswordFragment fragment = new ForgotPasswordFragment();
+                fragment.setArguments(bundle);
+                getActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragmentContainer, fragment)
+                        .addToBackStack(null).commit();
+                Log.d(TAG, "Forgot clicked");
+                break;
             default:
                 Log.wtf("", "Didn't Expect to see me.");
         }
