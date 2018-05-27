@@ -29,6 +29,10 @@
     <item android:title="Communicate">
         <menu>
             <item
+                android:id="@+id/landingAccountSetting"
+                android:icon="@drawable/ic_settings"
+                android:title="Account setting" />
+            <item
                 android:id="@+id/landingSetting"
                 android:icon="@drawable/ic_settings"
                 android:title="Setting" />

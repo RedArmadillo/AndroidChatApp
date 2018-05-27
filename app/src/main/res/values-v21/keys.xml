@@ -36,6 +36,8 @@
     <string name="keys_connection">Connection</string>
     <string name="keys_incoming_connection">IncomingConnection</string>
     <string name="keys_outgoing_connection">OutgoingConnection</string>
+    <string name="keys_old_password">oldpassword</string>
+    <string name="keys_new_password">newpassword</string>
 
     <string name="keys_weather_API">86f9cef815f848349f2d3d757c55531f</string>
 

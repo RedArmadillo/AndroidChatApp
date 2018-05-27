@@ -55,7 +55,8 @@
     <string name="fb_body">body</string>
     <string name="fb_sender">sender</string>
     <string name="login_forgot_msg">Forgot your password?</string>
-    <string name="forgot_pw_msg">Please provide your username, we will send a secret token to your registered email. Use that token to reset your password.</string>
+    <string name="forgot_pw_msg">Please provide your username, a secret token will be sent to your registered email. Use that token to reset your password.</string>
+    <string name="reset_pw_msg">Want to change your password? Please fill in the fields below.</string>
 
 
 </resources>

@@ -42,11 +42,14 @@ public class ForgotPasswordFragment extends Fragment {
     }
 
     private void resetPassword(View view)  {
+
+        // Users should have the token by now and input them
         EditText token = (EditText) getView().findViewById(R.id.forgot_token_input);
         EditText password1 = (EditText) getView().findViewById(R.id.forgot_newpw_input);
         EditText password2 = (EditText) getView().findViewById(R.id.forgot_retype_input);
         EditText username = (EditText) getView().findViewById(R.id.forgot_username_input);
 
+        // Client-side checking, make sure they input new password correctly
         if (!password1.getText().toString().equals(password2.getText().toString())) {
             password2.setError("Passwords not match");
             return;
@@ -66,17 +69,17 @@ public class ForgotPasswordFragment extends Fragment {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
+        // Access the reset password service
         new SendPostAsyncTask.Builder(requestURL.toString(), messageJson)
                 .onPostExecute(this::onPostChangePassword)
                 .onCancelled(this::handleError)
                 .build().execute();
-
-
     }
 
     private void onPostChangePassword(String s) {
+        // Inform user that password has been reset
         Toast.makeText(getContext(), "Password reset successfully", Toast.LENGTH_LONG).show();
+        // Go back to Login screen
         getActivity().getSupportFragmentManager()
                 .popBackStack();
 
@@ -84,6 +87,8 @@ public class ForgotPasswordFragment extends Fragment {
 
     private void requestToken(View view) {
         EditText username = (EditText) getView().findViewById(R.id.forgot_username_input);
+
+        // Client-side checking user inputted a username
         if (username.getText().toString().length() == 0) {
             ((EditText) getView().findViewById(R.id.forgot_username_input))
                     .setError("Missing username");
@@ -103,14 +108,15 @@ public class ForgotPasswordFragment extends Fragment {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        // Access the request token service
         new SendPostAsyncTask.Builder(requestURL.toString(), messageJson)
                 .onPostExecute(this::endRequestToken)
                 .onCancelled(this::handleError)
                 .build().execute();
-
     }
 
     private void endRequestToken(String s) {
+        // Inform user token has been sent
         Toast.makeText(getContext(), "Token sent", Toast.LENGTH_SHORT).show();
         EditText username = (EditText) getView().findViewById(R.id.forgot_username_input);
         username.setEnabled(false);
