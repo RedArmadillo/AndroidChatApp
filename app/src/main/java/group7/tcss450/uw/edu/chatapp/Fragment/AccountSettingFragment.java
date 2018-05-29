@@ -75,9 +75,10 @@ public class AccountSettingFragment extends Fragment {
 
         mImage = v.findViewById(R.id.acc_setting_avatar);
         // Create a storage reference from our app
-        StorageReference storageRef = FirebaseStorage.getInstance().getReference();
-        // Create a reference with an initial file path and name
-        StorageReference pathReference = storageRef.child(getString(R.string.keys_firebase_avatars_folder) + mUsername);
+        storage = FirebaseStorage.getInstance();
+        storageReference = storage.getReference();
+        // Create a reference with path and name
+        StorageReference pathReference = storageReference.child("images/avatars/" + mUsername);
         // Now loading their avatar into the image view
         Glide.with(getContext())
                 .using(new FirebaseImageLoader())
@@ -112,8 +113,7 @@ public class AccountSettingFragment extends Fragment {
     // Handle upload to Firebase storage
     private void uploadImage() {
         if(filePath != null) {
-            storage = FirebaseStorage.getInstance();
-            storageReference = storage.getReference();
+
 
             // As a convention, all users' avatar will be saved in the folder images/avatars/<their username as file name>
             StorageReference ref = storageReference.child(getString(R.string.keys_firebase_avatars_folder) + mUsername.getText().toString());
