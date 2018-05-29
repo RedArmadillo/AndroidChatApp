@@ -27,11 +27,10 @@ import java.io.IOException;
 import group7.tcss450.uw.edu.chatapp.Activities.ChatActivity;
 import group7.tcss450.uw.edu.chatapp.Activities.ChatListActivity;
 import group7.tcss450.uw.edu.chatapp.Activities.Connections.ConnectionsActivity;
-import group7.tcss450.uw.edu.chatapp.Activities.MainActivity;
+import group7.tcss450.uw.edu.chatapp.Fragment.AccountSettingFragment;
 import group7.tcss450.uw.edu.chatapp.Fragment.HomeFragment;
 import group7.tcss450.uw.edu.chatapp.Fragment.SettingsFragment;
 import group7.tcss450.uw.edu.chatapp.Fragment.WeatherFragment;
-import group7.tcss450.uw.edu.chatapp.Front_End_Register_Login.LoginFragment;
 
 public class LandingActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, WeatherFragment.OnFragmentInteractionListener{
@@ -127,16 +126,15 @@ public class LandingActivity extends AppCompatActivity
             loadFragment(new WeatherFragment());
         } else if (id == R.id.landingSetting) {
             loadFragment(new SettingsFragment());
-            String refreshedToken = FirebaseInstanceId.getInstance().getToken();
-            Log.d("TOKEN", "New token: " + refreshedToken);
-
         } else if (id == R.id.landingLogout) {
             onLogout();
         } else if (id == R.id.landingChatList) {
             Intent intent = new Intent(this, ChatListActivity.class);
             startActivity(intent);
+        } else if (id == R.id.landingAccountSetting) {
+            loadFragment(new AccountSettingFragment());
+            //loadFragment(new ResetPasswordFragment());
         }
-
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

@@ -44,14 +44,12 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.OnF
     }
     @Override
     public void onLoginAttempt(Credentials credentials) {
-        Log.i("Login", "Clicked");
 //build the web service URL
         Uri uri = new Uri.Builder()
                 .scheme("https")
                 .authority(getString(R.string.ep_base_url))
                 .appendPath(getString(R.string.ep_login))
                 .build();
-        Log.i("URL", uri.toString());
                 //build the JSONObject
         JSONObject msg = credentials.asJSONObject();
         mCredentials = credentials;
@@ -72,24 +70,20 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.OnF
         updateToken();
         if (savedInstanceState == null) {
             if (findViewById(R.id.fragmentContainer) != null) {
-                if (savedInstanceState == null) {
-                    if (findViewById(R.id.fragmentContainer) != null) {
-                        SharedPreferences prefs =
-                                getSharedPreferences(
-                                        getString(R.string.keys_shared_prefs),
-                                        Context.MODE_PRIVATE);
-                        if (prefs.getBoolean(getString(R.string.keys_prefs_stay_logged_in),
-                                false)) {
-                            //loadSuccessFragment();
-                            loadHomeNavigation();
-                        } else {
-                            getSupportFragmentManager().beginTransaction()
-                                    .add(R.id.fragmentContainer,
-                                            new LoginFragment(),
-                                            getString(R.string.keys_fragment_login))
-                                    .commit();
-                        }
-                    }
+                SharedPreferences prefs =
+                        getSharedPreferences(
+                                getString(R.string.keys_shared_prefs),
+                                Context.MODE_PRIVATE);
+                if (prefs.getBoolean(getString(R.string.keys_prefs_stay_logged_in),
+                        false)) {
+                    //loadSuccessFragment();
+                    loadHomeNavigation();
+                } else {
+                    getSupportFragmentManager().beginTransaction()
+                            .add(R.id.fragmentContainer,
+                                    new LoginFragment(),
+                                    getString(R.string.keys_fragment_login))
+                            .commit();
                 }
             }
         }
@@ -122,10 +116,15 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.OnF
             boolean success = resultsJSON.getBoolean("success");
             Log.d("Problem:", result);
             if (success) {
+                // Update Firebase token
                 updateToken();
+                // Save user's preference
                 checkStayLoggedIn();
                 saveMemberid(mCredentials.getUsername());
 //Login was successful. Switch to the loadSuccessFragment.
+                // Ideally, subscribe should be after Register
+                // But i put it here for old users
+                FirebaseMessaging.getInstance().subscribeToTopic(mCredentials.getUsername());
                 loadHomeNavigation();
 
             } else if(result.equals("{\"success\":false,\"message\":\"account not verified\"}")) {
@@ -142,7 +141,7 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.OnF
                         (LoginFragment) getSupportFragmentManager()
                                 .findFragmentByTag(
                                         getString(R.string.keys_fragment_login));
-                frag.setError("Log in unsuccessful");
+                frag.setError(result);
             }
         } catch (JSONException e) {
 //It appears that the web service didn’t return a JSON formatted String
@@ -160,6 +159,8 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.OnF
             boolean success = resultsJSON.getBoolean("success");
             if (success) {
                 updateToken();
+                // The user from now on will subscribe to their username topic to help sending notification
+                FirebaseMessaging.getInstance().subscribeToTopic(mCredentials.getUsername());
                 Log.d("In Register Attempt", " YAY!");
 //Login was successful. Switch to the loadSuccessFragment.
                 loadHomeNavigation();
@@ -211,6 +212,7 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.OnF
             JSONObject user = new JSONObject();
             try {
                 user.put(getString(R.string.keys_prefs_username), username);
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -241,7 +243,7 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.OnF
         }
     }
 
-    // Every instance of our app will have a distinc firebase token
+    // Every instance of our app will have a distinct firebase token
     // This method retrieves that toke and save on server
     public void updateToken() {
         String refreshedToken = FirebaseInstanceId.getInstance().getToken();

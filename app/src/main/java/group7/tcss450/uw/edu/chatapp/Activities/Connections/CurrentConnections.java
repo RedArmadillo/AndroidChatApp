@@ -36,11 +36,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Locale;
-import java.util.Objects;
 
-import group7.tcss450.uw.edu.chatapp.Activities.MainActivity;
 import group7.tcss450.uw.edu.chatapp.Async.SendPostAsyncTask;
 import group7.tcss450.uw.edu.chatapp.R;
 
@@ -81,7 +78,6 @@ public class CurrentConnections extends Fragment {
         v = rootView;
         task.execute("", "", "");
         // Inflate the layout for this fragment
-
 
 
 
