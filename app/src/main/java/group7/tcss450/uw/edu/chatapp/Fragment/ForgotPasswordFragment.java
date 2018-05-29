@@ -3,6 +3,7 @@ package group7.tcss450.uw.edu.chatapp.Fragment;
 
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -54,6 +55,14 @@ public class ForgotPasswordFragment extends Fragment {
             password2.setError("Passwords not match");
             return;
         }
+        if (password1.getText().toString().trim().length() < 6) {
+            password1.setError("Too short!");
+            return;
+        }
+        if (password2.getText().toString().trim().length() < 6) {
+            password2.setError("Too short!");
+            return;
+        }
 
         Uri requestURL = new Uri.Builder()
                 .scheme("https")
@@ -65,7 +74,7 @@ public class ForgotPasswordFragment extends Fragment {
         try {
             messageJson.put(getString(R.string.keys_json_username), username.getText().toString());
             messageJson.put(getString(R.string.token), token.getText().toString());
-            messageJson.put(getString(R.string.keys_json_password), password1.getText().toString());
+            messageJson.put(getString(R.string.keys_new_password), password1.getText().toString());
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -76,9 +85,9 @@ public class ForgotPasswordFragment extends Fragment {
                 .build().execute();
     }
 
-    private void onPostChangePassword(String s) {
+    private void onPostChangePassword(String result) {
         // Inform user that password has been reset
-        Toast.makeText(getContext(), "Password reset successfully", Toast.LENGTH_LONG).show();
+        Toast.makeText(getContext(), "Successfully! Please login", Toast.LENGTH_LONG).show();
         // Go back to Login screen
         getActivity().getSupportFragmentManager()
                 .popBackStack();
@@ -120,6 +129,18 @@ public class ForgotPasswordFragment extends Fragment {
         Toast.makeText(getContext(), "Token sent", Toast.LENGTH_SHORT).show();
         EditText username = (EditText) getView().findViewById(R.id.forgot_username_input);
         username.setEnabled(false);
+
+        // Disable the request button for few seconds in case user has multiple click
+        Button request = (Button) getView().findViewById(R.id.forgot_request_button);
+        request.setEnabled(false);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                // This method will be executed once the timer is over
+                request.setEnabled(true);
+            }
+        },6000);
+        request.setText("Request new token");
 
     }
 

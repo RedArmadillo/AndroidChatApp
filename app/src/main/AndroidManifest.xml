@@ -17,7 +17,6 @@
             android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -42,6 +41,10 @@
         <activity
             android:name=".Activities.ChatActivity"
             android:parentActivityName=".LandingActivity">
+            <intent-filter>
+                <action android:name="OPEN_ACTIVITY" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="group7.tcss450.uw.edu.chatapp.Activities.ChatListActivity" />

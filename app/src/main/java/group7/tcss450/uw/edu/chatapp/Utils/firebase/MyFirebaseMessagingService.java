@@ -38,6 +38,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         }
     }
 
+
     private void sendNotification(RemoteMessage.Notification noti) {
         Intent intent = new Intent(this, ChatListActivity.class);
         intent.setFlags((Intent.FLAG_ACTIVITY_CLEAR_TOP));

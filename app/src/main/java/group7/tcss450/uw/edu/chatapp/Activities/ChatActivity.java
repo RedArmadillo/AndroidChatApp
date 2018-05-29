@@ -33,7 +33,7 @@ public class ChatActivity extends SettingMenuActivity implements AddUserDialogFr
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
 
-        if (savedInstanceState == null) {
+        //if (savedInstanceState == null) {
             //if (findViewById(R.id.chatLayout) != null) {
             int chatId = getIntent().getIntExtra(getString(R.string.keys_json_chat_id_lowercase), 1);
             mChatId = chatId;
@@ -43,7 +43,7 @@ public class ChatActivity extends SettingMenuActivity implements AddUserDialogFr
                     .add(R.id.chatLayout, new ChatFragment(chatId, mRoomname))
                     .commit();
             //}
-        }
+        //}
     }
 
     @Override
