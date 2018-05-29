@@ -21,7 +21,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import group7.tcss450.uw.edu.chatapp.Async.SendPostAsyncTask;
@@ -39,16 +42,22 @@ import static android.content.Context.INPUT_METHOD_SERVICE;
 public class ChatFragment extends Fragment {
     private List<Message> messageList = new ArrayList<>();
     private String mUsername;
-    private String mSendUrl;
-    //private TextView mOutputTextView;
+    private String mSendUrl,  mRetrieveUrl;
+    private int msgListSize;
     private ListenManager mListenManager;
     private RecyclerView mRecycleView;
     private MessageListAdapter mAdapter;
     private int mChatId;
     private String mRoomName;
+    private boolean isUserScrolling = false;
+    private boolean isListGoingUp = true;
+    private int dateDecrement = -1;
     public ChatFragment() {
         mChatId = 1;
     }
+
+
+
     @SuppressLint("ValidFragment")
     public ChatFragment(int chatId, String roomname) {
         mRoomName = roomname;
@@ -62,16 +71,59 @@ public class ChatFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_chat, container, false);
 
         v.findViewById(R.id.chatSendButton).setOnClickListener(this::sendMessage);
-        //mOutputTextView = v.findViewById(R.id.chatOutputTextView);
         mRecycleView = v.findViewById(R.id.chatOuputRecycleView);
         mAdapter = new MessageListAdapter(getContext(), messageList);
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
+        LinearLayoutManager  mLayoutManager = new LinearLayoutManager(getContext());
         mRecycleView.setLayoutManager(mLayoutManager);
         mRecycleView.setItemAnimator(new DefaultItemAnimator());
         mRecycleView.setAdapter(mAdapter);
-        return v;
+//        mRecycleView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+//            @Override
+//            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+//                super.onScrollStateChanged(recyclerView, newState);
+//                //detect is the topmost item visible and is user scrolling? if true then only execute
+//                if(newState ==  RecyclerView.SCROLL_STATE_DRAGGING){
+//                    isUserScrolling = true;
+//                }
+//            }
+//
+//            @Override
+//            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+//                super.onScrolled(recyclerView, dx, dy);
+//                //if(isUserScrolling) {
+//                Log.d("CHAT FRAGMENT", String.valueOf(dy));
+//                if (dy > 0) {
+//                    //means user finger is moving up but the list is going down
+//                } else {
+//                    //means user finger is moving down but the list is going up
+//                    if (mLayoutManager.findFirstCompletelyVisibleItemPosition() == 0 && isUserScrolling) {
+//                        // User scrolled to top, we're going to load old messages to display
+//                        updateListenManager();
+//                    }
+//                }
+//            }
+//        });
+    return v;
 
     }
+
+    private void updateListenManager() {
+        String timestamp;
+        final Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DATE, dateDecrement--);
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        timestamp = dateFormat.format(cal.getTime());
+        //ignore all of the seen messages. You may want to store these messages locally
+        mListenManager = new ListenManager.Builder(mRetrieveUrl.toString(),
+                this::publishProgress)
+                .setTimeStamp(timestamp)
+                .setExceptionHandler(this::handleError)
+                .setDelay(100)
+                .build();
+        mRecycleView.smoothScrollToPosition(0);
+        Log.d("CHAT FRAGMENT", timestamp);
+    }
+
     @Override
     public void onStart() {
         super.onStart();
@@ -96,6 +148,7 @@ public class ChatFragment extends Fragment {
                 .appendPath(getString(R.string.ep_get_message))
                 .appendQueryParameter("chatId", Integer.toString(mChatId))
                 .build();
+        mRetrieveUrl = retrieve.toString();
 
         if (prefs.contains(getString(R.string.keys_prefs_time_stamp))) {
             //ignore all of the seen messages. You may want to store these messages locally
@@ -164,9 +217,9 @@ public class ChatFragment extends Fragment {
 
     private void publishProgress(JSONObject messages) {
         if(messages.has(getString(R.string.keys_json_messages))) {
-            mRecycleView.scrollToPosition(mAdapter.getItemCount() - 1);
             try {
                 JSONArray jMessages = messages.getJSONArray(getString(R.string.keys_json_messages));
+                if (jMessages.length() == 0) return;
                 for (int i = 0; i < jMessages.length(); i++) {
                     JSONObject msg = jMessages.getJSONObject(i);
                     String username = msg.get(getString(R.string.keys_json_username)).toString();
@@ -174,14 +227,18 @@ public class ChatFragment extends Fragment {
                     Message m = new Message(userMessage, username);
                     messageList.add(m);
                 }
+                // Update the list size
+                msgListSize = jMessages.length();
+                getActivity().runOnUiThread(() -> {
+                    mAdapter.notifyDataSetChanged();
+                });
+                mRecycleView.smoothScrollToPosition(mAdapter.getItemCount()-1);
             } catch (JSONException e) {
                 e.printStackTrace();
                 return;
             }
 
-           getActivity().runOnUiThread(() -> {
-               mAdapter.notifyDataSetChanged();
-            });
+
 
         }
     }
@@ -191,7 +248,6 @@ public class ChatFragment extends Fragment {
         super.onResume();
         mListenManager.startListening();
     }
-
 
     @Override
     public void onStop() {

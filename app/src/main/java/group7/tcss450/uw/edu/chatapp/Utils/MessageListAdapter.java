@@ -31,6 +31,9 @@ public class MessageListAdapter extends RecyclerView.Adapter {
         mContext = context;
         this.messageList = messageList;
     }
+
+
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view;
@@ -72,6 +75,10 @@ public class MessageListAdapter extends RecyclerView.Adapter {
             case VIEW_TYPE_MESSAGE_RECEIVED:
                 ((ReceivedMessageHolder) holder).bind(m);
         }
+    }
+
+    public void updateData() {
+        super.notifyDataSetChanged();
     }
 
     @Override

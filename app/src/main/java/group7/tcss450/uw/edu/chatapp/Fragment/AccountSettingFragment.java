@@ -13,6 +13,10 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,8 +24,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
@@ -29,6 +31,8 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import group7.tcss450.uw.edu.chatapp.R;
 
@@ -39,11 +43,16 @@ import static android.app.Activity.RESULT_OK;
  */
 public class AccountSettingFragment extends Fragment {
     private static final int PICK_IMAGE_REQUEST = 71;
+    private static final int PASSWORD_ITEM = 0;
+
+    private RecyclerView mRecycleView;
     private ImageView mImage;
     private TextView mUsername, mEmail, mPassword;
     private Uri filePath;
     private FirebaseStorage storage;
     private StorageReference storageReference;
+    private List<String> mList = new ArrayList<>();
+    private SettingViewAdapter mAdapter;
     public AccountSettingFragment() {
         // Required empty public constructor
     }
@@ -65,14 +74,6 @@ public class AccountSettingFragment extends Fragment {
                         Context.MODE_PRIVATE);
         mUsername.setText(prefs.getString(getString(R.string.keys_prefs_username), ""));
         mEmail.setText("me@armadillo");
-        mPassword = v.findViewById(R.id.acc_setting_change_pw);
-        mPassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                loadFragment(new ResetPasswordFragment());
-            }
-        });
-
         mImage = v.findViewById(R.id.acc_setting_avatar);
         // Create a storage reference from our app
         storage = FirebaseStorage.getInstance();
@@ -80,19 +81,37 @@ public class AccountSettingFragment extends Fragment {
         // Create a reference with path and name
         StorageReference pathReference = storageReference.child("images/avatars/" + mUsername);
         // Now loading their avatar into the image view
-        Glide.with(getContext())
-                .using(new FirebaseImageLoader())
-                .load(pathReference)
-                .dontTransform()
-                .into(mImage);
-        // Users click on avatar to change
+//        mImage.setImageDrawable(null);
+//        Glide.with(getContext())
+//                .using(new FirebaseImageLoader())
+//                .load(pathReference)
+//                .into(mImage);
+
+        // Users click on avatar to change it
         mImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Open the dialog that let users choose image from device
                 getDialog();
             }
         });
+
+        mRecycleView = v.findViewById(R.id.acc_setting_rv);
+        populateList();
+
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext().getApplicationContext());
+        mRecycleView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
+        mRecycleView.setLayoutManager(mLayoutManager);
+        mRecycleView.setItemAnimator(new DefaultItemAnimator());
+        mAdapter = new SettingViewAdapter(mList);
+        mRecycleView.setAdapter(mAdapter);
+
         return v;
+    }
+
+    // Populate the recycler view list
+    private void populateList() {
+        mList.add(PASSWORD_ITEM, "Update Password");
     }
 
     private void getDialog() {
@@ -175,6 +194,53 @@ public class AccountSettingFragment extends Fragment {
         transaction.commit();
     }
 
+    private class SettingViewAdapter extends RecyclerView.Adapter<SettingViewAdapter.ViewHolder> {
+        private List<String> mList;
 
+        public SettingViewAdapter(List<String> list) {
+            mList = list;
+        }
+        @Override
+        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            View view = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.row_setting_item, parent, false);
+            return new ViewHolder(view);
+        }
+
+        @Override
+        public void onBindViewHolder(ViewHolder holder, int position) {
+            holder.mTitle.setText(mList.get(position));
+            holder.mView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    switch (position) {
+                        case PASSWORD_ITEM:
+                            loadFragment(new ResetPasswordFragment());
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            });
+        }
+
+        @Override
+        public int getItemCount() {
+            return mList.size();
+        }
+
+        public class ViewHolder extends RecyclerView.ViewHolder {
+            public View mView;
+
+            public TextView mTitle;
+
+            public ViewHolder(View itemView) {
+                super(itemView);
+                mView = itemView;
+                mView.setClickable(true);
+                mTitle = (TextView) itemView.findViewById(R.id.settingTitle);
+            }
+        }
+    }
 
 }
