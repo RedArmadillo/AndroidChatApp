@@ -49,9 +49,10 @@ public class ChatFragment extends Fragment {
     private MessageListAdapter mAdapter;
     private int mChatId;
     private String mRoomName;
-    private boolean isUserScrolling = false;
+    private boolean scrolledToTop = false;
     private boolean isListGoingUp = true;
-    private int dateDecrement = -1;
+    private int dateDecrement = -1, oldState;
+    String TAG = "CHATFRAGMENT";
     public ChatFragment() {
         mChatId = 1;
     }
@@ -77,32 +78,33 @@ public class ChatFragment extends Fragment {
         mRecycleView.setLayoutManager(mLayoutManager);
         mRecycleView.setItemAnimator(new DefaultItemAnimator());
         mRecycleView.setAdapter(mAdapter);
-//        mRecycleView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-//            @Override
-//            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-//                super.onScrollStateChanged(recyclerView, newState);
-//                //detect is the topmost item visible and is user scrolling? if true then only execute
-//                if(newState ==  RecyclerView.SCROLL_STATE_DRAGGING){
-//                    isUserScrolling = true;
-//                }
-//            }
-//
-//            @Override
-//            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-//                super.onScrolled(recyclerView, dx, dy);
-//                //if(isUserScrolling) {
-//                Log.d("CHAT FRAGMENT", String.valueOf(dy));
-//                if (dy > 0) {
-//                    //means user finger is moving up but the list is going down
-//                } else {
-//                    //means user finger is moving down but the list is going up
-//                    if (mLayoutManager.findFirstCompletelyVisibleItemPosition() == 0 && isUserScrolling) {
-//                        // User scrolled to top, we're going to load old messages to display
-//                        updateListenManager();
-//                    }
-//                }
-//            }
-//        });
+        mRecycleView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                //detect is the topmost item visible and is user scrolling? if true then only execute
+                if(newState ==  RecyclerView.SCROLL_STATE_IDLE && oldState == RecyclerView.SCROLL_STATE_DRAGGING){
+                    scrolledToTop = true;
+                }
+                oldState = newState;
+                Log.d(TAG + " STATE", String.valueOf(oldState));
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                //if(isUserScrolling) {
+                Log.d("CHAT FRAGMENT", String.valueOf(dy));
+                if (dy < 0) {
+                    //means user finger is moving down but the list is going up
+                    if (mLayoutManager.findFirstCompletelyVisibleItemPosition() == 0
+                            && mRecycleView.getScrollState() == RecyclerView.SCROLL_STATE_IDLE) {
+                        // User scrolled to top, we're going to load old messages to display
+                        updateListenManager();
+                    }
+                }
+            }
+        });
     return v;
 
     }
