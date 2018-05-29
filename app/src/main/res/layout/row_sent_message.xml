@@ -24,5 +24,6 @@
         android:paddingVertical="4dp"
         android:paddingHorizontal="15dp"
         android:layout_below="@+id/sentMessageSender"
+        android:layout_marginLeft="38dp"
         />
 </RelativeLayout>

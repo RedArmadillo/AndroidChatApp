@@ -27,8 +27,8 @@ import java.io.IOException;
 import group7.tcss450.uw.edu.chatapp.Activities.ChatActivity;
 import group7.tcss450.uw.edu.chatapp.Activities.ChatListActivity;
 import group7.tcss450.uw.edu.chatapp.Activities.Connections.ConnectionsActivity;
+import group7.tcss450.uw.edu.chatapp.Fragment.AccountSettingFragment;
 import group7.tcss450.uw.edu.chatapp.Fragment.HomeFragment;
-import group7.tcss450.uw.edu.chatapp.Fragment.ResetPasswordFragment;
 import group7.tcss450.uw.edu.chatapp.Fragment.SettingsFragment;
 import group7.tcss450.uw.edu.chatapp.Fragment.WeatherFragment;
 
@@ -132,7 +132,8 @@ public class LandingActivity extends AppCompatActivity
             Intent intent = new Intent(this, ChatListActivity.class);
             startActivity(intent);
         } else if (id == R.id.landingAccountSetting) {
-            loadFragment(new ResetPasswordFragment());
+            loadFragment(new AccountSettingFragment());
+            //loadFragment(new ResetPasswordFragment());
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
