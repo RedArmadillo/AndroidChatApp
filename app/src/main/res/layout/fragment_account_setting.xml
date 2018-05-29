@@ -15,7 +15,6 @@
         android:layout_marginStart="12dp"
         android:layout_marginTop="12dp"
         android:scaleType="fitXY"
-        android:src="@drawable/armadillo"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

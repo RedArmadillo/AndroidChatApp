@@ -6,7 +6,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
+import com.firebase.ui.storage.images.FirebaseImageLoader;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.List;
 
@@ -90,15 +96,29 @@ public class MessageListAdapter extends RecyclerView.Adapter {
 
     public class ReceivedMessageHolder extends RecyclerView.ViewHolder {
         TextView message, username;
+        ImageView avatar;
+        View mView;
         ReceivedMessageHolder(View itemView) {
             super(itemView);
+            mView = itemView;
             message = itemView.findViewById(R.id.receivedMessage);
             username = itemView.findViewById(R.id.receivedMessageSender);
+            avatar = itemView.findViewById(R.id.receivedAvatar);
         }
 
         void bind(Message m) {
             message.setText(m.getMessage());
             username.setText(m.getUsername());
+
+            // Create a storage reference from our app
+            StorageReference storageRef = FirebaseStorage.getInstance().getReference();
+            // Create a reference with an initial file path and name
+            StorageReference pathReference = storageRef.child(mView.getContext().getString(R.string.keys_firebase_avatars_folder) + m.getUsername());
+            // Now loading their avatar into the image view
+            Glide.with(mView.getContext())
+                    .using(new FirebaseImageLoader())
+                    .load(pathReference)
+                    .into(avatar);
         }
     }
 }
