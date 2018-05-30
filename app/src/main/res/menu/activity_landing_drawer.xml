@@ -17,10 +17,6 @@
             android:icon="@drawable/ic_connections"
             android:title="Connections" />
         <item
-            android:id="@+id/landingChat"
-            android:icon="@drawable/ic_menu_send"
-            android:title="Chat" />
-        <item
             android:id="@+id/landingWeather"
             android:icon="@drawable/ic_weather"
             android:title="Weather" />

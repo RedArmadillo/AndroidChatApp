@@ -35,7 +35,6 @@
             android:text="@string/chat_invitation" />
 
 
-
     </LinearLayout>
 
     <View
@@ -67,7 +66,6 @@
             android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
             android:src="@android:drawable/ic_input_add"
-            app:backgroundTint="@color/colorPrimary"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintRight_toRightOf="parent" />

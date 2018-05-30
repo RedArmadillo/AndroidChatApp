@@ -1,5 +1,7 @@
 package group7.tcss450.uw.edu.chatapp;
 
+import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -13,6 +15,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.view.ContextThemeWrapper;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -33,12 +36,25 @@ import group7.tcss450.uw.edu.chatapp.Fragment.SettingsFragment;
 import group7.tcss450.uw.edu.chatapp.Fragment.WeatherFragment;
 
 public class LandingActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, WeatherFragment.OnFragmentInteractionListener{
+        implements NavigationView.OnNavigationItemSelectedListener, WeatherFragment.OnFragmentInteractionListener, SettingsFragment.OnSettingsInterationListener{
 
     private final String TAG = "LandingActivity";
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        String u_name = getSharedPreferences(getString(R.string.keys_shared_prefs),
+                Context.MODE_PRIVATE).getString("Style", "");
+        if (u_name == "") {
+            u_name = String.valueOf(R.style.AppTheme);
+            Log.d("Restart", "DEFAULT THEME");
+
+        }
+        Log.d("Shared Prefs Style :", u_name);
+        ThemeChange(Integer.valueOf(u_name));
+
         setContentView(R.layout.activity_landing);
 
 
@@ -72,14 +88,15 @@ public class LandingActivity extends AppCompatActivity
     }
 
 
+
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        int count = getFragmentManager().getBackStackEntryCount();
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
-
         }
     }
 
@@ -111,13 +128,7 @@ public class LandingActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.landingChat) {
-            Intent intent = new Intent(this, ChatActivity.class);
-            int chatId = 1;
-            intent.putExtra(getString(R.string.keys_json_chat_id_lowercase), chatId);
-            startActivity(intent);
-            //loadFragment(new ChatFragment());
-        } else if (id == R.id.landingConnections) {
+        if (id == R.id.landingConnections) {
             Intent intent = new Intent(getApplicationContext(), ConnectionsActivity.class);
             startActivity(intent);
         } else if (id == R.id.landingHome) {
@@ -170,6 +181,7 @@ public class LandingActivity extends AppCompatActivity
                 .addToBackStack(null);
         // Commit the transaction
         transaction.commit();
+
     }
 
 
@@ -177,5 +189,14 @@ public class LandingActivity extends AppCompatActivity
     public void OnWeatherFragmentInteractionListener(Uri uri) {
 
     }
+
+    @Override
+    public void ThemeChange(int color) {
+        Log.d("Theme:", String.valueOf(color));
+        //ContextThemeWrapper w = new ContextThemeWrapper(this, color);
+        setTheme(color);
+        getApplication().setTheme(color);
+    }
+
 
 }

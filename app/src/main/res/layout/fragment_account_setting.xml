@@ -10,8 +10,8 @@
 
     <ImageView
         android:id="@+id/acc_setting_avatar"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="157dp"
+        android:layout_height="153dp"
         android:layout_marginStart="12dp"
         android:layout_marginTop="12dp"
         android:scaleType="fitXY"
@@ -23,9 +23,10 @@
         android:id="@+id/acc_setting_username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="104dp"
+        android:layout_marginStart="68dp"
         android:layout_marginTop="16dp"
         android:text="TextView"
+        android:textSize="21sp"
         app:layout_constraintStart_toEndOf="@+id/acc_setting_avatar"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -33,9 +34,10 @@
         android:id="@+id/acc_setting_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
+        android:layout_marginStart="68dp"
+        android:layout_marginTop="16dp"
         android:text="TextView"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:textSize="21sp"
         app:layout_constraintStart_toEndOf="@+id/acc_setting_avatar"
         app:layout_constraintTop_toBottomOf="@+id/acc_setting_username" />
 
