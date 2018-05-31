@@ -40,7 +40,7 @@
         <activity
             android:name=".Activities.ChatActivity"
             android:parentActivityName=".LandingActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+            android:theme="@style/Theme.AppCompat.NoActionBar">
             <intent-filter>
                 <action android:name="OPEN_ACTIVITY" />
                 <category android:name="android.intent.category.DEFAULT" />

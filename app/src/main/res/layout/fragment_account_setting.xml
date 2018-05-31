@@ -24,11 +24,13 @@
         android:id="@+id/acc_setting_username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="68dp"
         android:layout_marginTop="16dp"
         android:text="TextView"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/acc_setting_avatar"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -36,12 +38,12 @@
         android:id="@+id/acc_setting_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="68dp"
         android:layout_marginTop="16dp"
         android:text="TextView"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/acc_setting_avatar"
         app:layout_constraintTop_toBottomOf="@+id/acc_setting_username" />
 
@@ -56,6 +58,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="#d4d4d4"></View>
+
         <android.support.v7.widget.RecyclerView
             android:id="@+id/acc_setting_rv"
             android:layout_width="match_parent"
