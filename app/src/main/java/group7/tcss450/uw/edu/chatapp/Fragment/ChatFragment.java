@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -43,20 +44,27 @@ public class ChatFragment extends Fragment {
     private List<Message> messageList = new ArrayList<>();
     private String mUsername;
     private String mSendUrl,  mRetrieveUrl;
-    private int msgListSize;
+    private int oldListSize = 0;
     private ListenManager mListenManager;
+    private LinearLayoutManager mLayoutManager;
     private RecyclerView mRecycleView;
     private MessageListAdapter mAdapter;
     private int mChatId;
     private String mRoomName;
-    private boolean scrolledToTop = false;
-    private boolean isListGoingUp = true;
-    private int dateDecrement = -1, oldState;
+    private boolean isUserScrolling = false, didSizeChange;
+    private int dateDecrement = -1;
     String TAG = "CHATFRAGMENT";
+
+    private final Runnable myRunnable = new Runnable() {
+        @Override
+        public void run() {
+            updateListenManager();
+            isUserScrolling = false;
+        }
+    };
     public ChatFragment() {
         mChatId = 1;
     }
-
 
 
     @SuppressLint("ValidFragment")
@@ -74,35 +82,33 @@ public class ChatFragment extends Fragment {
         v.findViewById(R.id.chatSendButton).setOnClickListener(this::sendMessage);
         mRecycleView = v.findViewById(R.id.chatOuputRecycleView);
         mAdapter = new MessageListAdapter(getContext(), messageList);
-        LinearLayoutManager  mLayoutManager = new LinearLayoutManager(getContext());
+        mLayoutManager = new LinearLayoutManager(getContext());
         mRecycleView.setLayoutManager(mLayoutManager);
         mRecycleView.setItemAnimator(new DefaultItemAnimator());
         mRecycleView.setAdapter(mAdapter);
+
+        // User scroll always up to load old messages
         mRecycleView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
                 //detect is the topmost item visible and is user scrolling? if true then only execute
-                if(newState ==  RecyclerView.SCROLL_STATE_IDLE && oldState == RecyclerView.SCROLL_STATE_DRAGGING){
-                    scrolledToTop = true;
+                if (newState == RecyclerView.SCROLL_STATE_DRAGGING && (mLayoutManager.findFirstVisibleItemPosition()
+                        == 0 || messageList.size() == 0)) {
+                    Log.d(TAG,"first visible " + mLayoutManager.findViewByPosition(0));
+                    if(isUserScrolling || messageList.size() == 0) {
+                        Handler handler = new Handler();
+                        handler.postDelayed(myRunnable, 500);
+                    }
                 }
-                oldState = newState;
-                Log.d(TAG + " STATE", String.valueOf(oldState));
             }
 
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                //if(isUserScrolling) {
-                Log.d("CHAT FRAGMENT", String.valueOf(dy));
-                if (dy < 0) {
-                    //means user finger is moving down but the list is going up
-                    if (mLayoutManager.findFirstCompletelyVisibleItemPosition() == 0
-                            && mRecycleView.getScrollState() == RecyclerView.SCROLL_STATE_IDLE) {
-                        // User scrolled to top, we're going to load old messages to display
-                        updateListenManager();
-                    }
-                }
+                if (dy <= 0) {
+                    isUserScrolling = true;
+                } else isUserScrolling = false;
             }
         });
     return v;
@@ -113,17 +119,20 @@ public class ChatFragment extends Fragment {
         String timestamp;
         final Calendar cal = Calendar.getInstance();
         cal.add(Calendar.DATE, dateDecrement--);
-        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        @SuppressLint("SimpleDateFormat")
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSSSSS");
         timestamp = dateFormat.format(cal.getTime());
-        //ignore all of the seen messages. You may want to store these messages locally
+        messageList.clear();
+        mListenManager.stopListening();
         mListenManager = new ListenManager.Builder(mRetrieveUrl.toString(),
                 this::publishProgress)
                 .setTimeStamp(timestamp)
                 .setExceptionHandler(this::handleError)
                 .setDelay(100)
                 .build();
-        mRecycleView.smoothScrollToPosition(0);
-        Log.d("CHAT FRAGMENT", timestamp);
+        mListenManager.startListening();
+        //mRecycleView.smoothScrollToPosition(0);
+        Log.d(TAG, timestamp);
     }
 
     @Override
@@ -230,16 +239,16 @@ public class ChatFragment extends Fragment {
                     messageList.add(m);
                 }
                 // Update the list size
-                msgListSize = jMessages.length();
+                //oldListSize  = jMessages.length();
                 getActivity().runOnUiThread(() -> {
                     mAdapter.notifyDataSetChanged();
                 });
-                mRecycleView.smoothScrollToPosition(mAdapter.getItemCount()-1);
+                mRecycleView.smoothScrollToPosition(mAdapter.getItemCount() - 1);
+
             } catch (JSONException e) {
                 e.printStackTrace();
                 return;
             }
-
 
 
         }
