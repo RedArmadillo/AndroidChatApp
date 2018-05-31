@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -24,6 +25,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
@@ -44,6 +47,8 @@ import static android.app.Activity.RESULT_OK;
 public class AccountSettingFragment extends Fragment {
     private static final int PICK_IMAGE_REQUEST = 71;
     private static final int PASSWORD_ITEM = 0;
+    private static final int AVATAR_ITEM = 1;
+    private static final String TAG = "AccountSettingFragment";
 
     private RecyclerView mRecycleView;
     private ImageView mImage;
@@ -73,19 +78,12 @@ public class AccountSettingFragment extends Fragment {
                         getString(R.string.keys_shared_prefs),
                         Context.MODE_PRIVATE);
         mUsername.setText(prefs.getString(getString(R.string.keys_prefs_username), ""));
-        mEmail.setText("me@armadillo");
+        mEmail.setText(mUsername.getText() + "@armadillo");
         mImage = v.findViewById(R.id.acc_setting_avatar);
         // Create a storage reference from our app
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
-        // Create a reference with path and name
-        StorageReference pathReference = storageReference.child("images/avatars/" + mUsername);
-        // Now loading their avatar into the image view
-//        mImage.setImageDrawable(null);
-//        Glide.with(getContext())
-//                .using(new FirebaseImageLoader())
-//                .load(pathReference)
-//                .into(mImage);
+
 
         // Users click on avatar to change it
         mImage.setOnClickListener(new View.OnClickListener() {
@@ -97,7 +95,7 @@ public class AccountSettingFragment extends Fragment {
         });
 
         mRecycleView = v.findViewById(R.id.acc_setting_rv);
-        populateList();
+
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext().getApplicationContext());
         mRecycleView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
@@ -109,9 +107,31 @@ public class AccountSettingFragment extends Fragment {
         return v;
     }
 
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        if (mList.size() == 0) {
+            populateList();
+        }
+        // Create a reference with path and name
+        StorageReference pathReference = storageReference.child("images/avatars/" + mUsername.getText().toString());
+        if (pathReference.getDownloadUrl() == null) {
+            pathReference = storageReference.child("images/avatars/" + getString(R.string.default_avatar));
+        }
+
+        // Now loading their avatar into the image view
+        mImage.setImageDrawable(null);
+        mImage.setImageBitmap(null);
+        Glide.with(getContext())
+                .using(new FirebaseImageLoader())
+                .load(pathReference)
+                .into(mImage);
+    }
+
     // Populate the recycler view list
     private void populateList() {
         mList.add(PASSWORD_ITEM, "Update Password");
+        mList.add(AVATAR_ITEM, "Change avatar");
     }
 
     private void getDialog() {
@@ -132,8 +152,6 @@ public class AccountSettingFragment extends Fragment {
     // Handle upload to Firebase storage
     private void uploadImage() {
         if(filePath != null) {
-
-
             // As a convention, all users' avatar will be saved in the folder images/avatars/<their username as file name>
             StorageReference ref = storageReference.child(getString(R.string.keys_firebase_avatars_folder) + mUsername.getText().toString());
             UploadTask uploadTask = ref.putFile(filePath);
@@ -216,6 +234,9 @@ public class AccountSettingFragment extends Fragment {
                     switch (position) {
                         case PASSWORD_ITEM:
                             loadFragment(new ResetPasswordFragment());
+                            break;
+                        case AVATAR_ITEM:
+                            getDialog();
                             break;
                         default:
                             break;

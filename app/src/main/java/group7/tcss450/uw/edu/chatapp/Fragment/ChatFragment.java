@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -97,8 +96,8 @@ public class ChatFragment extends Fragment {
                         == 0 || messageList.size() == 0)) {
                     Log.d(TAG,"first visible " + mLayoutManager.findViewByPosition(0));
                     if(isUserScrolling || messageList.size() == 0) {
-                        Handler handler = new Handler();
-                        handler.postDelayed(myRunnable, 500);
+                        //Handler handler = new Handler();
+                        //handler.postDelayed(myRunnable, 500);
                     }
                 }
             }
