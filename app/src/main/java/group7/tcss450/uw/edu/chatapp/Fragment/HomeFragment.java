@@ -38,7 +38,6 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_home, container, false);
         ImageButton weather = v.findViewById(R.id.weather);
-        ImageButton chat = v.findViewById(R.id.chat);
         ImageButton chatlist = v.findViewById(R.id.chatroom);
         ImageButton cconnections = v.findViewById(R.id.connectionsButton);
         weather.setOnClickListener(
@@ -46,10 +45,6 @@ public class HomeFragment extends Fragment {
                         .beginTransaction()
                         .replace(R.id.landingContainer, new WeatherFragment()).addToBackStack(null)
                         .commit());
-        chat.setOnClickListener(view2 -> getFragmentManager()
-            .beginTransaction()
-            .replace(R.id.landingContainer, new ChatFragment()).addToBackStack(null)
-            .commit());
 
         chatlist.setOnClickListener(view3 -> {
             Intent intent = new Intent(getActivity(), ChatListActivity.class);

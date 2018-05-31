@@ -1,47 +1,51 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme"   parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="RedLightBlue" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="RedLightBlue" parent="RedLightBlue.NoActionBar">
         <item name="colorPrimary">#F44336</item>
         <item name="colorPrimaryDark">#D32F2F</item>
         <item name="colorAccent">#03A9F4</item>
         <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
     </style>
 
-    <style name="LimeTeal" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="LimeTeal" parent="LimeTeal.NoActionBar">
         <item name="colorPrimary">#CDDC39</item>
         <item name="colorPrimaryDark">#AFB42B</item>
         <item name="colorAccent">#009688</item>
         <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
     </style>
 
-    <style name="OrangeBrown" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="OrangeBrown" parent="OrangeBrown.NoActionBar">
         <item name="colorPrimary">#FF9800</item>
         <item name="colorPrimaryDark">#F57C00</item>
         <item name="colorAccent">#795548</item>
-        <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
+    </style>
+    <style name="OrangeBrown2" parent="OrangeBrown.PopupOverlay">
+        <item name="colorPrimary">#FF9800</item>
+        <item name="colorPrimaryDark">#F57C00</item>
+        <item name="colorAccent">#795548</item>
     </style>
 
-    <style name="IndigoGrey" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="IndigoGrey" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">#9E9E9E</item>
         <item name="colorPrimaryDark">#616161</item>
         <item name="colorAccent">#536DFE</item>
         <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
     </style>
-    <style name="BluePurple" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="BluePurple" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">#2196F3</item>
         <item name="colorPrimaryDark">#1976D2</item>
         <item name="colorAccent">#E040FB</item>
         <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
     </style>
-    <style name="YellowOrange" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="YellowOrange" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">#FFEB3B</item>
         <item name="colorPrimaryDark">#FBC02D</item>
         <item name="colorAccent">#FF5722</item>
@@ -53,11 +57,6 @@
         <item name="android:windowExitAnimation">@android:anim/fade_out</item>
     </style>
 
-    <style name="AppTheme.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-    </style>
-
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
@@ -65,5 +64,35 @@
     <style name="Theme"></style>
 
     <style name="ThemeOverlay"></style>
+
+
+    <style name="AppTheme.NoActionBar" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+    </style>
+
+    <style name="RedLightBlue.NoActionBar" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+    </style>
+
+    <style name="LimeTeal.NoActionBar" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+    </style>
+
+    <style name="OrangeBrown.NoActionBar" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+    </style>
+
+    <style name="OrangeBrown.PopupOverlay" parent="ThemeOverlay.AppCompat.Light">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
 
 </resources>

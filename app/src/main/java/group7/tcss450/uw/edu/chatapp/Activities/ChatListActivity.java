@@ -47,6 +47,17 @@ public class ChatListActivity extends AppCompatActivity implements CreateRoomDia
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        String u_name = getSharedPreferences(getString(R.string.keys_shared_prefs),
+                Context.MODE_PRIVATE).getString("Style", "");
+        if (u_name == "") {
+            u_name = String.valueOf(R.style.AppTheme);
+            Log.d("Restart", "DEFAULT THEME");
+
+        }
+        Log.d("Shared Prefs Style :", u_name);
+        ThemeChange(Integer.valueOf(u_name));
+
         setContentView(R.layout.activity_chat_list);
         recyclerView = (RecyclerView) findViewById(R.id.chat_recycle_view);
         invRecyclerView = (RecyclerView) findViewById(R.id.invitation_recycle_view);
@@ -273,6 +284,13 @@ public class ChatListActivity extends AppCompatActivity implements CreateRoomDia
     public void onDialogReturn(String roomName) {
         Log.d("DIALOG", "Creating room");
         createNewRoom(roomName);
+    }
+
+    public void ThemeChange(int color) {
+        Log.d("Theme:", String.valueOf(color));
+        //ContextThemeWrapper w = new ContextThemeWrapper(this, color);
+        setTheme(color);
+        getApplication().setTheme(color);
     }
 
 

@@ -70,7 +70,6 @@
             android:layout_height="wrap_content"
             android:fontFamily="monospace"
             android:text="Current Contacts"
-            android:textColor="@color/colorAccent"
             android:textSize="22sp"
             android:textStyle="bold" />
 
@@ -94,7 +93,6 @@
             android:layout_height="wrap_content"
             android:fontFamily="monospace"
             android:text="Incoming Requests"
-            android:textColor="@color/colorAccent"
             android:textSize="22sp"
             android:textStyle="bold" />
 
@@ -109,7 +107,6 @@
             android:layout_height="wrap_content"
             android:fontFamily="monospace"
             android:text="Outgoing Requests"
-            android:textColor="@color/colorAccent"
             android:textSize="22sp"
             android:textStyle="bold" />
 

@@ -37,6 +37,16 @@ public class ConnectionsActivity extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        String u_name = getSharedPreferences(getString(R.string.keys_shared_prefs),
+                Context.MODE_PRIVATE).getString("Style", "");
+        if (u_name == "") {
+            u_name = String.valueOf(R.style.AppTheme);
+            Log.d("Restart", "DEFAULT THEME");
+
+        }
+        Log.d("Shared Prefs Style :", u_name);
+        ThemeChange(Integer.valueOf(u_name));
+
         setContentView(R.layout.activity_connections);
 
         getSupportFragmentManager().beginTransaction()
@@ -52,6 +62,13 @@ public class ConnectionsActivity extends FragmentActivity {
     @Override
     protected void onStart() {
         super.onStart();
+    }
+
+    public void ThemeChange(int color) {
+        Log.d("Theme:", String.valueOf(color));
+        //ContextThemeWrapper w = new ContextThemeWrapper(this, color);
+        setTheme(color);
+        getApplication().setTheme(color);
     }
 
 
