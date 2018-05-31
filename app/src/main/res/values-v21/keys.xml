@@ -40,7 +40,7 @@
     <string name="keys_new_password">newpassword</string>
 
     <string name="keys_weather_API">86f9cef815f848349f2d3d757c55531f</string>
-
+    <string name="keys_firebase_avatars_folder">images/avatars/</string>
 
 
 
