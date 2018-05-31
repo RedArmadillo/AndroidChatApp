@@ -1,7 +1,5 @@
 package group7.tcss450.uw.edu.chatapp;
 
-import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -15,7 +13,6 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.view.ContextThemeWrapper;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -27,7 +24,6 @@ import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.io.IOException;
 
-import group7.tcss450.uw.edu.chatapp.Activities.ChatActivity;
 import group7.tcss450.uw.edu.chatapp.Activities.ChatListActivity;
 import group7.tcss450.uw.edu.chatapp.Activities.Connections.ConnectionsActivity;
 import group7.tcss450.uw.edu.chatapp.Fragment.AccountSettingFragment;
@@ -59,7 +55,7 @@ public class LandingActivity extends AppCompatActivity
 
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+//        setSupportActionBar(toolbar);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(

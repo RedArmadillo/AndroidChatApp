@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.support.v7.widget.Toolbar;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -42,6 +43,8 @@ public class ChatActivity extends SettingMenuActivity implements AddUserDialogFr
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.chatLayout, new ChatFragment(chatId, mRoomname))
                     .commit();
+            Toolbar myToolbar = (Toolbar) findViewById(R.id.chat_toolbar);
+            setSupportActionBar(myToolbar);
             //}
         //}
     }
