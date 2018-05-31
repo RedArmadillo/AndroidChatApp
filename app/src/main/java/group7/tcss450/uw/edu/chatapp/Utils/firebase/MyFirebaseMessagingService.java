@@ -10,7 +10,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
-import android.util.Log;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
@@ -27,13 +26,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
-        Log.d(TAG, "RECEIVED NEW MESSAGE");
-        if(remoteMessage.getData().size() > 0) {
-            Log.d(TAG, "Message data: " + remoteMessage.getData());
-        }
 
         if (remoteMessage.getNotification() != null) {
-            Log.d(TAG, "Message body: " + remoteMessage.getNotification().getBody());
             //sendNotification(remoteMessage.getNotification());
         }
     }

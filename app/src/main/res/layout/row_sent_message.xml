@@ -5,6 +5,7 @@
     android:padding="1dp"
     android:layout_gravity="end">
 
+
     <TextView
         android:id="@+id/sentMessageSender"
         android:layout_width="wrap_content"

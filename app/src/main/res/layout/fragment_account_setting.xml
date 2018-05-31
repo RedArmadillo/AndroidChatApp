@@ -10,11 +10,11 @@
 
     <ImageView
         android:id="@+id/acc_setting_avatar"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:layout_marginStart="12dp"
         android:layout_marginTop="12dp"
-        android:scaleType="fitXY"
+        android:scaleType="fitCenter"
         android:src="@drawable/armadillo"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -26,6 +26,8 @@
         android:layout_marginStart="104dp"
         android:layout_marginTop="16dp"
         android:text="TextView"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="24sp"
         app:layout_constraintStart_toEndOf="@+id/acc_setting_avatar"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -35,6 +37,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:text="TextView"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/acc_setting_avatar"
         app:layout_constraintTop_toBottomOf="@+id/acc_setting_username" />
@@ -46,12 +50,14 @@
         android:orientation="vertical"
         app:layout_constraintTop_toBottomOf="@+id/acc_setting_avatar">
 
-        <TextView
-            android:id="@+id/acc_setting_change_pw"
+        <View
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Change password"
-            android:textSize="18sp" />
+            android:layout_height="1dp"
+            android:background="#d4d4d4"></View>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/acc_setting_rv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
 
