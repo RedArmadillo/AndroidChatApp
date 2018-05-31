@@ -24,7 +24,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.bumptech.glide.Glide;
 import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -80,6 +79,7 @@ public class AccountSettingFragment extends Fragment {
         mUsername.setText(prefs.getString(getString(R.string.keys_prefs_username), ""));
         mEmail.setText(mUsername.getText() + "@armadillo");
         mImage = v.findViewById(R.id.acc_setting_avatar);
+        mImage.setWillNotCacheDrawing(true);
         // Create a storage reference from our app
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
@@ -115,9 +115,6 @@ public class AccountSettingFragment extends Fragment {
         }
         // Create a reference with path and name
         StorageReference pathReference = storageReference.child("images/avatars/" + mUsername.getText().toString());
-        if (pathReference.getDownloadUrl() == null) {
-            pathReference = storageReference.child("images/avatars/" + getString(R.string.default_avatar));
-        }
 
         // Now loading their avatar into the image view
         mImage.setImageDrawable(null);
@@ -125,6 +122,7 @@ public class AccountSettingFragment extends Fragment {
         Glide.with(getContext())
                 .using(new FirebaseImageLoader())
                 .load(pathReference)
+                .error(R.drawable.armadillo)
                 .into(mImage);
     }
 
