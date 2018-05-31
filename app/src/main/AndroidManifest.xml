@@ -30,16 +30,17 @@
         <activity
             android:name=".LandingActivity"
             android:label="@string/title_activity_landing"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.AppBarOverlay" />
         <activity android:name=".Activities.MainActivity$ThemeChangeActivity" />
         <activity
             android:name=".Utils.SettingMenuActivity"
             android:label="@string/title_activity_setting_menu"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.AppBarOverlay" />
         <activity android:name=".Activities.Connections.ConnectionsActivity"></activity>
         <activity
             android:name=".Activities.ChatActivity"
-            android:parentActivityName=".LandingActivity">
+            android:parentActivityName=".LandingActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar">
             <intent-filter>
                 <action android:name="OPEN_ACTIVITY" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -48,7 +49,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="group7.tcss450.uw.edu.chatapp.Activities.ChatListActivity" />
         </activity>
-        <activity android:name=".Activities.ChatListActivity">
+        <activity android:name=".Activities.ChatListActivity"
             android:parentActivityName="group7.tcss450.uw.edu.chatapp.LandingActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
