@@ -76,7 +76,6 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.OnF
                                 Context.MODE_PRIVATE);
                 if (prefs.getBoolean(getString(R.string.keys_prefs_stay_logged_in),
                         false)) {
-                    //loadSuccessFragment();
                     loadHomeNavigation();
                 } else {
                     getSupportFragmentManager().beginTransaction()
@@ -294,10 +293,7 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.OnF
         Log.d("tag2", mCredentials.getFirstName());
         Log.d("tag2", mCredentials.getLastName());
         Log.d("tag2", mCredentials.getUsername());
-//instantiate and execute the AsyncTask.
-//Feel free to add a handler for onPreExecution so that a progress bar
-//is displayed or maybe disable buttons. You would need a method in
-//LoginFragment to perform this.
+
         new SendPostAsyncTask.Builder(uri.toString(), msg)
                 .onPostExecute(this::handleRegisterOnPost)
                 .onCancelled(this::handleErrorsInTask)

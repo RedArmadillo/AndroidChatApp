@@ -1,5 +1,9 @@
 package group7.tcss450.uw.edu.chatapp.Models;
 
+/**
+ * This class represents an invitation object with necessary information
+ * Mainly be used for the RecyclerView adapter
+ */
 public class Invitation extends ChatRoom{
 
     private int mChatId;
@@ -12,7 +16,6 @@ public class Invitation extends ChatRoom{
         mRoomName = roomName;
         mSender = sender;
     }
-
 
 
     public int getChatId() { return mChatId;}

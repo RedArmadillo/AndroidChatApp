@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +14,7 @@ import android.widget.Button;
 import group7.tcss450.uw.edu.chatapp.R;
 
 /**
- * A simple {@link Fragment} subclass.
+ * This class handle the dialog opened when user wants to leave a chat room
  */
 public class ConfirmDialogFragment extends DialogFragment {
     private LeaveRoomDialogListener mNoticeListener;
@@ -53,7 +52,6 @@ public class ConfirmDialogFragment extends DialogFragment {
                 int memberid = prefs.getInt(getString(R.string.keys_prefs_memberid), 0);
                 mNoticeListener.onLeaveDialogReturn();
                 getDialog().dismiss();
-
             }
         });
 

@@ -61,6 +61,8 @@ public class ChatFragment extends Fragment {
             isUserScrolling = false;
         }
     };
+
+    // The original global chat room
     public ChatFragment() {
         mChatId = 1;
     }
@@ -114,6 +116,7 @@ public class ChatFragment extends Fragment {
 
     }
 
+    // Update ListenManager reset timestamp to load old image
     private void updateListenManager() {
         String timestamp;
         final Calendar cal = Calendar.getInstance();
@@ -179,6 +182,7 @@ public class ChatFragment extends Fragment {
 
     }
 
+    // Send message to server
     private void sendMessage(final View theButton) {
         JSONObject messageJson = new JSONObject();
         String msg = ((EditText) getView().findViewById(R.id.chatInputEditText))
@@ -225,6 +229,7 @@ public class ChatFragment extends Fragment {
         Log.e("LISTEN ERROR!!!", e.getMessage());
     }
 
+    // Display messages
     private void publishProgress(JSONObject messages) {
         if(messages.has(getString(R.string.keys_json_messages))) {
             try {

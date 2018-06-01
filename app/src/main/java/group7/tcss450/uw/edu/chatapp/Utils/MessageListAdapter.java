@@ -19,11 +19,15 @@ import java.util.List;
 import group7.tcss450.uw.edu.chatapp.Models.Message;
 import group7.tcss450.uw.edu.chatapp.R;
 
+/**
+ * Adapter class for the recyclerview which displays messages in a chat room
+ */
 public class MessageListAdapter extends RecyclerView.Adapter {
 
     private List<Message> messageList;
     private Context mContext;
 
+    // We have 2 type of messages: the SENT and the RECEIVED
     private static final int VIEW_TYPE_MESSAGE_SENT = 1;
     private static final int VIEW_TYPE_MESSAGE_RECEIVED = 2;
 
@@ -37,7 +41,7 @@ public class MessageListAdapter extends RecyclerView.Adapter {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view;
-
+        // Display message style depends on its type
         if (viewType == VIEW_TYPE_MESSAGE_SENT) {
             view = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.row_sent_message, parent, false);
@@ -57,9 +61,10 @@ public class MessageListAdapter extends RecyclerView.Adapter {
                 mContext.getSharedPreferences(mContext.getString(R.string.keys_shared_prefs),
                         Context.MODE_PRIVATE);
         String currentUser = prefs.getString(mContext.getString(R.string.keys_prefs_username), "");
+        // if message's owner is user, it's a SENT
         if (m.getUsername().equals(currentUser)) {
             return VIEW_TYPE_MESSAGE_SENT;
-        } else {
+        } else { // otherwise RECEIVED
             return VIEW_TYPE_MESSAGE_RECEIVED;
         }
 

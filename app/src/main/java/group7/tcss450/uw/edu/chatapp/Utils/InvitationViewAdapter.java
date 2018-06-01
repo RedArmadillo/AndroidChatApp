@@ -21,6 +21,9 @@ import group7.tcss450.uw.edu.chatapp.Async.SendPutAsyncTask;
 import group7.tcss450.uw.edu.chatapp.Models.Invitation;
 import group7.tcss450.uw.edu.chatapp.R;
 
+/**
+ * Adapter class for the recyclerview which displays list of invitation
+ */
 public class InvitationViewAdapter extends RecyclerView.Adapter {
     private List<Invitation> mInvitationList;
     public InvitationViewAdapter(List<Invitation> list) {
@@ -48,6 +51,9 @@ public class InvitationViewAdapter extends RecyclerView.Adapter {
         Invitation i = mInvitationList.get(position);
         ((InvitationViewHolder) holder).bind(i, (InvitationViewHolder) holder);
     }
+
+    // Handle user responds to an invitation
+    // Send response to server depends on which button user clicked on
 
     public void sendResponse(Boolean accept, View view, Invitation invitation, InvitationViewHolder holder) {
         SharedPreferences prefs =
@@ -119,27 +125,15 @@ public class InvitationViewAdapter extends RecyclerView.Adapter {
         void bind(final Invitation i, InvitationViewHolder holder) {
             mSender.setText(i.getSender());
             mRoomName.setText(i.getRoomName());
-//            mView.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    mNoButton.setVisibility(View.VISIBLE);
-//                    mJoinButton.setVisibility(View.VISIBLE);
-//                }
-//            });
             mNoButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     sendResponse(false, mView, i, holder);
-//                    mNoButton.setEnabled(false);
-//                    mJoinButton.setEnabled(false);
                 }
             });
-
             mJoinButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-//                    mNoButton.setEnabled(false);
-//                    mJoinButton.setEnabled(false);
                     sendResponse(true, mView,i, holder);
                 }
             });

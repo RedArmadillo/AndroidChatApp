@@ -94,9 +94,8 @@ public class AccountSettingFragment extends Fragment {
             }
         });
 
+        // A recycler view to display setting items
         mRecycleView = v.findViewById(R.id.acc_setting_rv);
-
-
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext().getApplicationContext());
         mRecycleView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
         mRecycleView.setLayoutManager(mLayoutManager);
@@ -229,6 +228,7 @@ public class AccountSettingFragment extends Fragment {
             holder.mView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    // User chooses change password or set avatar
                     switch (position) {
                         case PASSWORD_ITEM:
                             loadFragment(new ResetPasswordFragment());
@@ -250,9 +250,7 @@ public class AccountSettingFragment extends Fragment {
 
         public class ViewHolder extends RecyclerView.ViewHolder {
             public View mView;
-
             public TextView mTitle;
-
             public ViewHolder(View itemView) {
                 super(itemView);
                 mView = itemView;

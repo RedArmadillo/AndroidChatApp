@@ -22,7 +22,7 @@ import group7.tcss450.uw.edu.chatapp.Async.SendPostAsyncTask;
 import group7.tcss450.uw.edu.chatapp.R;
 
 /**
- * A simple {@link Fragment} subclass.
+ * This fragment is used when user wants to reset their password to a new one
  */
 public class ResetPasswordFragment extends Fragment {
 
@@ -44,6 +44,7 @@ public class ResetPasswordFragment extends Fragment {
         return v;
     }
 
+    // Connect to web service to request change password
     private void sendResetPassword(View view) {
         EditText oldpw =  (EditText) getView().findViewById(R.id.reset_old_pw_input);
         EditText pw1 =  (EditText) getView().findViewById(R.id.reset_pw_input);

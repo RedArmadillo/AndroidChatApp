@@ -33,20 +33,16 @@ public class ChatActivity extends SettingMenuActivity implements AddUserDialogFr
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
+        // Getting the chat id from the Intent to retrieve the correct chat room
+        int chatId = getIntent().getIntExtra(getString(R.string.keys_json_chat_id_lowercase), 1);
+        mChatId = chatId;
+        mRoomname =  getIntent().getStringExtra(getString(R.string.keys_json_roomname));
 
-        //if (savedInstanceState == null) {
-            //if (findViewById(R.id.chatLayout) != null) {
-            int chatId = getIntent().getIntExtra(getString(R.string.keys_json_chat_id_lowercase), 1);
-            mChatId = chatId;
-            mRoomname =  getIntent().getStringExtra(getString(R.string.keys_json_roomname));
-
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.chatLayout, new ChatFragment(chatId, mRoomname))
-                    .commit();
-            Toolbar myToolbar = (Toolbar) findViewById(R.id.chat_toolbar);
-            setSupportActionBar(myToolbar);
-            //}
-        //}
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.chatLayout, new ChatFragment(chatId, mRoomname))
+                .commit();
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.chat_toolbar);
+        setSupportActionBar(myToolbar);
     }
 
     @Override
@@ -58,6 +54,7 @@ public class ChatActivity extends SettingMenuActivity implements AddUserDialogFr
 
     public boolean onOptionsItemSelected(MenuItem item) {
         FragmentManager fm = getSupportFragmentManager();
+        // Open the dialog based on user choosing
         switch (item.getItemId()) {
             case R.id.chat_menu_add_item:
                 AddUserDialogFragment frag = new AddUserDialogFragment();
@@ -75,7 +72,8 @@ public class ChatActivity extends SettingMenuActivity implements AddUserDialogFr
         }
     }
 
-    // The return username from AddUserDialog
+    // @Param: The return username from AddUserDialog
+    // We will collect that username and send them a chat invitation
     @Override
     public void onDialogReturn(String username) {
         JSONObject messageJson = new JSONObject();
@@ -113,6 +111,7 @@ public class ChatActivity extends SettingMenuActivity implements AddUserDialogFr
     }
 
     // The confirmation return from LeaveRoomDialog
+    // Request our server to remove current user out of the room
     @Override
     public void onLeaveDialogReturn() {
         JSONObject messageJson = new JSONObject();
@@ -138,7 +137,6 @@ public class ChatActivity extends SettingMenuActivity implements AddUserDialogFr
                 .onPostExecute(this::endOfLeave)
                 .onCancelled(this::handleError)
                 .build().execute();
-
     }
 
     private void endOfLeave(String result) {

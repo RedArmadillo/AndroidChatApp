@@ -20,7 +20,7 @@ import group7.tcss450.uw.edu.chatapp.Async.SendPostAsyncTask;
 import group7.tcss450.uw.edu.chatapp.R;
 
 /**
- * A simple {@link Fragment} subclass.
+ * This fragment is used when a user forgot their password in Login page
  */
 public class ForgotPasswordFragment extends Fragment {
     private final String TAG = "ForgotPasswordFragment";
@@ -42,58 +42,9 @@ public class ForgotPasswordFragment extends Fragment {
         return v;
     }
 
-    private void resetPassword(View view)  {
 
-        // Users should have the token by now and input them
-        EditText token = (EditText) getView().findViewById(R.id.forgot_token_input);
-        EditText password1 = (EditText) getView().findViewById(R.id.forgot_newpw_input);
-        EditText password2 = (EditText) getView().findViewById(R.id.forgot_retype_input);
-        EditText username = (EditText) getView().findViewById(R.id.forgot_username_input);
 
-        // Client-side checking, make sure they input new password correctly
-        if (!password1.getText().toString().equals(password2.getText().toString())) {
-            password2.setError("Passwords not match");
-            return;
-        }
-        if (password1.getText().toString().trim().length() < 6) {
-            password1.setError("Too short!");
-            return;
-        }
-        if (password2.getText().toString().trim().length() < 6) {
-            password2.setError("Too short!");
-            return;
-        }
-
-        Uri requestURL = new Uri.Builder()
-                .scheme("https")
-                .authority(getString(R.string.ep_lab_url))
-                .appendPath(getString(R.string.ep_password))
-                .appendPath(getString(R.string.ep_password_forgot))
-                .build();
-        JSONObject messageJson = new JSONObject();
-        try {
-            messageJson.put(getString(R.string.keys_json_username), username.getText().toString());
-            messageJson.put(getString(R.string.token), token.getText().toString());
-            messageJson.put(getString(R.string.keys_new_password), password1.getText().toString());
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        // Access the reset password service
-        new SendPostAsyncTask.Builder(requestURL.toString(), messageJson)
-                .onPostExecute(this::onPostChangePassword)
-                .onCancelled(this::handleError)
-                .build().execute();
-    }
-
-    private void onPostChangePassword(String result) {
-        // Inform user that password has been reset
-        Toast.makeText(getContext(), "Successfully! Please login", Toast.LENGTH_LONG).show();
-        // Go back to Login screen
-        getActivity().getSupportFragmentManager()
-                .popBackStack();
-
-    }
-
+    // We send to server to request a reset token to be sent to user's email
     private void requestToken(View view) {
         EditText username = (EditText) getView().findViewById(R.id.forgot_username_input);
 
@@ -146,6 +97,58 @@ public class ForgotPasswordFragment extends Fragment {
 
     private void handleError(final String msg) {
         Log.e(TAG, msg);
+    }
+
+    // This stage happens after user received token in the registered email
+    private void resetPassword(View view)  {
+        // Users should have the token by now and input them
+        EditText token = (EditText) getView().findViewById(R.id.forgot_token_input);
+        EditText password1 = (EditText) getView().findViewById(R.id.forgot_newpw_input);
+        EditText password2 = (EditText) getView().findViewById(R.id.forgot_retype_input);
+        EditText username = (EditText) getView().findViewById(R.id.forgot_username_input);
+
+        // Client-side checking, make sure they input new password correctly
+        if (!password1.getText().toString().equals(password2.getText().toString())) {
+            password2.setError("Passwords not match");
+            return;
+        }
+        if (password1.getText().toString().trim().length() < 6) {
+            password1.setError("Too short!");
+            return;
+        }
+        if (password2.getText().toString().trim().length() < 6) {
+            password2.setError("Too short!");
+            return;
+        }
+
+        Uri requestURL = new Uri.Builder()
+                .scheme("https")
+                .authority(getString(R.string.ep_lab_url))
+                .appendPath(getString(R.string.ep_password))
+                .appendPath(getString(R.string.ep_password_forgot))
+                .build();
+        JSONObject messageJson = new JSONObject();
+        try {
+            messageJson.put(getString(R.string.keys_json_username), username.getText().toString());
+            messageJson.put(getString(R.string.token), token.getText().toString());
+            messageJson.put(getString(R.string.keys_new_password), password1.getText().toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        // Access the reset password service
+        new SendPostAsyncTask.Builder(requestURL.toString(), messageJson)
+                .onPostExecute(this::onPostChangePassword)
+                .onCancelled(this::handleError)
+                .build().execute();
+    }
+
+    private void onPostChangePassword(String result) {
+        // Inform user that password has been reset
+        Toast.makeText(getContext(), "Successfully! Please login", Toast.LENGTH_LONG).show();
+        // Go back to Login screen
+        getActivity().getSupportFragmentManager()
+                .popBackStack();
+
     }
 
 
