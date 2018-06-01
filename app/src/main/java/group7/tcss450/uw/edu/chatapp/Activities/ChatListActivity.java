@@ -47,7 +47,6 @@ public class ChatListActivity extends AppCompatActivity implements CreateRoomDia
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         String u_name = getSharedPreferences(getString(R.string.keys_shared_prefs),
                 Context.MODE_PRIVATE).getString("Style", "");
         if (u_name == "") {
@@ -59,25 +58,27 @@ public class ChatListActivity extends AppCompatActivity implements CreateRoomDia
         ThemeChange(Integer.valueOf(u_name));
 
         setContentView(R.layout.activity_chat_list);
+        // We have 2 RecyclerView, 1 to handle list of chat room
+        // The other handles list of chat room invitation
         recyclerView = (RecyclerView) findViewById(R.id.chat_recycle_view);
         invRecyclerView = (RecyclerView) findViewById(R.id.invitation_recycle_view);
 
+        // Setting up these RecyclerView
         mAdapter = new ChatRoomViewAdapter(chatRoomList);
-        mInvAdapter = new InvitationViewAdapter(invitationList);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
-
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);
 
         RecyclerView.LayoutManager invLayoutManager = new LinearLayoutManager(getApplicationContext());
-
+        mInvAdapter = new InvitationViewAdapter(invitationList);
         invRecyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
         invRecyclerView.setLayoutManager(invLayoutManager);
         invRecyclerView.setItemAnimator(new DefaultItemAnimator());
         invRecyclerView.setAdapter(mInvAdapter);
 
+        // FAB allows user to create a new chat room
         myFabButton = findViewById(R.id.chatRoomAddButton);
         myFabButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,6 +88,8 @@ public class ChatListActivity extends AppCompatActivity implements CreateRoomDia
                 frag.show(fm, "input room name");
             }
         });
+
+        // 2 buttons to switch back and forth between list of chat room and list of invitations
         mRecentButton = findViewById(R.id.chat_Recent);
         mRecentButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,19 +106,21 @@ public class ChatListActivity extends AppCompatActivity implements CreateRoomDia
         });
     }
 
+    // A helper method to "turn off" invitation stuff and display chat stuffs
     public void chatRoomInCharge() {
         myFabButton.setVisibility(View.VISIBLE);
         recyclerView.setVisibility(View.VISIBLE);
         invRecyclerView.setVisibility(View.INVISIBLE);
     }
-
     public void invitationInCharge() {
-        // "turn off" chat stuff
+        // the other way around
         myFabButton.setVisibility(View.INVISIBLE);
         recyclerView.setVisibility(View.INVISIBLE);
         invRecyclerView.setVisibility(View.VISIBLE);
 
     }
+
+    // Handle user request to create a room by passing it to server
     public void createNewRoom(String roomName) {
         JSONObject messageJson = new JSONObject();
 
@@ -165,6 +170,8 @@ public class ChatListActivity extends AppCompatActivity implements CreateRoomDia
                         Context.MODE_PRIVATE);
         String currentUser = prefs.getString(getString(R.string.keys_prefs_username), "");
         int currentMemberId = prefs.getInt(getString(R.string.keys_prefs_memberid),0);
+
+        // Setup
         mCreateRoomURL = new Uri.Builder()
                 .scheme("https")
                 .authority(getString(R.string.ep_lab_url))
@@ -172,15 +179,12 @@ public class ChatListActivity extends AppCompatActivity implements CreateRoomDia
                 .build()
                 .toString();
 
-
         Uri retrieve = new Uri.Builder()
                 .scheme("https")
                 .authority(getString(R.string.ep_lab_url))
                 .appendPath(getString(R.string.ep_chat_room))
                 .appendQueryParameter("username", currentUser)
                 .build();
-
-
         mListenManager = new ListenManager.Builder(retrieve.toString(),
                 this::publishProgress)
                 .setExceptionHandler(this::handleError)
@@ -205,6 +209,7 @@ public class ChatListActivity extends AppCompatActivity implements CreateRoomDia
         Log.i("INVITATION ERROR", e.toString());
     }
 
+    // Helper method to display invitations
     public void invitationPublishProgress(JSONObject result) {
         Log.i("INVITATION PROGRESS", result.toString());
         if (result.has(getString(R.string.keys_json_invitations))) {
@@ -232,8 +237,8 @@ public class ChatListActivity extends AppCompatActivity implements CreateRoomDia
         }
     }
 
+    // Helper function to display list of chat room
     private void publishProgress(JSONObject result) {
-        //final String[] ids;
         if (result.has(getString(R.string.keys_json_success))) {
             List<ChatRoom> newList = new ArrayList<>();
             try {

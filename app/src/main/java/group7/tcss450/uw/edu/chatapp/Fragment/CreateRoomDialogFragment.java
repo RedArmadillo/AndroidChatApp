@@ -13,7 +13,10 @@ import android.widget.EditText;
 
 import group7.tcss450.uw.edu.chatapp.R;
 
-
+/**
+ * This class handle the dialog opened when user wants to create a chat room,
+ * allowing them to input a room name
+ */
 public class CreateRoomDialogFragment extends DialogFragment  {
 
     private NoticeDialogListener mNoticeListener;

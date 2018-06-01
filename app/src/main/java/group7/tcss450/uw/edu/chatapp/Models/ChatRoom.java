@@ -1,5 +1,9 @@
 package group7.tcss450.uw.edu.chatapp.Models;
 
+/**
+ * This class represents a chat room object with necessary information
+ * Mainly be used for the RecyclerView adapter
+ */
 public class ChatRoom {
     private int mChatId;
     private StringBuilder mName;
@@ -35,9 +39,6 @@ public class ChatRoom {
     }
     public String getLastMsg() {
         return mLastMsg.toString();
-    }
-    public void setLastSender(String username) {
-        mLastSender = new StringBuilder(username);
     }
     public String getLastSender() {
         return mLastSender.toString();

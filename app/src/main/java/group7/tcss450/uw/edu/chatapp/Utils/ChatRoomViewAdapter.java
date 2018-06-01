@@ -13,7 +13,9 @@ import group7.tcss450.uw.edu.chatapp.Activities.ChatActivity;
 import group7.tcss450.uw.edu.chatapp.Models.ChatRoom;
 import group7.tcss450.uw.edu.chatapp.R;
 
-
+/**
+ * Adapter class for the recyclerview which displays list of chat rooms
+ */
 public class ChatRoomViewAdapter extends RecyclerView.Adapter<ChatRoomViewAdapter.ViewHolder> {
 
     private List<ChatRoom> mChatList;
@@ -21,6 +23,8 @@ public class ChatRoomViewAdapter extends RecyclerView.Adapter<ChatRoomViewAdapte
     public ChatRoomViewAdapter(List<ChatRoom> list) {
         mChatList = list;
     }
+
+    // Method to update the list of content
     public void updateData(List<ChatRoom> roomList) {
         mChatList.clear();
         mChatList.addAll(roomList);
@@ -38,9 +42,11 @@ public class ChatRoomViewAdapter extends RecyclerView.Adapter<ChatRoomViewAdapte
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         ChatRoom c = mChatList.get(position);
+        // Getting information of the Chat room object to be displayed
         holder.mLastMsg.setText(c.getLastMsg());
         holder.mLastSender.setText(c.getLastSender());
         holder.mRoomName.setText(c.getName());
+        // User clicking on a chat room will open that conversation
         holder.mView.setOnClickListener((View view) -> {
             Intent intent = new Intent(holder.itemView.getContext(), ChatActivity.class);
             intent.putExtra("chatid", c.getChatId());
